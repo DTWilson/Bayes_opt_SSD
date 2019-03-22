@@ -1,0 +1,394 @@
+\documentclass{article} %[twocolumn] 
+
+%\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{multirow}
+
+\title{Efficient and flexible simulation-based sample size determination for clinical trials with multiple parameters}
+\author{Duncan T. Wilson\thanks{Leeds Institute of Clinical Trials Research, University of Leeds, Leeds, UK}  \and Rebecca E. A. Walwyn\footnotemark[1] \and Richard Hooper\thanks{Centre for Primary Care \& Public Health, Queen Mary University of London, London, UK} \and Julia Brown\footnotemark[1] \and Amanda J. Farrin\footnotemark[1]}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\textbf{Background}: When analytic formulae for calculating the power of a clinical trial are not available, simulation offers a simple and flexible alternative. The computational burden of using simulation has, however, restricted its application to only the simplest of sample size determination problems. These typically involve minimising a single parameter (the sample size) subject to power being above a target level. Many sample size determination problems, such as those for multi-level trials of complex interventions, are more complicated. There can be several several design parameters over which to optimise and several conflicting criteria we aim to simultaneously minimise. As the complexity of the sample size determination problem increases, so too does the computational burden incurred by using simulation to estimate power. Efficient global optimisation algorithms for the design and analysis of computer experiments offer a potential way to manage this burden and thus enable simulation-based sample size determination for complex problems.
+
+\textbf{Motivating example}: An trial of adaptive pacing therapy for chronic fatigue syndrome motivates our work. Sample size determination involved minimising the numbers of participants, therapists and doctors, while analysis required generalised linear mixed effects models of data with a cross-classified multilevel structure.
+
+\textbf{Methods}: We describe a general framework for solving multi-parameter sample size determination design problems based around an established global optimisation algorithm. The method involves fitting a non-parametric regression `surrogate' model as an approximation of the true underlying power function. The model predictions of power at yet-to-be evaluated sample sizes are then used at each iteration to carefully select the point to be evaluated next.The method is flexible, can be used for almost any problem for which power can be estimated using simulation, and can be implemented using existing statistical software packages.
+
+\textbf{Results}: The framework is illustrated by applying it to three increasingly complex problems based around the motivating example. Firstly, the complex clustering structure is addressed. Secondly, we extend the model to allow for co-primary endpoints. Finally, we consider a small-sample pilot design for assessing potential efficacy.
+
+\textbf{Conclusions}: Efficient global optimisation based on surrogate models can be an effective method for complex sample size determination problems where operating characteristics must be estimated using simulation. By improving the efficiency of these calculations, increasingly complex problems can be addressed in a timely manner.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+The sample size of a clinical trial is typically minimised subject to the power of the trial being above a nominal level, often 80 or 90\%. For many sample size determination (SSD) problems, power can be calculated using a simple mathematical formula and the problem can be solved in a timely manner. However, complexity in the trial design or the method of analysis can mean such formulae are not available. In these cases we can estimate power using a Monte Carlo (MC) approximation~\cite{Arnold2011, Landau2013}. To do so, we simply simulate several hypothetical sets of trial data under the alternative hypothesis, analyse each of these, and calculate the proportion of analyses which reject the null hypothesis. The simplicity and flexibility of the simulation method has seen it used for a variety of statistical models and study designs, including problems involving hierarchical models~\cite{Feng1992, Hooper2013}, proportional hazards models~\cite{Schoenfeld2005}, logistic regression models~\cite{Grieve2016}, individual patient data meta-analyses~\cite{Sutton2007, Kontopantelis2016}, patient enrolment models~\cite{Fedorov2005}, stepped wedge designs~\cite{Baio2015, Hooper2016}, and cluster randomised crossover designs~\cite{Reich2012}. Although calculating MC estimates of power can be computationally demanding, these SSD problems remain feasible because because, as optimisation problems, they are quite simple. In particular, optimisation takes place over a single parameter (the sample size), subject to a single constraint (power), and with respect to a single objective to be minimised (the sample size again).
+
+Sample size determination problems, particilarly those found in trials of complex interventions, are not always this simple~\cite{Wilson2015}. There may be several \emph{design parameters}, each influencing the power of the trial, which need to be chosen. Several design parameters are common in, for example, trials with multilevel structures. In cluster randomised trials both the number of cluster and the number of participants in each cluster, must be chosen. Increasing the number of design parameters complicates the SSD problem by increasing the number of possible solutions which must be searched over. A second complication arises when there is more than one criteria we are interested in minimising, subject to the nominal power constraint. A cluster randomised trial will often have this property, too, as we would like to minimise both the total number of participants and the number of clusters. Given multiple conflicting objectives, there is no single `optimum' solution but rather a range of solutions which offer different degrees of trade-off between the objectives. Seeking to find a set of good solutions, rather than a single optimum, further adds to the difficulty of the SSD problem.
+
+Robust implementations of benchmark multi-objective optimisation algorithms such as NSGA-II~\cite{Deb2002} are freely available in statistical software such as R~\cite{Mersmann2014}, and could in theory be applied to solve complex SSD problems with several design parameters and several objectives. However, these so-called `greedy' algorithms typically assume that evaluating any proposed solution to the problem is a very fast process, and consequently evaluate many thousands of solutions during the search. If they were applied to problems where evaluating solutions required computing an MC estimate of power, they would take an infeasibly long time to converge. Thus, if we are to extend simulation-based trial design to complex SSD problems, we require a more general framework employing more efficient optimisation algorithms. 
+
+Outwith the context of clinical trial design a great deal of research has addressed optimisation problems where the evaluation of a solution is a computationally demanding, or \emph{expensive}, operation~\cite{Sacks1989,Santner2003}. One approach addresses the problem by substituting the expensive function with a mathematical approximation known as a \emph{surrogate model}. The surrogate model is then used to make predictions about the true function for different values of design parameters, with these predictions informing which point should be evaluated next. The information obtained from this evaluation is used to update the surrogate model, thus improving the predictions available at the next iteration. One class of surrogate model is Gaussian process (GP) regression. Also known as Kriging and having its roots in geostatistics~\cite{Krige1951}, GP models are spatial interpolators which are computational tractable~\cite{Rasmussen2006} and can be fitted using robust and freely available software~\cite{Roustant2012}. A GP surrogate model provides not only a prediction of the true function value at any point, but also a measure of uncertainty in this prediction. This property is exploited by the benchmark Efficient Global Optimisation (EGO) algorithm~\cite{Jones2001}, allowing the next point in the search to be chosen in a way that formally balances the potential benefits of \emph{exploitation} (searching around areas already known to be promising) and \emph{exploration} (searching in areas of high uncertainty). Although EGO was originally proposed for unconstrained optimisation of expensive objective functions with deterministic output, various proposals have extended it to incorporate the expensive constraints~\cite{Sasena2002}, multiple objectives~\cite{Emmerich2011}, and stochastic outputs~\cite{Picheny2014} that feature in complex SSD problems.
+
+In this paper we will explore how GP regression models and a varient of the EGO algorithm can be used to solve complex SSD problems. In contrast with much of the available methods and software for simulation-based SSD, which focus on specific application areas such as multilvel designs (MLPowSim~\cite{Browne2009}), IPD meta-analyses (ipdpower~\cite{Kontopantelis2016}) or stepped wedge design (SWSamp~\cite{Baio2015}), we propose a general framework which can be applied to a broad class of SSD problems following the Neyman-Pearson hypothesis testing formulation, providing a simulation program can be provided. This flexibility will not only mean simulation-based SSD can be used for a wide range of existing trial designs, but will also facilitate SSD for novel designs developed in the future. 
+
+The remainder of the paper is structured as follows. Three motivating problems are described in Section~\ref{sec:examples}. In Section~\ref{sec:prelim} we provide the necessary background and notation regarding Monte Carlo estimation and multi-objective optimisation. In Section~\ref{sec:methods} we describe Gaussian process regression, the efficient global optimisation algorithm, and a framework for their application to sample size determination. We return to the examples in Section~\ref{sec:application}, illustrating how the method can be applied in practice. We conclude with a discussion of the implications and limitations of the proposed approach in Section~\ref{sec:discussion}.
+
+%Key point to emphasise - we are interested in quite general design methods which we can apply to a wide range of problems, i.e. anything we can simulate. Simulation is largely needed because the models are complex and idiosyncratic, with no literature devoted to them because this may be the first time they have come up. So for method to be useful it needs to be both efficient, but also easy to apply to the problem at hand.
+
+\section{Motivating examples}\label{sec:examples}
+
+PACE~\cite{White2007, White2011} was a randomised controlled trial comparing cognitive behavioural therapy (CBT), graded exercise therapy (GET), adaptive pacing therapy (APT) and specialist medical care (SSMC) as treatments for chronic fatigue syndrome. It had a complex multilevel data structure, with participants in some arms receiving treatment from therapists and all participants receiving treatment from doctors, leading the potential for treatment related clustering. Moreover, two potentially correlated co-primary endpoints were used. The original sample size calculation used a simple analytic formula to for comparing proportions in two groups of equal size. It did not account for the impact of clustering effects or correlated endpoints, and nor did it allow the number of therapists or doctors to be varied. In this section we will describe three example SSD problems based around the PACE trial, increasing complexity at each step. 
+
+\subsection{Complex clustering}\label{sec:ex1}
+
+We consider powering the PACE trial to detect a difference in the probability of response with respect to fatigue between the APT and SSMC arms, as this comparison was thought to involve the smallest effect size. Response is defined as exeeding a target value on the 33 point Chalder Fatigue Scale. As in the original design, we assume an equal number $n$ of participants will be recruited to each arm. In the intervention arm, $k$ therapists will deliver APT to participants, with participants nested within therapists. We assume that the number of participants allocated to each therapist will vary with therapist. Specifically, we model the proportion of all participants in the APT arm allocated to a therapist using a Gamma distribution with shape parameter 1. Participants in both APT and SSMC arms will receive specialist medical care from one of $2k$ doctors, with the proportion to each doctor also following a gamma dsitribution with shape parameter 1. This leads to a multilevel data structure where patients are nested within doctors in the control arm, patients are cross-classfied with therapists and doctors in the intervention arm, and doctors are crossed with treatment~\cite{Walwyn2010}. This structure is illustrated in Figure~\ref{fig:ex1_structure}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.7, trim={1.9cm 19cm 0 0}, clip]{./Figures/ex1_structure.pdf}
+\caption{Multilevel structure of the SSMC and APT arms of our example, where patients are nested within doctors in the control arm, patients are cross-classified with therapists and doctors in the intervention arm, and doctors are crossed with treatment.}
+\label{fig:ex1_structure}
+\end{figure}
+
+The primary analysis will fit two nested generalised linear mixed effect models, with and without a treatment effect term, using maximum likelihood. A likelihood ratio test will then be used to compare the two models and test the null hypothesis that the probability of response in the APT arm, $p_1$, is equal to that in the SSMC arm, $p_0$. We assume that the test statistic follows a chi-squared distribution with 1 degree of freedom, and therefore that the type I error rate can be controlled at a nominal level of $\alpha^* = 0.05$ (two-sided). When either model fails to converge, we do not reject the null hypothesis. We require that the power at the alternative hypothesis $H_1: p_0=0.1, p_1=0.25$ be no less than 90\%. Subject to these constraints, we aim to find minimal values of $n$ and $k$, recognising that these two objectives will conflict with one another. To the best of our knowledge there are no analytic formulae which calculate the power of such a design and analysis. 
+
+\subsection{Co-primary endpoints}\label{sec:ex2}
+
+We extend the example to include a co-primary endpoint relating to physical function, a binary response defined as reaching a target level on the short form-36 physical function subscale. The endpoints will be analysed separately, each time fitting nested GLMM's and conducting a likelihood ratio test as described in Section~\ref{sec:ex1}. The results of the trial will be considered positive if either or both of the analyses show a statistically significant difference. A Bonferroni correction will be applied to address multiplicity arising from multiple testing. Correlation between the endpoints is expected at the participant level, and correlations between the random effects of therapists and doctors for different endpoints are also expected.
+
+We are interested in achieving a nominal power of 90\% when a treatment effect is present for one endpoint but not for the other, leading to two alternative hypotheses:
+\begin{align}
+H_1^F: & p_0^F=0.1, p_1^F=0.25 \\
+H_1^D: & p_0^D=0.1, p_1^D=0.25.
+\end{align}
+The problem can be simplified somewhat through symmetry, by setting the null and alternative hypotheses to be equal for both endpoints and thus ensuring that the power will be the same under $H_1^F$ and $H_1^D$. We can then restrict attention to the former.
+
+\subsection{Small samples}\label{sec:ex3}
+
+Finally, we consider how we could have designed a pilot trial to be conducted prior to PACE as a preliminary test of potential efficacy. To enable a small trial to maintain 90\% power, we relax the type I error rate to 0.2 (one-sided) and change the primary endpoints from binary responses to the continuous scores on the CFS and SF-36. Although large sample formula for continuous outcomes with a cross-classified structure are available~\cite{Roberts2013}, they are restricted to cases where clusters are nested within treatment and are therefore not applicable here, where doctors are crossed with treatment.
+
+In the pilot setting we assume we have greater control over the numbers of participants allocated to therapists and to doctors, and so can maximise efficiency by balancing cluster sizes. We also now consider varying the number of doctors. In terms of design parameters, we must choose the total sample size in the APT arm, denoted $n_1$; the number of APT therapists, $k$; the allocation ratio relating the total number of participants in each arm, $r = n_0/n_1$; and the number of doctors, $j$. Our objectives are to minimise the total number of participants $n_0 + n_1$, the number of therapists, and the number of doctors. The small sample setting of a pilot trial implies the distributional assumptions underpinning type I error control may be violated. We can assess the extent of this violation by simulating power under the null hypothesis, leading to two expensive constraint functions and thus increasing the computational burden of evaluating a choice of design parameters.
+
+\section{Background}\label{sec:prelim}
+
+\subsection{Monte Carlo estimation}\label{sec:MC}
+
+Monte Carlo methods can be used to numerically approximate expectations $\mathbb{E}[f(Z)]$ of real valued functions $f(Z)$ with respect to the probability distribution of $Z$. Given $N$ samples of $Z$, denoted $z_{i}$, $i=1,\ldots,N$, the MC estimate is
+\begin{equation}
+\mathbb{E}[f(Z)] \approx \frac{1}{N} \sum_{i=1}^{N} f(z_{i}).
+\end{equation}
+The estimate is unbiased for all $N$ and has variance equal to
+\begin{equation}
+\omega^{2} = Var \left[ \frac{1}{N} \sum_{i=1}^{N} f(z_{i}) \right] = \frac{1}{N} Var \left[ f(z_{i}) \right].
+\end{equation}
+The standard error of the MC estimate will therefore reduce at a rate of $1/\sqrt{N}$ as we increase $N$. When $N$ is large we can consider an MC estimate to be the true expectation plus a normally distributed error term with 0 mean and variance $\omega^{2}$, i.e.
+\begin{equation}\label{eqn:MC_error}
+\frac{1}{N} \sum_{i=1}^{N} f(z_{i}) = \mathbb{E}[f(Z)] + e \text{, where } e \sim N(0, \omega^{2}).
+\end{equation}
+
+In the context of simulation-based trial design, if $Z$ is the test statistic to be compared with an acceptance region $\Lambda$ then the probability of acceptance under hypothesis $H$ is $\mathbb{E}[I(Z \in \Lambda) \mid H]$, where $I(.)$ is the indicator function. An MC estimate of the power of a trial design under $H$ can therefore be obtained given $N$ test statistics $z_{1}, \ldots , z_{N}$ sampled under $H$. The steps required to simulate these statistics are described in~\cite{Landau2013}, and we briefly summarise them here:
+\begin{enumerate}
+\item Define the population model. This describes the underlying target population and should specify all population parameters and distributions under the hypothesis of interest.
+\item Define the sampling strategy. This should specify the numbers of patients, clusters, or any other sampling units in the trial and how they will be drawn from the population.
+\item Define the method of analysis. For hypothesis testing, this will include defining the form of the test statistic $Z$ and the acceptance region $\Lambda$.
+\end{enumerate}
+Given each of the above elements, pseudo-random number generators can be used to simulate the recruitment, randomisation and primary outcome measure of patients under the hypothesis of interest, from which a test statistic $z_{i}$ can be calculated. 
+
+\subsection{Multi-objective optimisation of trial designs}\label{sec:optimisation}
+
+A solution to the trial design problem consists of a vector of design parameters $\mathbf{x}$, and the \emph{solution space} $\mathcal{X}$ is the set of all solutions. A simple SSD problem may have a 1-dimensional solution space, while more complex problems may have several dimensions. Elements of $\mathbf{x}$ may include parameters defining the sample size of the trial, the acceptance region to be used in the analysis, or any other design aspect which we have control of and which may influence the trial operating characteristics. As an example, consider a cluster randomised trial (cRCT) with $k$ clusters in each arm, and $m$ participants in each cluster. A solution to this SSD problem is $\mathbf{x} = (k, m)$.
+
+An \emph{objective function} $f(\mathbf{x})$ is a function $f : \mathcal{X} \rightarrow \mathbb{R}$ which we wish to minimise. In a multi-objective problem with $B$ objectives, we denote the vector of objective values as $\mathbf{y} = (f_{1}(\mathbf{x}), \ldots, f_{B}(\mathbf{x})) \in \mathbb{R}^{B}$. We will describe $\mathbb{R}^{B}$ as the \emph{objective space}. In our cRCT example, we have two objectives: minimising the number of clusters $f_1(\mathbf{x}) = 2k$; and minimising the total number of participants, $f_2(\mathbf{x}) = 2km$.
+
+A \emph{constraint function} $g(\mathbf{x})$ is a function $g : \mathcal{X} \rightarrow \mathbb{R}$ which must be less than or equal to 0 for the solution $\mathbf{x}$ to be considered feasible. For example, if type II error rate is denoted by $\beta(\mathbf{x})$ and the nominal type II error rate is set at $\beta^{*}$, a constraint function would be $g(\mathbf{x}) = \beta(\mathbf{x}) - \beta^{*}$. We denote $C$ constraint functions as $g_{j}(\mathbf{x}),~j=1,\ldots , C$. The general SSD problem can now be stated as
+\begin{align}
+\min_{\mathbf{x} \in \mathcal{X}} {~ f_{i}(\mathbf{x})}, ~ i = 1, \ldots , B \\
+\text{subject to} ~ g_{j}(\mathbf{x}) \leq 0, ~ j = 1, \ldots , C.
+\end{align}
+
+We denote by $\prec$ the relation of Pareto dominance, where a solution dominates another if it is at least as good in all respects, and better in at least one. Formally, $\mathbf{x}_{*} \prec \mathbf{x}$ if $f_{i}(\mathbf{x}_{*}) \leq f_{i}(\mathbf{x})$ for $i = 1, \ldots , B$, and $f_{j}(\mathbf{x}_{*}) < f_{j}(\mathbf{x})$ for some $j$. For example, $\mathbf{x}_a = (k=10, m=6) \prec \mathbf{x}_b = (k=10, m=10)$ for our cRCT, but $\mathbf{x}_a = (k=10, m=6) \nprec \mathbf{x}_c = (k=13, m=4)$. The \emph{Pareto set} is the set of non-dominated solutions $\mathcal{X}_{p} = \{\mathbf{x} \in \mathcal{X} \mid \nexists ~ \mathbf{x}_{*}  \in \mathcal{X} ~\text{s.t.}~ \mathbf{x}_{*} \prec \mathbf{x} \}$. An example Pareto set for a cRCT is plotted in Figure~\ref{fig:fake_pareto}, illustrating the available trade-offs between the two objectives.
+
+An approximation set $\mathcal{A}$ is any set of solutions where all members are non-dominated with respect to the others~\cite{Emmerich2011}. That is, $\mathcal{A} \in \mathcal{X}$ with $\forall~\mathbf{x} \in \mathcal{A}:~\nexists~\mathbf{x}_{*} \in \mathcal{A} : \mathbf{x}_{*} \prec \mathbf{x}$. A set $\mathcal{A}$ is feasible if all constraints are satisfied by every member of $\mathcal{A}$. An example feasible approximation set for our cRCT example, plotted in Figure~\ref{fig:fake_pareto}, is 
+\begin{equation}
+\mathcal{A} = \{ (589, 24), (705, 20), (810, 12), (982, 10) \}.
+\end{equation}
+
+The dominated hypervolume of a set $\mathcal{A}$ is the volume of the subspace dominated by solutions in $\mathcal{A}$ and bounded by a reference point $r$:
+\begin{equation}
+H(\mathcal{A}) = \text{Vol}(\{\mathbf{y} \in \mathbb{R}^{B} \mid \mathbf{y} \text{ is dominated by some } \mathbf{y}_{*} \in \mathcal{A} \text{ and } \mathbf{y} \prec r \}). 
+\end{equation}
+The largest possible hypervolume of any feasible approximation set $\mathcal{A}$ is achieved by the true Pareto set $\mathcal{X}_{p}$. We can therefore frame the multi-objective optimisation problem as finding the feasible approximation set $\mathcal{A}$ with largest hypervolume. Taking a reference point of $r = (1200, 30)$ (marked by the cross in Figure~\ref{fig:fake_pareto}), our example approximation set has a dominated hypervolume of 9202. This can be compared with that of the Pareto set, at 14501. We would expect the approximation set to converge to the Pareto set as the number of optimisation iterations increases.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{./Figures/fake_pareto}
+\caption{Example Pareto front $\mathcal{X}_{p}$ and approximation set $\mathcal{A}$ for a cluster randomised trial design problem. The dominated hypervolume of the approximation set with respect to a reference point (cross) is the shaded area.}
+\label{fig:fake_pareto}
+\end{figure}
+
+
+\section{Simulation-based sample size determination}\label{sec:methods}
+
+\subsection{Overview}
+
+The proposed method is based on the Efficient Global Optimisation algorithm~\cite{Jones1998}. For clarity we will describe the algorithm in the context of a SSD problem with a single constraint function, denoted $g(\mathbf{x})$, which must be estimated using simulation. The more general case of several constraints will follow immediately. The initial step is to select a number of potential solutions to the SSD problem $\mathcal{X}_{E} = (\mathbf{x}^{(1)}, \ldots , \mathbf{x}^{(E)})$ and evaluate the constraint function at each of these points, giving $\mathbf{y}_{E} = (g(\mathbf{x}^{(1)}), \ldots , g(\mathbf{x}^{(E)}))$. A Gaussian process regression model is then fitted to the data, relating the solutions $\mathcal{X}_{E}$ to the estimates $\mathbf{y}_{E}$ and providing an approximation of the constraint function $g$. The solution $\mathbf{x}_{*}$ which has the largest expected improvement $EI(\mathbf{x})$ according to the predictions of the GP model, is then found. This solution is evaluated to obtain $y_*$. This new data is then used to update the GP model, which is then used again to find the next solution to evaluate. The algorithm can be repeated until either the computational resources available have been exceeded, or until no further improvements are being obtained. The Algorithm is summarised in~\ref{alg:EGO}.
+
+
+\section{Simulation-based sample size determination}\label{sec:methods}
+
+\subsection{Overview}
+
+The proposed method is based on the Efficient Global Optimisation algorithm~\cite{Jones1998}. For clarity we will describe the algorithm in the context of a SSD problem with a single constraint function, denoted $g(\mathbf{x})$, which must be estimated using simulation. The more general case of several constraints will follow immediately. The initial step is to select a number of potential solutions to the SSD problem $\mathcal{X}_{E} = (\mathbf{x}^{(1)}, \ldots , \mathbf{x}^{(E)})$ and evaluate the constraint function at each of these points, giving $\mathbf{y}_{E} = (g(\mathbf{x}^{(1)}), \ldots , g(\mathbf{x}^{(E)}))$. A Gaussian process regression model is then fitted to the data, relating the solutions $\mathcal{X}_{E}$ to the estimates $\mathbf{y}_{E}$ and providing an approximation of the constraint function $g$. The solution $\mathbf{x}_{*}$ which has the largest expected improvement $EI(\mathbf{x})$ according to the predictions of the GP model, is then found. This solution is evaluated to obtain $y_*$. This new data is then used to update the GP model, which is then used again to find the next solution to evaluate. The algorithm can be repeated until either the computational resources available have been exceeded, or until no further improvements are being obtained. The Algorithm is summarised in~\ref{alg:EGO}.
+
+\begin{algorithm}
+\caption{Efficient Global Optimisation~\cite{Jones1998}}\label{alg:EGO}
+\begin{algorithmic}[1]
+\State Compute MC estimates $\mathbf{y}_{E} = (g(\mathbf{x}^{(1)}), \ldots , g(\mathbf{x}^{(E)}))$
+\While{Computation budget not exhausted}
+\State Regress $\mathbf{y_{E}}$ on $\mathcal{X}_{E} = (\mathbf{x}^{(1)}, \ldots , \mathbf{x}^{(E)})$
+\State Find $\mathbf{x}_{*} = \arg\max EI(\mathbf{x})$
+\State Compute MC estimate $y_{*} = g(\mathbf{x}_{*})$ and add to $\mathbf{y_{E}},~\mathcal{X}_{E}$
+\State Update the computational budget
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+The process of computing MC estimates used in steps (1) and (5) has already been described in Section~\ref{sec:MC}. In what follows we will first consider step (3), describing Gaussian process regression models and outlining how they can be fitted and used to make predictions. The notion of expected improvement in step (4) will then be defined for the constrained multi-objective problems we are concerned with. We then cover the remaining aspects of implementation.
+
+
+\subsection{Gaussian process regression}\label{sec:GP}
+
+Consider a set of points $\mathcal{X}_{E} = \{ \textbf{x}^{(1)}, \ldots , \textbf{x}^{(E)} \} \subset \mathcal{X}$ at which an expensive function $g$ will be estimated using the Monte Carlo method. Consider also some other point $\mathbf{x}_{*} \not\in \mathcal{X}_{E}$ where we are interested in making a prediction of $g(\mathbf{x}_{*})$. The value of $g$ at each point in $\{\mathcal{X}_{E}, \mathbf{x}_{*}\}$ is initially unknown, but can be modelled by a Gaussian process (GP). 
+
+In using a GP we assume that our belief regarding the the values of $g$ can be represented by a multivariate normal distribution. Prior to computing any estimates of $g$, we assume that the mean function of this multivariate normal is equal to zero\footnote{This is not a restrictive assumption. After observing estimates of the function $g$ and updating the GP model to account for these, the mean function can take on non-zero values.}. We write the covariance matrix of the distribution as
+\begin{equation}\label{eqn:cov_matrix}
+\begin{pmatrix}
+K(\mathcal{X}_{E}, \mathcal{X}_{E}) & K(\mathcal{X}_{E}, \mathbf{x}_{*}) \\
+K(\mathbf{x}_{*}, \mathcal{X}_{E}) & K(\mathbf{x}_{*}, \mathbf{x}_{*})
+\end{pmatrix},
+\end{equation}
+where $K(\mathcal{X}_{E}, \mathcal{X}_{E})$ is the $E \times E$ covariance matrix for the points $\mathcal{X}_{E}$, $\mathbf{k}_{*} = K(\mathcal{X}_{E}, \mathbf{x}_{*})$ is the $E$-length vector of covariances between $\mathcal{X}_{E}$ and $\mathbf{x}_{*}$, and $K(\mathbf{x}_{*}, \mathbf{x}_{*})$ is the variance at $\mathbf{x}_{*}$.
+
+Given this prior distribution, we compute the MC estimates $y^{(1)} , \ldots , y^{(E)}$ at each point in $\mathcal{X}_{E}$. From equation (\ref{eqn:MC_error}), $y^{(i)} = g(\textbf{x}^{(i)}) + e^{(i)}$ where $e^{(i)}$ is a zero-mean normally distributed error term with standard deviation $\omega^{(i)}$. We denote by $\Delta$ the $E \times E$ diagonal matrix where the $i$th entry is $[\omega^{(i)}]^{2}$. The distribution of $g(\mathbf{x}_{*})$ conditional on the observed $\mathbf{y}$ can be shown to be normal with mean $\mathbf{k}_{*}^\top(K + \Delta)^{-1}\mathbf{y}$ and variance $k(x_{*}, x_{*})-\mathbf{k}_{*}^\top(K + \Delta)^{-1}\mathbf{k}_{*}$~\cite{Rasmussen2006}. Thus, given a prior covariance matrix of the form (\ref{eqn:cov_matrix}) and some MC estimates of $g$ at the points $\mathcal{X}_{E}$, a conditional predictive distribution of $g(\mathbf{x}_{*})$ can be found. It is this distribution which will be used in the optimisation algorithm when deciding which solution should next be evaluated.
+
+The predictive distributions are influenced by the prior covariance matrix (\ref{eqn:cov_matrix}). The matrix is populated using a covariance function (or \emph{kernel}), $k(\mathbf{x}, \mathbf{x}') : \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}$. This function must be symmetric and positive definite for the covariance matrix to have the same properties. One such covariance function is the squared exponential, which has the form
+\begin{equation}
+k(\mathbf{x}, \mathbf{x}') = \sigma \exp \left( -\sum_{j=1}^{D} \frac{(x_{j} - x'_{j})^2}{\lambda_{j}^2} \right).
+\end{equation}
+By using covariance functions of this form we will obtain a Gaussian process which is infinitely differentiable over $\mathcal{X}$ and thus very smooth. This would appear to be a reasonable restriction to place upon the power functions we are interested in. In order to populate the covariance matrix we must choose values of the hyper-parameters $\boldsymbol{\theta} = (\sigma, \lambda_{1}, \ldots, \lambda_{D})$. We do this by numerically optimising the log marginal likelihood
+\begin{equation}\label{eqn:loglik}
+\log{p(\mathbf{y} \mid \mathcal{X}_{E}, \boldsymbol{\theta})} = -\frac{1}{2}\mathbf{y}^\top[K + \Delta]^{-1}\mathbf{y} - \frac{1}{2} \log{|K + \Delta|} - \frac{n}{2} \log{2\pi},
+\end{equation}
+considered as a function of $\boldsymbol{\theta}$~\cite{Rasmussen2006}. Fitting a GP model by maximum likelihood in this manner can be done using the function \texttt{km} in the R package DiceKriging, as illustrated in the appendix.
+
+An illustration of a Gaussian process regression model of a power function in one dimension is given in Figure~\ref{fig:GP_example}. The power of three different choices of sample size have been calculated and a GP model fitted to the results. The figure illustrates how the uncertainty in the model predictions (shaded area) increases the further we are from a point which has been evaluated. The GP prediction of power at a sample size of $n = 190$, shown as a dashed line, is normally distributed with mean 0.84 and standard deviation 0.035.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{./Figures/GP_example}
+\caption{A Gaussian process model of a power function over a one-dimensional sample size (solid line) based on three evaluations. Uncertainty is shown as the shaded area. Expected improvement (dotted line) is maximised at a sample size of 190, where the predicted power is normally distributed around a mean estimate of 0.84 (dashed line).}
+\label{fig:GP_example}
+\end{figure}
+
+
+\subsection{Expected improvement}\label{sec:EGO}
+
+At any given point during the optimisation process we can obtain an approximation set $\mathcal{A}$ based on the set of solutions which have been evaluated up to that point. If a new point $\mathbf{x}_{*}$ is considered feasible, a new approximation set $\mathcal{A}_{*}$ will be identified. The improvement resulting from the evaluation of $\mathbf{x}_{*}$ is the difference in the dominated hypervolumes:
+\begin{equation}
+I = H(\mathcal{A}_{*}) - H(\mathcal{A}).
+\end{equation}
+
+Prior to evaluation, we do not know if the point $\mathbf{x}_{*}$ will be considered feasible. We therefore modify $I$ to account for the probability that $\mathbf{x}_{*}$ will be considered feasible after the MC estimates have been obtained. This probability can be estimated using the GP regression methodology described in Section~\ref{sec:GP}. A GP model of unknown constraint function $g$ will describe our current belief about the value of $g$ at $\mathbf{x}_{*}$ using a normal distribution with mean $m$ and variance $s^2$ $g(\mathbf{x}_{*}) \sim \mathcal{N}(m, s^{2})$, and we will consider the point $\mathbf{x}_{*}$ feasible if the upper $100 \times p$\% quantile of this distribution is below 0. We denote this quantile as
+\begin{equation}\label{eqn:quant}
+q(\mathbf{x}_{*}) = m + \Phi^{-1}(p)s,
+\end{equation}
+where $\Phi$ is the standard normal cumulative distribution. Following an evaluation of $\mathbf{x}_{*}$ the GP model will be updated and the quantile revised to $q_{+}(\mathbf{x}_{*})$. Before the evaluation the value of $q_{+}(\mathbf{x}_{*})$ is unknown, but it is shown in~\cite{Picheny2014} that its predictive distribution is $q_{+}(\mathbf{x}_{*}) \sim N(m_{+}, s_{+}^{2})$ where
+\begin{align}
+m_{+} &= m + \Phi^{-1}(p)\sqrt{\frac{\omega^{2}s^{2}}{\omega^{2} + s^{2}}} \\
+s_{+}^{2} &= \frac{[s^{2}]^{2}}{\omega^{2} + s^{2}},
+\end{align}
+and $\omega$ is the MC error of the planned evaluation, estimated as $m(1-m)/N$ where $N$ is the number of MC samples to be used. The predictive distribution can then be used to calculate the probability that the point $\mathbf{x}_{*}$ will be considered feasible following its evaluation. Following~\cite{Sasena2002}, we multiply the theoretical improvement $I$ by this probability, thus penalising candidate solutions with a low chance of satisfying the constraint. This then gives us our expected improvement measure $EI$, where
+\begin{equation}
+\text{Expected Improvement } EI = [H(\mathcal{A}_{*}) - H(\mathcal{A})] \prod_{j=1}^{C} \Phi\left(\frac{-m_{j,+}}{s_{j,+}}\right).
+\end{equation}
+Note that we include a penalty term for all $j = 1, \ldots , C$ constraint functions. This maximisation problem is in itself complex, with a potentially large number of local maxima. We therefore use the particle swarm optimisation algorithm as implemented in the R package pso~\cite{Bendtsen2012}, designed to avoid becoming trapped in local maxima, to solve this sub-problem.
+
+An illustration of expected improvement for a single-objective problem is given in Figure~\ref{fig:GP_example}. When choosing which sample size to evaluate next and aiming to find the lowest sample size with at least 80\% power, we balance the potential improvement over the best current solution (a sample size of 260) with the probability of constraint satisfaction. In this case, we would choose to evaluate the sample size of 190, estimated by the GP model to have a power of 84\%.
+
+
+\subsection{Implementation}
+
+To apply Algorithm~\ref{alg:EGO} in practice we must first choose the initial set of points to be evaluated, $\mathcal{X}_{E}$. One recommendation is to include 10 points for each dimension of the solution space, and to allocate between 25 and 50\% of the total computation budget to their evaluation~\cite{}. To select the location of the points in $\mathcal{X}_{E}$ we use the space-filling Sobol sequence generated using the R package randtoolbox~\cite{Dutang2015}. The number of iterations and the number of MC samples $N$ used at each iteration must also be chosen. Given a total computational budget in terms of MC samples, the choice of these values should account for the fact that fitting GP regression models in R to more than around 800 points is infeasible~\cite{Chevalier2014}. 
+
+As the algorithm depends on GP regression models, it is important that the fit of these models is assessed. One approach is to regularly plot the predicted mean and standard deviation in one or two dimensions, centred at the last evaluated point. Poor model fit could be identified if the mean function is not, for example, strictly increasing as expected. We can also contrast the predicted function values with the obtained function values at each iteration, halting the algorithm if a large and unexpected discrepancy in these values is observed.
+
+We have used R to implement the proposed framework, partly due to the availability of robust and efficient R packages for fitting Gaussian process models (DiceKriging~\cite{Roustant2012}) and for global optimisation (pso~\cite{Bendtsen2012}). Using R also provides flexibility in terms of the user-writen simulation routines by facilitating various complicated analysis procedures, e.g. multilevel modelling through lme4~\cite{Bates2015}. Our implementation works to a simple interface. The user must provide instances of two data frames. The first, \texttt{design\char`_space}, contains a row for each design parameter describing its name and its lower and upper bounds. The second, \texttt{constraints}, contains a row for each constraint function $g_{j}$. Each row should include a label for the constraint, the hypothesis it pertains to, a nominal power which should not be exceeded, and the confidence we require in the constraint being satisfied (i.e. the $p$ in Equation~\ref{eqn:quant}). Further, two functions are required. The first, \texttt{objectives}, takes as argument a vector of design parameter values $\mathbf{x}$ and returns a vector of objective values $( f_{1}(\mathbf{x}), \ldots, f_{B}(\mathbf{x}) )$. The second, \texttt{sim\char`_trial}, takes as arguments a vector of design parameter values $\mathbf{x}$ and a vector of parameter values defining the conditions under which we wish to simulate. The function should simulate the necessary data generation and analysis and return a boolean indicator of the rejection of the null hypothesis, or, more generally, of declaring `success'. Given these components, the example R code in the appendix can be modified to solve the problem at hand.
+
+\section{Application to the examples}\label{sec:application}
+
+In this section we describe the data generating models used to simulate trial data for each of our examples and the methods used in their analyses. Full details, including all the programs used to generate the results presented, are given in the appendix.
+
+\subsection{Complex clustering}
+
+We model the binary response of the $i$th participant using a latent variable representation. Specifically, we suppose that underlying the binary response $y_i$ there is a continuous latent variable $y_i^*$ such that
+$$
+y_i =
+\begin{cases}
+1 \text{ if } y_i^* \geq 0\\
+0 \text{ if } y_i^* < 0.
+\end{cases}
+$$
+We then define a our model in terms of the $y_i^*$. Using the multilevel model notation of~\cite{Goldstein2003}:
+\begin{align}\label{eqn:ex1_model}
+y_i^* &= \beta_{0} + \beta_1 t_i + u_{therapist(i)}^{(2)}t_{i} + v_{doctor(i)}^{(2)} + e_i \\
+u_{therapist(i)}^{(2)} & \sim N(0, \sigma_T^2) \\
+v_{doctor(i)}^{(2)} & \sim N(0, \sigma_D^2),
+\end{align}
+where $e_i$ is a level 1 residual with mean zero and variance $\sigma_W^2$. Assuming $e_i$ follows a logistic distribution with $\sigma_W^2 = 3.29$ leads to a random intercept logistic model. For the purposes of power calculations we assume the remaining variance components are known and equal to $\sigma_{T}^{2} = 0.19, \sigma_{D}^{2} = 0.37$. In the SSMC arm the variance partition coefficient is $\sigma_D^2 / (\sigma^2_D + \sigma^2_W) = 0.1$. In the intervention arm, the variance partition coefficient for between-therapist variance is $\sigma^2_T/(\sigma^2_T + \sigma^2_D + \sigma^2_W) = 0.05$, and similarly for between-doctor variation, $\sigma^2_D/(\sigma^2_T + \sigma^2_D + \sigma^2_W) = 0.095$. Recall that we want to simulate the power of the trial under the alternative hypothesis $H_1: p_0=0.1, p_1=0.25$. We can translate these probabilities into corresponding values for the coefficients in our model, giving $H_1: \beta_0 = \log(p_0/(1-p_0)) = -2.20, \beta_1 = \log(p_1/(1-p_1)) - \beta_0 = 1.10$.
+
+The design parameters are the number of participants in each arm $n$, the number of therapists $k$ in the APT arm, and the number of doctors $j$ delivering specialist medical care across both arms. For simplicity and ease of illustration we will fix $j = 2k$. When searching over the remaining design parameters $n$ and $k$ we will initially consider $n \in [100, 500]$ and $k \in [3, 30]$, noting that these can be easily revised if the initial evaluations indicate larger values are required to achieve nominal power. We wish to minimise both the total number of patients $f_{1}(\mathbf{x}) = 2n$ and the total number of care providers $f_{2}(\mathbf{x}) = 3k$. The only constraint we must satisfy is that the type II error rate $\beta(\mathbf{x})$ under the alternative hypothesis is no more than $\beta^{*} = 0.1$. This gives the constraint function $g_{1}(\mathbf{x}) = \beta(\mathbf{x}) - 0.1$.
+
+The original PACE sample size calculation did not account for clustering and, using simple analytic formulae for power of test of proportions, arrived at $n = 135$ per arm (before inflating for attrition) to achieve 90\% power. Simulating the actual power obtained from $n=135$ under our proposed model, with $k = 10$ therapists and $j = 20$ doctors, gave an MC estimate of 0.69 (95\% confidence interval 0.66 to 0.72). Fitting two multilevel models for each sample led to a significant computational burden, needing over 5.3 minutes minutes to generate the $N=1000$ samples required for this estimate. Thus, there is a need to search for an appropriate sample size using simulation, but a practical limit on the number of designs which we can evaluate in a timely manner. 
+
+We initialised the optimisation algorithm by generating a Sobol sequence of size 20 and computing MC estimates of power for each point using $N = 100$ samples. Following this, 30 iterations of the algorithm were applied, with $N = 100$ samples used at each iteration. We chose these optimisation parameters to ensure a solution could be found quickly, noting that further iterations can easily be added if it solutions of a higher quality are sought. In Figure~\ref{fig:ex1_single_run} we plot the 50 evaluated solutions, distinguishing between those in the initial design $\mathcal{X}_{E}$, those which were subsequently evaluated during the iterative phase of the algorithm, and those which together form the final approximation set. The contours of the mean function of the final GP model are also shown. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{./Figures/ex1_single_run}
+\caption{Objective values of solutions in the initial set $\mathcal{X}_{E}$ (open circles), subsequent iterations of the algorithm (crosses), and those in the final approximation of the Pareto set (filled circles). Contours represent the mean function of the final GP model.}
+\label{fig:ex1_single_run}
+\end{figure}
+
+For comparison, we also plot the approximation set obtained using a similar procedure as that implemented in MLPowSim, software designed for simulation-based SSD for problems with multilevel data. Specifically, we take a Sobol sequence of size 50 and estimated the type II error at each of these points using $N = 100$ MC samples. For each point a 95\% confidence interval based on the MC error was calculated, and any points where the interval was not entirely below the nominal value of 0.1 were discarded. Of those that remained, any dominated solutions were discarded. The remaining two solutions are plotted in Figure~\ref{fig:ex1_single_run}. Clearly, The proposed method has led to a larger set of solutions, offering more options regarding the trade-offs between the two objectives. The solutions obtained collectively dominate those produced by the simpler method.
+
+At the $i$th iteration of the algorithm we calculated the dominated volume $H(\mathcal{A}_{i})$, plotted in Figure~\ref{fig:ex1_traj}. In this instance the algorithm appears to plateau after around 15 iterations. Note that $H(\mathcal{A}_{i})$ is not strictly increasing. This is because the evaluation of a new solution can lead to revised estimates of other solutions which were in the approximation set, such that they are then considered infeasible and removed from the set. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{./Figures/ex1_traj}
+\caption{Quality of the approximation set obtained as the algorithm proceeds.}
+\label{fig:ex1_traj}
+\end{figure}
+
+The solutions which form the final approximation set are detailed in Table~\ref{tab:ex1_single_run}. As few as 5 therapists and 10 doctors can lead to a sufficiently powered trial, although nearly 1000 participants in total are required in this configuration. On the other hand, if minimising the total sample size is deemed more important than minimising the number of therapists and doctors, we see that as few as 488 participants are necessary providing 11 therapists and 22 doctors are included. The approximation set contains 6 solutions in total, providing a reasonable set of options from which the solution best representing the priorities of the decision makers can be selected.
+
+\begin{table}
+\caption{Approximation set after 30 iterations for Example 1. Solutions are defined by their total sample size $2n$, number of therapists $k$, and number of doctors $j$. Type II error rate $\beta$ is constrained to be below 0.1, while the total sample size and number of providers are to be minimised.}
+\centering
+\begin{tabular}{rrrrrr}
+\toprule
+$2n$ & $k$ & $j$ & $\hat{\beta}~(s.e.)$ \\ 
+\midrule
+488 & 11 & 22 & 0.16 (0.04) \\ 
+512 & 9 & 18 & 0.12 (0.03) \\
+548 & 8 & 16 & 0.10 (0.03) \\
+594 & 7 & 14 & 0.06 (0.02) \\
+700 & 6 & 12 & 0.08 (0.03) \\
+950 & 5 & 10 & 0.11 (0.03) \\
+\bottomrule
+\end{tabular}
+\label{tab:ex1_single_run}
+\end{table}
+
+As can be seen from Table~\ref{tab:ex1_single_run}, approximate upper 95\% confidence limits based on the MC estimates of power often exceed the corresponding nominal bound of 0.1. For example, the solution described in the last row would have an approximate upper 95\% two-sided confidence limit of $0.23$. To verify the actual type II error  we computed a more precise MC estimate using $N = 10,000$ samples, which gave a two-sided interval of $(0.1100163, 0.1225837)$. Thus, in this case it appears that the GP model has slightly underestimated the true power of this solution.
+
+
+\subsection{Co-primary endpoints}
+
+For our second example we consider a second co-primary binary response endpoint. We use the same latent variable representation as described in the preceding section to model the fatigue response $y_i^F$ and disability response $y_i^D$ of the $i$th participant. Correlation between these two response is modelled by simulating bivariate residuals $(e_i^F, e_i^D)$ from a joint logistic distribution with correlation $\rho_W$ and marginal variances $\sigma_e^2 = 3.29$ as before. We also allow for correlation between the random effects associated with each therapist and doctor. These are now simulated according to the bivariate normal distributions
+$$
+(u_{therapist(i)}^F, u_{therapist(i)}^D) \sim N\left( (0,0)^T, \quad
+\begin{pmatrix} 
+\sigma_T^2 & \rho_T \sigma_T^2 \\
+\rho_T \sigma_T^2  & \sigma_T^2 
+\end{pmatrix}
+\quad \right)
+$$
+
+$$
+(v_{doctor(i)}^F, v_{doctor(i)}^D) \sim N\left( (0,0)^T, \quad
+\begin{pmatrix} 
+\sigma_D^2  & \rho_D \sigma_D^2  \\
+\rho_D \sigma_D^2  & \sigma_D^2 
+\end{pmatrix}
+\quad \right)
+$$
+We set all correlations equal at $\rho_W = \rho_T = \rho_D = 0.9$.
+
+The algorithm was applied using the same settings as before, with an initial design of 20 points followed by 30 iterations, and each evaluation using $N = 100$ MC samples. The resulting approximation set is plotted in Figure~\ref{fig:ex2_single_run}. Again, the contours represent the mean function of the final GP model.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{./Figures/ex2_single_run}
+\caption{Objective values of solutions in the initial set $\mathcal{X}_{E}$ (open circles), subsequent iterations of the algorithm (crosses), and those in the final approximation of the Pareto set (filled circles).}
+\label{fig:ex2_single_run}
+\end{figure}
+
+\subsection{Small samples}
+
+For our final example, recall that we have two continuous co-primary endpoints. For notational simplicity we use model~(\ref{eqn:ex1_model}) but now consider the $y_i^*$ to be the actual observed continuous response, as opposed to a latent variable. We now assume the individual-level residual term $e_i$ is normally distributed but with the same variance as before, thus maintaining the variance partition coefficients at the same levels. The alternative hypothesis remains $H_1: \beta_1 = 1.10$. Note that this corresponds to a treatment effect standardised with respect to the total standard deviation in the APT arm of $1.10/\sqrt(0.19+0.37+3.29) = 0.56$.
+
+Our design parameters (together with the ranges considered)are the total sample size in the APT arm, denoted $n_1$ (50 - 100); the number of APT therapists, $k$ (2 - 10); the allocation ratio relating the total number of participants in each arm, $r = n_0/n_1$ (0.5 - 1.5); and the number of doctors, $j$ (3 - 20). The three objective functions to be minimised are $f_{1}(\mathbf{x}) = n_1 + rn_1$, $f_{2}(\mathbf{x}) = k$ and $f_{3}(\mathbf{x}) = j$. The two constraints to be satisfied are $g_{1}(\mathbf{x}) = \beta(\mathbf{x}) - 0.1$ and $g_{2}(\mathbf{x}) = \alpha(\mathbf{x}) - 0.1$.
+
+Given the increase in dimensions of the solution space, we use an initial Sobol sequence design of 40 solutions. As before, we use 100 MC samples for each evaluation. After 60 iterations of the algorithm, an approximation set containing 9 solutions was obtained. These are detailed in Table~\ref{tab:ex3_single_run}. Total numbers of participants range from 93 to 158. While there is a reasonable range of therapists in the set (from 3 to 8), the largest number of doctors included is 6, some way below the maximum of 20. We see that type I error rates tend to be somewhat lower than the nominal value of 0.2. This is likely due to the high correlation between the co-primary endpoints, making the Bonferroni correction conservative. 
+
+\begin{table}
+\caption{Approximation set after 60 iterations for Example 3. Solutions are defined by the number of participants in the APT arm $n_1$, the number of participants in the SSMC arm $r n_1$, the number of therapists $k$, and the number of doctors $j$. Both the Type I and II error rates are estimated using simulation, constrained at 0.2 and 0.1 respectively.}
+\centering
+\begin{tabular}{rrrrrrr}
+\toprule
+$n_1$ & $r$ & $n_1(1+r)$ & $k$ & $j$ & $\hat{\beta}~(s.e.)$ & $\hat{\alpha}~(s.e.)$ \\ 
+\midrule
+50  &        0.87  &        93  & 8 &  3 & 0.06 (0.02) & 0.13  (0.03) \\
+50  &       0.96   &       98   &7  & 4 & 0.10   (0.03) & 0.14  (0.03) \\
+50  &       1.09   &      104   &7  & 3 & 0.11   (0.03) & 0.13  (0.03) \\
+78  &        0.50  &       117  & 6 &  6 & 0.13  (0.03) & 0.19   (0.04) \\
+79  &        0.50  &       119  & 6 &  5 & 0.06  (0.02) & 0.14   (0.03) \\
+83  &        0.50  &       125 & 5 &  6 & 0.12  (0.03)& 0.20   (0.04) \\
+85  &        0.50  &       128  & 5 &  3 & 0.10  (0.03) & 0.16   (0.04) \\
+91  &        0.50  &       137  & 4 &  3 & 0.15  (0.04) & 0.07  (0.03) \\
+94  &        0.68  &       158  & 3 &  3 & 0.08  (0.03) & 0.14   (0.03) \\
+\bottomrule
+\end{tabular}
+\label{tab:ex3_single_run}
+\end{table}
+
+\section{Discussion}\label{sec:discussion}
+
+Although simulation is often required for clinical trial sample size determination, related methodology has typically assumed that there is only one parameter which we are able to adjust (the sample size); that there is only one operating characteristic which must be estimated using simulation (the power of the trial); and that our goal is to minimise only one criterion (the sample size again)~\cite{Landau2013, Hooper2013}. In this paper we have described a flexible approach to simulation-based SSD which can be used for more general multi-parameter problems. The method draws on established global optimisation algorithms which use statistical `surrogate` models to solve design problems where there are several parameters to be chosen, several objectives to minimise, and several constraints to satisfy. We have illustrated how such problems arise in clinical trials of complex interventions.
+
+The general optimisation framework we have suggested recognises that in many complex trials we are interested in minimising more than one quantity subject to constraints on operating characteristics. Problems of this sort are common in multilevel trial design~\cite{Hemming2017}, but are typically approached by first reducing the multiple objectives down to a single objective. For example, in the design of a cluster randomised trial it is common to fix the number of participants per cluster and minimise the number of clusters~\cite{Donner2000}, or vice-versa~\cite{Hemming2011, Eldridge2015}. Alternatively, a function which specifies the cost of sampling at the cluster and the patient level could be specified~\cite[p. 175]{Hox2002}, and the overall cost minimised~\cite{Snijders1993}. The latter approach has been suggested for both two-level~\cite{Raudenbush2000} and three-level hierarchical trial designs~\cite{Breukelen2012, Teerenstra2008}. However, the \emph{a priori} specification of such a cost function may not always be feasible, particularly when several stakeholders are involved. The Pareto optimisation framework we have described leads to a more computationally challenging optimisation problem, but produces a set good solutions enabling the available trade-offs between objectives to be seen and selected from. 
+
+As noted in Section~\ref{sec:intro}, related work in simulation-based design methodology has often focussed on a specific area of application. One advantage that bringsh is the relative ease with which the software can be used to solve a new problem within the same area. In contrast, our approach requires that the user provides a program which simulates the data generation and analysis of their proposed trial design. Although some have argued that this requirement may be prohibitive in practice~\cite{Kontopantelis2016}, it allows the user to solve their specific problem rather than some related version of it. Moreover, prior to addressing the sample size issue, modelling and simulation can help inform many other aspects of trial design, such as the patient popullation or the choice of endpoint~\cite{Smith2010}. One way to assist users in writing their own simulations is to share example programs for a range of problems, providing a starting point for the development of a new program. We have provided some such examples in the appendix.
+
+%[Note also - benefit of being forced to write simulation, helps to understand exactly what assumptions you are making, and running many simualtions means any issues will crop up and can be dealt with].
+%[Generally - we are requiring people to write their own simulations, which has good and bad points]
+
+When submitting a proposed design for approval by a funding body it is important that the sample size calculation is transparent and replicable. This may be achieved in the context of simulation-based SSD by supplying the simulation programas part of the application~\cite{Hooper2013}. Given this, any reviewer should be able to re-calculate the operating characteristics of the proposed design. However, a greater challenge for the reviewer is understanding the program and ensuring it is an accurate representation of the model in question. This requirement has partly motivated our use of R. Although significantly slower than a compiled language such as C++, it has been argued that software written in R is more transparent~\cite{Smith2010}. Validation will be further facilitated if a simulation protocol of the sort described in~\cite{Burton2006} is provided alongside the code. Future work could develop an interface for alternative statistical software such as Stata or SAS, allowing a simulation program to be written in them and connect with the R implementation of the optimisation algorithm.
+
+We have followed the conventional approach to clinical trial design whereby constraints on operating characteristics are set and then a constrained optimisation problem is solved. In practice the constraints are not fixed in advance, but adjusted iteratively in response to the design requirements they produce. For example, an initial nominal power of 90\% may require an infeasibly large sample size, leading to a revision down to 80\%. Such an iterative procedure will increase an already substantial computational burden for simulation-based design. However, note that a change to a constraint does not mean starting the process again, since any previous MC estimates can still be used when fitting the GP model(s). The sequential nature of the optimisation algorithm suggests that an interactive routine could be developed, where the user pauses the algorithm in response to the sample size requirements which are being observed, adjusts the constraints, and then continues with the optimisation.
+
+The examples have demonstrated that the time required to solve a sample size determination problem can be significant, of the order of hours. Given that the majority of computational effort is expended generating MC samples when evaluating solutions, it is important that these simulation programs are as efficient as possible. We recommend making use of code profilers such as R's `Rprof' to identify the parts of the program  are consuming the most resources. Further efficiencies could potentially be gained by using more sophisticated methods for surrogate modelling and efficient optimisation. For example, when the modelled function can be assumed monotonic, this information can be incorporated into the surrogate modelling process~\cite{Emmerich2011}.
+
+Numerous extensions to the proposed approach can be considered. One argument for simulation-based design is the ease with which sensitvity to model assumptions, such as the value of nuisance parameters, can be assessed~\cite{Landau2013}. Future work could consider how a systematic assessment of sensitivity to nuisance parameters could be conducted, given a proposed trial design. Such investigations fall under the heading of \emph{uncertainty quantification} and can be carried out using GP regression and associated techniques~\cite{Kennedy2001}. A further extension could consider Bayesian approaches to trial design, including hybrid Bayesian-frequentist assurances~\cite{OHagan2005}, fully Bayesian measures such as average coverage criterion~\cite{Cao2009}, and decision-theoretic methods~\cite{Oakley2010}. Aside from very simple cases involving only conjugate analyses, evaluating these Bayesian criteria will generally require simulation~\cite{OHagan2005} and so optimal design may benefit from the efficient methods discussed here. Complex SSD problems are also common in the area of adaptive designs, which can aim to minimise the expected sample size under several different hypotheses and over a number of stopping rule parameters~\cite{Wason2011, Wason2012}.  Extending the proposed methods to such problems would require using surrogate models to approximate the objective functions, as opposed to only the constraints.
+
+In conclusion, efficient optimisation algorithms based on surrogate models of expensive operating characteristic functions can be used to solve complex clinical trial design problems. By using these methods we can avoid making unrealistic simplifying assumptions at the trial design stage, both in terms of the statistical model underlying the trial and of the nature of the sample size determination problem.
+
+\bibliographystyle{unsrt}
+\bibliography{U:/Literature/Databases/DTWrefs}
+
+\end{document}
+

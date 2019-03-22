@@ -1,0 +1,180 @@
+\relax 
+\citation{Arnold2011}
+\citation{Landau2013}
+\citation{Feng1992}
+\citation{Hooper2013}
+\citation{Schoenfeld2005}
+\citation{Grieve2016}
+\citation{Sutton2007}
+\citation{Kontopantelis2016}
+\citation{Fedorov2005}
+\citation{Baio2015}
+\citation{Hooper2016}
+\citation{Reich2012}
+\citation{Landau2013}
+\citation{Browne2009}
+\citation{Baio2015}
+\citation{Hooper2013}
+\citation{Hooper2013}
+\citation{Grieve2016}
+\citation{Hooper2016}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}}
+\newlabel{sec:intro}{{1}{2}}
+\citation{Sacks1989}
+\citation{Jones2001}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Motivating examples}{3}}
+\newlabel{sec:examples}{{2}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Cross-classified psychotherapy trial}{3}}
+\newlabel{sec:CC}{{2.1}{3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Multilevel structure of a cross-classified psychotherapy trial where patients are nested within doctors in the control arm, patients are cross-classified with therapists and doctors in the intervention arm, and doctors are crossed with treatment.}}{4}}
+\newlabel{fig:CC_structure}{{1}{4}}
+\newlabel{eqn:CC_model}{{1}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Cluster randomised pilot trial}{5}}
+\citation{Bryant1995}
+\citation{Lee2014}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Preliminaries}{6}}
+\newlabel{sec:prelim}{{3}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Monte Carlo estimation}{6}}
+\newlabel{sec:MC}{{3.1}{6}}
+\citation{Landau2013}
+\newlabel{eqn:MC_error}{{12}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Multi-objective optimisation of trial designs}{7}}
+\newlabel{sec:optimisation}{{3.2}{7}}
+\citation{Emmerich2011}
+\citation{Jones1998}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Simulation-based optimal trial design}{8}}
+\newlabel{sec:methods}{{4}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Example Pareto front $\mathcal  {X}_{p}$ (green) and approximation set $\mathcal  {A}$ (yellow) for a cluster randomised trial design problem. The dominated hypervolume of the approximation set with respect to a reference point (cross) is the shaded area.}}{9}}
+\newlabel{fig:fake_pareto}{{2}{9}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Efficient Global Optimisation}}{9}}
+\newlabel{alg:EGO}{{1}{9}}
+\citation{Rasmussen2006}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Gaussian process regression}{10}}
+\newlabel{sec:GP}{{4.1}{10}}
+\newlabel{eqn:cov_matrix}{{16}{10}}
+\citation{Rasmussen2006}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces A Gaussian process model of a power function over a one-dimensional sample size (solid line) based on three evaluations. Uncertainty is shown as the shaded area. Expected improvement (dotted line) is maximised at a sample size of 190, where the predicted power is normally distributed around a mean estimate of 0.84 (dashed line).}}{11}}
+\newlabel{fig:GP_example}{{3}{11}}
+\newlabel{eqn:loglik}{{18}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Expected improvement}{11}}
+\newlabel{sec:EGO}{{4.2}{11}}
+\citation{Picheny2014}
+\citation{Sasena2002}
+\citation{Bendtsen2012}
+\citation{Carnell2016}
+\citation{Chevalier2014}
+\newlabel{eqn:quant}{{20}{12}}
+\citation{Roustant2012}
+\citation{Bendtsen2012}
+\citation{Bates2015}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Implementation}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Objective values of solutions in the initial set $\mathcal  {X}_{E}$ (blue), subsequent iterations of the algorithm (green), and those in the final approximation of the Pareto set (yellow).}}{14}}
+\newlabel{fig:CC_single_run}{{4}{14}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Application to the examples}{14}}
+\newlabel{sec:application}{{5}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Cross-classified psychotherapy trial}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Quality of the approximation set obtained as the algorithm proceeds (solid line). The maximised expected improvement at each iteration is also plotted (dashed line), together with the corresponding predicted approximation set quality (dotted line).}}{15}}
+\newlabel{fig:CC_traj}{{5}{15}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Approximation set after 60 iterations of Bayesian optimisation for the cross-classified design problem. Solutions are defined by their allocation ratio $r$, sample size in the intervention arm $n_{2}$, and number of therapists $k$. Type II error rate $\beta $ is constrained to be below 0.2, while the total sample size $f_{1}$ and number of therapists $f_{2}$ are to be minimised.}}{16}}
+\newlabel{tab:CC_single_run}{{1}{16}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Cluster-randomised pilot trial}{16}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Going up to 60 iterations. We have focussed on the approximation set, omitting 34 points (all from the initial design) which take larger values of $f_{1}$ and/or $f_{2}$. }}{17}}
+\newlabel{fig:pilot_single_run}{{6}{17}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Quality of the approximation set obtained as the algorithm proceeds (solid line). The maximised expected improvement at each iteration is also plotted (dashed line), together with the corresponding predicted approximation set quality (dotted line).}}{17}}
+\newlabel{fig:pilot_traj}{{7}{17}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Approximation set after 60 iterations of Bayesian optimisation for the pilot trial design problem. Solutions are defined by the number of clusters $k_{i}$ and participants per cluster $m_{i}$ for each arm $i=1,2$, together with critical region adjustments $c_{r}, c_{a}$. The total number of participants $f_{1}$ and number of clusters $f_{2}$ are to be minimised, subject to constrained error rates $\beta < 0.1, \alpha _{r} < 0.3$ and $\alpha _{a} < 0.4$.}}{18}}
+\newlabel{tab:pilot_single_run}{{2}{18}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Simulation study}{18}}
+\newlabel{sec:simulation}{{6}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Cross-classified psychotherapy trial}{19}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Box plots illustrating the differences in dominated hypervolumes obtained as the number of iterations in the Bayesian optimisation algorithm increases. Corresponding differences obtained using the fixed experimental design are shown in red.}}{20}}
+\newlabel{fig:CC_hv_iters}{{8}{20}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Random selection of approximation fronts obtained after 0 iterations of the Bayesian optimisation algorithm (coloured lines) for the cross-classified problem, together with the Pareto front (dashed black line) and the approximation front obtained using the fixed experimental design (solid black line). Time taken - 1 hr 2 mins.}}{20}}
+\newlabel{fig:CC_ex_0}{{9}{20}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Random selection of approximation fronts obtained after 60 iterations of the Bayesian optimisation algorithm (coloured lines) for the cross-classified problem, together with the Pareto front (dashed black line) and the approximation front obtained using the fixed experimental design (solid black line).}}{21}}
+\newlabel{fig:CC_ex_60}{{10}{21}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Random selection of approximation fronts obtained after 200 iterations of the Bayesian optimisation algorithm (coloured lines) for the cross-classified problem, together with the Pareto front (dashed black line) and the approximation front obtained using the fixed experimental design (solid black line).}}{21}}
+\newlabel{fig:CC_ex_200}{{11}{21}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Box plots illustrating the differences in dominated hypervolumes obtained as the number of iterations in the Bayesian optimisation algorithm increases. Corresponding differences obtained using the fixed experimental design are shown in red.}}{22}}
+\newlabel{fig:pilot_hv_iters}{{12}{22}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Cluster-randomised pilot trial}{22}}
+\citation{Landau2013}
+\citation{Hooper2013}
+\citation{Hemming2017}
+\citation{Donner2000}
+\citation{Hemming2011}
+\citation{Eldridge2015}
+\citation{Hox2002}
+\citation{Snijders1993}
+\citation{Raudenbush2000}
+\citation{Breukelen2012}
+\citation{Teerenstra2008}
+\citation{Jung2001}
+\citation{Jung2004}
+\citation{Mander2012}
+\citation{Deb2002}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Random selection of approximation fronts obtained after 0 iterations of the Bayesian optimisation algorithm (coloured lines), together with the Pareto front (dashed black line) and the approximation front obtained using the fixed experimental design (solid black line).}}{23}}
+\newlabel{fig:pilot_ex_0}{{13}{23}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{23}}
+\newlabel{sec:discussion}{{7}{23}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Random selection of approximation fronts obtained after 60 iterations of the Bayesian optimisation algorithm (coloured lines), together with the Pareto front (dashed black line) and the approximation front obtained using the fixed experimental design (solid black line).}}{24}}
+\newlabel{fig:pilot_ex_60}{{14}{24}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Random selection of approximation fronts obtained after 200 iterations of the Bayesian optimisation algorithm (coloured lines), together with the Pareto front (dashed black line) and the approximation front obtained using the fixed experimental design (solid black line).}}{24}}
+\newlabel{fig:pilot_ex_200}{{15}{24}}
+\citation{Hooper2013}
+\citation{Kontopantelis2016}
+\citation{Smith2010}
+\citation{Smith2010}
+\citation{Emmerich2011}
+\citation{Landau2013}
+\citation{Kennedy2001}
+\citation{OHagan2005}
+\citation{Cao2009}
+\citation{OHagan2005}
+\bibstyle{plain}
+\bibdata{U:/Literature/Databases/DTWrefs}
+\bibcite{Arnold2011}{1}
+\bibcite{Baio2015}{2}
+\bibcite{Bates2015}{3}
+\bibcite{Bendtsen2012}{4}
+\bibcite{Browne2009}{5}
+\bibcite{Bryant1995}{6}
+\bibcite{Cao2009}{7}
+\bibcite{Carnell2016}{8}
+\bibcite{Chevalier2014}{9}
+\bibcite{Deb2002}{10}
+\bibcite{Donner2000}{11}
+\bibcite{Eldridge2015}{12}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{27}}
+\bibcite{Emmerich2011}{13}
+\bibcite{Fedorov2005}{14}
+\bibcite{Feng1992}{15}
+\bibcite{Grieve2016}{16}
+\bibcite{Hemming2017}{17}
+\bibcite{Hemming2011}{18}
+\bibcite{Hooper2013}{19}
+\bibcite{Hooper2016}{20}
+\bibcite{Hox2002}{21}
+\bibcite{Jones2001}{22}
+\bibcite{Jones1998}{23}
+\bibcite{Jung2001}{24}
+\bibcite{Jung2004}{25}
+\bibcite{Kennedy2001}{26}
+\bibcite{Kontopantelis2016}{27}
+\bibcite{Landau2013}{28}
+\bibcite{Lee2014}{29}
+\bibcite{Mander2012}{30}
+\bibcite{OHagan2005}{31}
+\bibcite{Picheny2014}{32}
+\bibcite{Rasmussen2006}{33}
+\bibcite{Raudenbush2000}{34}
+\bibcite{Reich2012}{35}
+\bibcite{Roustant2012}{36}
+\bibcite{Sacks1989}{37}
+\bibcite{Sasena2002}{38}
+\bibcite{Schoenfeld2005}{39}
+\bibcite{Smith2010}{40}
+\bibcite{Snijders1993}{41}
+\bibcite{Sutton2007}{42}
+\bibcite{Teerenstra2008}{43}
+\bibcite{Breukelen2012}{44}

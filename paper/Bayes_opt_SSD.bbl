@@ -1,0 +1,451 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{Arnold2011}
+Arnold BF, Hogan DR, Colford JM et~al.
+\newblock Simulation methods to estimate design power: an overview for applied
+  research.
+\newblock \emph{{BMC} Med Res Methodol} 2011; 11(1).
+\newblock \doi{10.1186/1471-2288-11-94}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1186/1471-2288-11-94}.
+
+\bibitem{Landau2013}
+Landau S and Stahl D.
+\newblock Sample size and power calculations for medical studies by simulation
+  when closed form expressions are not available.
+\newblock \emph{Statistical Methods in Medical Research} 2013; 22(3): 324--345.
+\newblock \doi{10.1177/0962280212439578}.
+\newblock \urlprefix\url{http://smm.sagepub.com/content/22/3/324.abstract}.
+\newblock \eprint{http://smm.sagepub.com/content/22/3/324.full.pdf+html}.
+
+\bibitem{Feng1992}
+Feng Z and Grizzle JE.
+\newblock Correlated binomial variates: Properties of estimator of intraclass
+  correlation and its effect on sample size calculation.
+\newblock \emph{Statistics in Medicine} 1992; 11(12): 1607--1614.
+\newblock \doi{10.1002/sim.4780111208}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1002/sim.4780111208}.
+
+\bibitem{Hooper2013}
+Hooper R.
+\newblock Versatile sample-size calculation using simulation.
+\newblock \emph{The STATA Journal} 2013; 13(1): 21--38.
+\newblock
+  \urlprefix\url{http://www.stata-journal.com/article.html?article=st0282}.
+
+\bibitem{Schoenfeld2005}
+Schoenfeld DA and Borenstein M.
+\newblock Calculating the power or sample size for the logistic and
+  proportional hazards models.
+\newblock \emph{Journal of Statistical Computation and Simulation} 2005;
+  75(10): 771--785.
+\newblock \doi{10.1080/00949650410001729445}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1080/00949650410001729445}.
+
+\bibitem{Grieve2016}
+Grieve AP and Sarker SJ.
+\newblock Simulation-based sample-sizing and power calculations in logistic
+  regression with partial prior information.
+\newblock \emph{Pharmaceutical Statistics} 2016; 15(6): 507--516.
+\newblock \doi{10.1002/pst.1773}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1002/pst.1773}.
+
+\bibitem{Sutton2007}
+Sutton AJ, Cooper NJ, Jones DR et~al.
+\newblock Evidence-based sample size calculations based upon updated
+  meta-analysis.
+\newblock \emph{Statistics in Medicine} 2007; 26(12): 2479--2500.
+\newblock \doi{10.1002/sim.2704}.
+\newblock \urlprefix\url{https://doi.org/10.1002%2Fsim.2704}.
+
+\bibitem{Kontopantelis2016}
+Kontopantelis E, Springate DA, Parisi R et~al.
+\newblock Simulation-based power calculations for mixed effects modeling:
+  ipdpower in stata.
+\newblock \emph{Journal of Statistical Software} 2016; 74(12).
+\newblock \doi{10.18637/jss.v074.i12}.
+\newblock \urlprefix\url{http://dx.doi.org/10.18637/jss.v074.i12}.
+
+\bibitem{Fedorov2005}
+Fedorov V and Jones B.
+\newblock The design of multicentre trials.
+\newblock \emph{Statistical Methods in Medical Research} 2005; 14(3): 205--248.
+\newblock \doi{10.1191/0962280205sm399oa}.
+\newblock \urlprefix\url{https://doi.org/10.1191/0962280205sm399oa}.
+\newblock PMID: 15969302, \eprint{https://doi.org/10.1191/0962280205sm399oa}.
+
+\bibitem{Baio2015}
+Baio G, Copas A, Ambler G et~al.
+\newblock Sample size calculation for a stepped wedge trial.
+\newblock \emph{Trials} 2015; 16(1).
+\newblock \doi{10.1186/s13063-015-0840-9}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1186/s13063-015-0840-9}.
+
+\bibitem{Hooper2016}
+Hooper R, Teerenstra S, de~Hoop E et~al.
+\newblock Sample size calculation for stepped wedge and other longitudinal
+  cluster randomised trials.
+\newblock \emph{Statistics in Medicine} 2016; 35(26): 4718--4728.
+\newblock \doi{10.1002/sim.7028}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1002/sim.7028}.
+
+\bibitem{Reich2012}
+Reich NG, Myers JA, Obeng D et~al.
+\newblock Empirical power and sample size calculations for cluster-randomized
+  and cluster-randomized crossover studies.
+\newblock \emph{PLOS ONE} 2012; 7(4): 1--7.
+\newblock \doi{10.1371/journal.pone.0035564}.
+\newblock \urlprefix\url{https://doi.org/10.1371/journal.pone.0035564}.
+
+\bibitem{Wilson2015}
+Wilson DT, Walwyn RE, Brown J et~al.
+\newblock Statistical challenges in assessing potential efficacy of complex
+  interventions in pilot or feasibility studies.
+\newblock \emph{Statistical Methods in Medical Research} 2015; 25(3):
+  997--1009.
+\newblock \doi{10.1177/0962280215589507}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1177/0962280215589507}.
+
+\bibitem{Deb2002}
+Deb K, Pratap A, Agarwal S et~al.
+\newblock A fast and elitist multiobjective genetic algorithm: {NSGA}-{II}.
+\newblock \emph{{IEEE} Transactions on Evolutionary Computation} 2002; 6(2):
+  182--197.
+\newblock \doi{10.1109/4235.996017}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1109/4235.996017}.
+
+\bibitem{Mersmann2014}
+Mersmann O.
+\newblock \emph{mco: Multiple Criteria Optimization Algorithms and Related
+  Functions}, 2014.
+\newblock \urlprefix\url{https://CRAN.R-project.org/package=mco}.
+\newblock R package version 1.0-15.1.
+
+\bibitem{Sacks1989}
+Sacks J, Welch WJ, Mitchell TJ et~al.
+\newblock Design and analysis of computer experiments.
+\newblock \emph{Statistical Science} 1989; 4(4): 409--423.
+\newblock \urlprefix\url{http://www.jstor.org/stable/2245858}.
+
+\bibitem{Santner2003}
+Santner TJ, Williams BJ and Notz WI.
+\newblock \emph{The Design and Analysis of Computer Experiments}.
+\newblock Springer-Verlag New York, Inc., 2003.
+
+\bibitem{Krige1951}
+Krige D.
+\newblock A statistical approach to some basic mine valuation problems on the
+  witwatersrand.
+\newblock \emph{Journal of the Southern African Institute of Mining and
+  Metallurgy} 1951; 52(6): 119--139.
+\newblock
+  \urlprefix\url{https://journals.co.za/content/saimm/52/6/AJA0038223X_4792}.
+
+\bibitem{Rasmussen2006}
+Rasmussen CE and Williams CKI.
+\newblock \emph{Gaussian Processes for Machine Learning}.
+\newblock MIT Press, 2006.
+
+\bibitem{Roustant2012}
+Roustant O, Ginsbourger D and Deville Y.
+\newblock {DiceKriging}, {DiceOptim}: Two {R} packages for the analysis of
+  computer experiments by kriging-based metamodeling and optimization.
+\newblock \emph{Journal of Statistical Software} 2012; 51(1): 1--55.
+\newblock \urlprefix\url{http://www.jstatsoft.org/v51/i01/}.
+
+\bibitem{Jones2001}
+Jones DR.
+\newblock A taxonomy of global optimization methods based on response surfaces.
+\newblock \emph{Journal of Global Optimization} 2001; 21(4): 345--383.
+\newblock \doi{10.1023/A:1012771025575}.
+\newblock
+  \urlprefix\url{http://link.springer.com/article/10.1023/A:1012771025575}.
+
+\bibitem{Sasena2002}
+Sasena MJ, Papalambros P and Goovaerts P.
+\newblock Exploration of metamodeling sampling criteria for constrained global
+  optimization.
+\newblock \emph{Engineering Optimization} 2002; 34(3): 263--278.
+\newblock \doi{10.1080/03052150211751}.
+\newblock \urlprefix\url{https://doi.org/10.1080%2F03052150211751}.
+
+\bibitem{Emmerich2011}
+Emmerich MT, Deutz AH and Klinkenberg JW.
+\newblock Hypervolume-based expected improvement: Monotonicity properties and
+  exact computation.
+\newblock In \emph{Evolutionary Computation (CEC), 2011 IEEE Congress on}.
+  IEEE, pp. 2147--2154.
+\newblock \doi{10.1109/cec.2011.5949880}.
+
+\bibitem{Picheny2014}
+Picheny V and Ginsbourger D.
+\newblock Noisy kriging-based optimization methods: A unified implementation
+  within the {DiceOptim} package.
+\newblock \emph{Computational Statistics {\&} Data Analysis} 2014; 71:
+  1035--1053.
+\newblock \doi{10.1016/j.csda.2013.03.018}.
+\newblock \urlprefix\url{https://doi.org/10.1016%2Fj.csda.2013.03.018}.
+
+\bibitem{Browne2009}
+Browne WJ, Lahi MG and Parker RM.
+\newblock \emph{A Guide to Sample Size Calculations for Random Effect Models
+  via Simulation and the MLPowSim Software Package}, 2009.
+\newblock
+  \urlprefix\url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.408.6314&rep=rep1&type=pdf}.
+
+\bibitem{White2007}
+White P, Sharpe M, Chalder T et~al.
+\newblock Protocol for the pace trial: A randomised controlled trial of
+  adaptive pacing, cognitive behaviour therapy, and graded exercise as
+  supplements to standardised specialist medical care versus standardised
+  specialist medical care alone for patients with the chronic fatigue
+  syndrome/myalgic encephalomyelitis or encephalopathy.
+\newblock \emph{BMC Neurology} 2007; 7(1): 6.
+\newblock \doi{10.1186/1471-2377-7-6}.
+\newblock \urlprefix\url{http://www.biomedcentral.com/1471-2377/7/6}.
+
+\bibitem{White2011}
+White P, Goldsmith K, Johnson A et~al.
+\newblock Comparison of adaptive pacing therapy, cognitive behaviour therapy,
+  graded exercise therapy, and specialist medical care for chronic fatigue
+  syndrome (pace): a randomised trial.
+\newblock \emph{The Lancet} 2011; 377(9768): 823--836.
+\newblock \doi{10.1016/S0140-6736(11)60096-2}.
+\newblock
+  \urlprefix\url{http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(11)60096-2/abstract}.
+
+\bibitem{Chalder1993}
+Chalder T, Berelowitz G, Hirsch S et~al.
+\newblock Development of a fatigue scale.
+\newblock \emph{Journal of Psychometric Research} 1993; 37(2): 147--153.
+
+\bibitem{Walwyn2010}
+Walwyn REA and Roberts C.
+\newblock Therapist variation within randomised trials of psychotherapy:
+  implications for precision, internal and external validity.
+\newblock \emph{Statistical Methods in Medical Research} 2010; 19(3): 291--315.
+\newblock \doi{10.1177/0962280209105017}.
+\newblock \urlprefix\url{http://smm.sagepub.com/content/19/3/291.abstract}.
+\newblock \eprint{http://smm.sagepub.com/content/19/3/291.full.pdf+html}.
+
+\bibitem{Roberts2015}
+Roberts C, Batistatou E and Roberts SA.
+\newblock Design and analysis of trials with a partially nested design and a
+  binary outcome measure.
+\newblock \emph{Statistics in Medicine} 2015; 35(10): 1616--1636.
+\newblock \doi{10.1002/sim.6828}.
+\newblock
+  \urlprefix\url{https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.6828}.
+\newblock \eprint{https://onlinelibrary.wiley.com/doi/pdf/10.1002/sim.6828}.
+
+\bibitem{McHorney1993}
+McHorney CA, Ware JE and Raczek AE.
+\newblock The mos 36-item short-form health survey (sf-36): Ii. psychometric
+  and clinical tests of validity in measuring physical and mental health
+  constructs.
+\newblock \emph{Medical Care} 1993; 31(3): 247--263.
+\newblock \urlprefix\url{http://www.jstor.org/stable/3765819}.
+
+\bibitem{Senn2007}
+Senn S and Bretz F.
+\newblock Power and sample size when multiple endpoints are considered.
+\newblock \emph{Pharmaceut Statist} 2007; 6(3): 161--170.
+\newblock \doi{10.1002/pst.301}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1002/pst.301}.
+
+\bibitem{Jones1998}
+Jones DR, Schonlau M and Welch WJ.
+\newblock Efficient global optimization of expensive black-box functions.
+\newblock \emph{Journal of Global Optimization} 1998; 13(4): 455--492.
+\newblock \doi{10.1023/a:1008306431147}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1023/A:1008306431147}.
+
+\bibitem{Bendtsen2012}
+Bendtsen C.
+\newblock \emph{pso: Particle Swarm Optimization}, 2012.
+\newblock \urlprefix\url{https://CRAN.R-project.org/package=pso}.
+\newblock R package version 1.0.3.
+
+\bibitem{Picheny2010}
+Picheny V, Ginsbourger D and Richet Y.
+\newblock Noisy expected improvement and on-line computation time allocation
+  for the optimization of simulators with tunable fidelity.
+\newblock In \emph{2nd International Conference on Engineering Optimization}.
+\newblock
+  \urlprefix\url{https://hal.archives-ouvertes.fr/hal-00489321v2/document}.
+
+\bibitem{Dutang2015}
+Dutang C and Savicky P.
+\newblock \emph{randtoolbox: Generating and Testing Random Numbers}, 2015.
+\newblock R package version 1.17.
+
+\bibitem{Chevalier2014}
+Chevalier C, Picheny V and Ginsbourger D.
+\newblock {KrigInv}: An efficient and user-friendly implementation of
+  batch-sequential inversion strategies based on kriging.
+\newblock \emph{Computational Statistics {\&} Data Analysis} 2014; 71:
+  1021--1034.
+\newblock \doi{10.1016/j.csda.2013.03.008}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1016/j.csda.2013.03.008}.
+
+\bibitem{Bates2015}
+Bates D, M{\"a}chler M, Bolker B et~al.
+\newblock Fitting linear mixed-effects models using {lme4}.
+\newblock \emph{Journal of Statistical Software} 2015; 67(1): 1--48.
+\newblock \doi{10.18637/jss.v067.i01}.
+
+\bibitem{Goldstein2003}
+Goldstein H.
+\newblock \emph{Multilevel Statistical Models}.
+\newblock 3rd ed. Arnold, 2003.
+
+\bibitem{Hemming2017}
+Hemming K, Eldridge S, Forbes G et~al.
+\newblock How to design efficient cluster randomised trials.
+\newblock \emph{BMJ} 2017; 358.
+\newblock \doi{10.1136/bmj.j3064}.
+\newblock \urlprefix\url{http://www.bmj.com/content/358/bmj.j3064}.
+\newblock \eprint{http://www.bmj.com/content/358/bmj.j3064.full.pdf}.
+
+\bibitem{Donner2000}
+Donner A and Klar N.
+\newblock \emph{Design and Analysis of Cluster Randomization Trials in Health
+  Research}.
+\newblock London Arnold Publishers, 2000.
+
+\bibitem{Hemming2011}
+Hemming K, Girling A, Sitch A et~al.
+\newblock Sample size calculations for cluster randomised controlled trials
+  with a fixed number of clusters.
+\newblock \emph{BMC Medical Research Methodology} 2011; 11(1): 102.
+\newblock \doi{10.1186/1471-2288-11-102}.
+\newblock \urlprefix\url{http://www.biomedcentral.com/1471-2288/11/102}.
+
+\bibitem{Eldridge2015}
+Eldridge SM, Costelloe CE, Kahan BC et~al.
+\newblock How big should the pilot study for my cluster randomised trial be?
+\newblock \emph{Statistical Methods in Medical Research} 2015;
+  \doi{10.1177/0962280215588242}.
+\newblock
+  \urlprefix\url{http://smm.sagepub.com/content/early/2015/06/12/0962280215588242.abstract}.
+\newblock
+  \eprint{http://smm.sagepub.com/content/early/2015/06/12/0962280215588242.full.pdf+html}.
+
+\bibitem{Hox2002}
+Hox J.
+\newblock \emph{Multilevel Analysis: Techniques and Applications}.
+\newblock Lawrence Erlbaum Associates, Inc., 2002.
+
+\bibitem{Snijders1993}
+Snijders TAB and Bosker RJ.
+\newblock Standard errors and sample sizes for two-level research.
+\newblock \emph{Journal of Educational and Behavioral Statistics} 1993; 18(3):
+  237--259.
+\newblock \doi{10.3102/10769986018003237}.
+\newblock \urlprefix\url{http://jeb.sagepub.com/content/18/3/237.abstract}.
+\newblock \eprint{http://jeb.sagepub.com/content/18/3/237.full.pdf+html}.
+
+\bibitem{Raudenbush2000}
+Raudenbush SW and Liu X.
+\newblock Statistical power and optimal design for multisite randomized trials.
+\newblock \emph{Psychological Methods} 2000; 5(2): 199--213.
+\newblock \doi{10.1037/1082-989x.5.2.199}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1037/1082-989X.5.2.199}.
+
+\bibitem{Breukelen2012}
+van Breukelen GJ and Candel MJ.
+\newblock Calculating sample sizes for cluster randomized trials: We can keep
+  it simple and efficient!
+\newblock \emph{Journal of Clinical Epidemiology} 2012; 65(11): 1212 -- 1218.
+\newblock \doi{http://dx.doi.org/10.1016/j.jclinepi.2012.06.002}.
+\newblock
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0895435612001692}.
+
+\bibitem{Teerenstra2008}
+Teerenstra S, Moerbeek M, van Achterberg T et~al.
+\newblock Sample size calculations for 3-level cluster randomized trials.
+\newblock \emph{Clinical Trials} 2008; 5(5): 486--495.
+\newblock \doi{10.1177/1740774508096476}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1177/1740774508096476}.
+
+\bibitem{Joseph1997a}
+Joseph L and Wolfson DB.
+\newblock Interval-based versus decision theoretic criteria for the choice of
+  sample size.
+\newblock \emph{Journal of the Royal Statistical Society: Series D (The
+  Statistician)} 1997; 46(2): 145--149.
+\newblock \doi{10.1111/1467-9884.00070}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1111/1467-9884.00070}.
+
+\bibitem{Smith2010}
+Smith MK and Marshall A.
+\newblock Importance of protocols for simulation studies in clinical drug
+  development.
+\newblock \emph{Statistical Methods in Medical Research} 2010;
+  \doi{10.1177/0962280210378949}.
+\newblock
+  \urlprefix\url{http://smm.sagepub.com/content/early/2010/08/03/0962280210378949.abstract}.
+\newblock
+  \eprint{http://smm.sagepub.com/content/early/2010/08/03/0962280210378949.full.pdf+html}.
+
+\bibitem{Burton2006}
+Burton A, Altman DG, Royston P et~al.
+\newblock The design of simulation studies in medical statistics.
+\newblock \emph{Statistics in Medicine} 2006; 25(24): 4279--4292.
+\newblock \doi{10.1002/sim.2673}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1002/sim.2673}.
+
+\bibitem{Kennedy2001}
+Kennedy MC and O'Hagan A.
+\newblock Bayesian calibration of computer models.
+\newblock \emph{Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)} 2001; 63(3): 425--464.
+\newblock \doi{10.1111/1467-9868.00294}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1111/1467-9868.00294}.
+
+\bibitem{OHagan2005}
+O'Hagan A, Stevens JW and Campbell MJ.
+\newblock Assurance in clinical trial design.
+\newblock \emph{Pharmaceutical Statistics} 2005; 4(3): 187--201.
+\newblock \doi{10.1002/pst.175}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1002/pst.175}.
+
+\bibitem{Cao2009}
+Cao J, Lee JJ and Alber S.
+\newblock Comparison of bayesian sample size criteria: {ACC}, {ALC}, and {WOC}.
+\newblock \emph{Journal of Statistical Planning and Inference} 2009; 139(12):
+  4111 -- 4122.
+\newblock \doi{http://dx.doi.org/10.1016/j.jspi.2009.05.041}.
+\newblock
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0378375809001670}.
+
+\bibitem{Oakley2010}
+Oakley JE, Brennan A, Tappenden P et~al.
+\newblock Simulation sample sizes for monte carlo partial evpi calculations.
+\newblock \emph{Journal of Health Economics} 2010; 29(3): 468 -- 477.
+\newblock \doi{https://doi.org/10.1016/j.jhealeco.2010.03.006}.
+\newblock
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0167629610000470}.
+
+\bibitem{Wason2011}
+Wason JM, Mander AP and Thompson SG.
+\newblock Optimal multistage designs for randomised clinical trials with
+  continuous outcomes.
+\newblock \emph{Statistics in Medicine} 2011; 31(4): 301--312.
+\newblock \doi{10.1002/sim.4421}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1002/sim.4421}.
+
+\bibitem{Wason2012}
+Wason JMS and Jaki T.
+\newblock Optimal design of multi-arm multi-stage trials.
+\newblock \emph{Statistics in Medicine} 2012; 31(30): 4269--4279.
+\newblock \doi{10.1002/sim.5513}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1002/sim.5513}.
+
+\end{thebibliography}
