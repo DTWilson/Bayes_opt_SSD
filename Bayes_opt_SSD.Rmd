@@ -494,7 +494,7 @@ DoE <- DoE[apply(DoE, 1, is_nondom, b=DoE), ]
 
 Plot the final results:
 
-```{r, eval=F, echo=F}
+```{r}
 DHs <- readRDS("./data/ex1_single_run_DHs.Rda")
 DoE <- readRDS("./data/ex1_single_run_DoE.Rda")
 DoE_sob <- readRDS("./data/ex1_sobol_DoE.Rda")
@@ -525,7 +525,7 @@ df$beta <- pred$mean
 df$sd <- pred$sd
 ```
 
-```{r, eval=F}
+```{r}
 b2$beta <- 1; b3$beta <- 1
 ## Plot evaluated points With the mean function
 ggplot(df, aes(2*n, 3*k, z=beta)) + geom_contour(colour="light blue") + 
@@ -623,7 +623,7 @@ We extend the problem above to an analysis of two binary endpoints, fatigue and 
 
 ### Simualtion
 
-```{r, eval=F}
+```{r}
 sim_trial2 <- function(x, h)
 {
   n <- x[1]; k <- x[2]
@@ -719,7 +719,7 @@ sim_trial2 <- function(x, h)
 }
 ```
 
-```{r, eval=F}
+```{r}
 calc_rates2 <- function(x, h, N)
 {
   ps <- replicate(N, sim_trial2(x, h))
@@ -740,7 +740,7 @@ proc.time() - ptm
 
 ### Algorithm
 
-```{r, eval=F}
+```{r, eval=T}
 set.seed(90307)
 
 ptm <- proc.time()
@@ -754,6 +754,13 @@ constraints <- data.frame(name=c("beta"),
                           hyp=c("H1"), 
                           nom=c(0.1), 
                           delta=c(0.975))
+
+nobj <- 2
+
+obj_names <- NULL
+for(i in 1:nobj){
+  obj_names <- c(obj_names, paste0("f",i))
+}
 
 objective <- function(x)
 {
@@ -771,7 +778,9 @@ for(i in 1:dim){
   DoE[,i] <-  DoE[,i]*(design_space$up[i]-design_space$low[i]) + design_space$low[i]
 }
 DoE[,1:2] <- round(DoE[,1:2])
+```
 
+```{r, eval=F}
 ## Evaluate at initial points
 N <- 100
 h <- c(r_t=0.05, r_d=0.1, v_w=3.29, cov_res=0.9, cov_w=0.9, p0a=0.1, p1a=0.25, p0b=0.1, p1b=0.25)
@@ -834,7 +843,7 @@ proc.time() - ptm
 
 ### Results
 
-```{r, echo=F, eval=F}
+```{r}
 DoE <- readRDS("./data/ex2_single_run_DoE.Rda")
 DHs <- readRDS("./data/ex2_single_run_DHs.Rda")
 
@@ -858,8 +867,8 @@ df$beta <- pred$mean
 df$sd <- pred$sd
 ```
 
-```{r, eval=F}
-ggplot(df, aes(2*n, 3*k, z=beta)) + geom_contour(colour = "light blue") + 
+```{r}
+ggplot(df, aes(2*n, 3*k)) + geom_contour(aes(z=beta), colour = "light blue") + 
   geom_point(data=DoE[1:20,], colour=colours[1], shape=1) +
   geom_point(data=DoE[21:50,], colour=colours[2], shape=4) +
   
@@ -913,7 +922,7 @@ print(xtable(tab2, digits=0), booktabs = T, include.rownames = F,
 
 ### Simualtion
 
-```{r, eval=F}
+```{r}
 sim_trial3 <- function(x, h)
 {
   n_1 <- x[1]; k <- x[2]; r <- x[3]; j <- x[4]
@@ -1003,7 +1012,7 @@ sim_trial3 <- function(x, h)
 }
 ```
 
-```{r, eval=F}
+```{r}
 calc_rates3 <- function(x, h, N)
 {
   alpha <- x[5]
@@ -1034,7 +1043,7 @@ proc.time() - ptm
 
 ### Algorithm
 
-```{r, eval=F}
+```{r}
 set.seed(90309)
 
 ptm <- proc.time()
@@ -1073,7 +1082,9 @@ for(i in 1:dim){
   DoE[,i] <-  DoE[,i]*(design_space$up[i]-design_space$low[i]) + design_space$low[i]
 }
 DoE[,c("n_1", "k", "j")] <- round(DoE[,c("n_1", "k", "j")])
+```
 
+```{r, eval=F}
 # Evaluate at initial points
 N <- 100
 DoE <- cbind(DoE, t(apply(DoE, 1, calc_rates3, h=h, N=N)))
@@ -1134,7 +1145,7 @@ proc.time() - ptm
 
 ### Results
 
-```{r, eval=F}
+```{r}
 DoE <- readRDS("./data/ex3_single_run_DoE.Rda")
 DHs <- readRDS("./data/ex3_single_run_DHs.Rda")
 
@@ -1183,7 +1194,7 @@ names(tab)[10:13] <- c("beta_2", "beta_var_2", "alpha_2", "alpha_var_2")
 ## Print the results in a table
 tab <- readRDS("./data/ex3_large_N.Rda")
 
-tab2 <- data.frame(n_1=tab$n_1, n=tab$n_1*(1+tab$r), k=tab$k, j=tab$k*2, a=tab$a,
+tab2 <- data.frame(n_1=tab$n_1, n=tab$n_1*(1+tab$r), k=tab$k, j=tab$j, a=tab$a,
                    beta=apply(tab[,6:7], 1, function(x) paste0(round(x[1], 2), " (", round(sqrt(x[2]), 3), ")")),
                    alpha=apply(tab[,8:9], 1, function(x) paste0(round(x[1], 2), " (", round(sqrt(x[2]), 3), ")")),
                    beta_2=apply(tab[,10:11], 1, function(x) paste0(round(x[1], 3), " (", round(sqrt(x[2]), 3), ")")),
@@ -1205,21 +1216,15 @@ print(xtable(tab2, digits=c(rep(0,5), 2, rep(0,4))),
 
 ## Figures
 
-```{r, eval=F}
+```{r, eval=T}
 # Plot an example optimisation problem, minimising clusters and patients, with
 # a true Pareto front and an approximation front, with the dominated hypervolume
 # shaded in.
 
-data_set <- "13_12_17"
-pf <- readRDS(paste0("../R/CC/Data_",data_set,"/p_front.Rda"))
-
-pf<- pf[pf$f2 <= 30,]
-pf <- rbind(pf, c(1200, 7))
+pf <- data.frame(f1 = c(472, 472, 473, 474, 476, 478, 481, 483, 486, 492, 498,
+           508, 518, 528, 536, 548, 560, 573, 595, 624, 658, 706, 782, 1150, 1200),
+           f2 = c(30:7, 7))
 pf$t <- "p"
-pf <- unique(pf)
-
-pf$f1 <- c(472, 472, 473, 474, 476, 478, 481, 483, 486, 492, 498,
-           508, 518, 528, 536, 548, 560, 573, 595, 624, 658, 706, 782, 1150, 1200)
 
 as <- data.frame(f2=c(30, 24,20,12,10, 10),
                  f1=c(589, 589, 705, 810, 982, 1200))
@@ -1240,8 +1245,8 @@ ggplot(df, aes(f1, f2)) + geom_polygon(data=pg, alpha=0.1) + #fill="grey90") +
   geom_point(data=data.frame(f1=1200, f2=30), shape=4) +
   annotate("text", x = 900, y = 23, label = "H(A)")
   
-# ggsave("U:/Projects/MRC SDF/WP4/Papers/Bayes_opt/Figures/fake_pareto.pdf", width= 5, height = 3)
-# ggsave("U:/Projects/MRC SDF/WP4/Papers/Bayes_opt/Figures/fake_pareto.eps", width= 5, height = 3, device=cairo_ps)
+# ggsave("./paper/figures/fake_pareto.pdf", width= 5, height = 3)
+# ggsave("./paper/figures/fake_pareto.eps", width= 5, height = 3, device=cairo_ps)
 ```
 
 Plot of a GP constraint, annotating some expected improvemets at a couple of points
@@ -1268,49 +1273,30 @@ x$max <- x$f + 1.96*x$sd
 
 get_p <- function(input)
 {
-  return(1-pnorm(0.8, input$f, input$sd))
+  return(1-pnorm(0.8, input[2], input[3]))
 }
 
-probs <- adply(x, 1, get_p)
+probs <- cbind(x, V1=apply(x, 1, get_p))
 probs$EFI <- (260-probs$n)*probs$V1/450 + 0.5
 probs$EFI <- ifelse(probs$EFI < 0.5 , 0.5, probs$EFI)
 
-# smallest probably feasible point is n=203 with m=0.8605029, s=0.0306694814
-m <- 0.8605029
-s <- 0.0306694814
-# expected improvemet here is (1-pnorm(0.8, m, s))*(260-203) = 55.62
-
-x2 <- data.frame(f=seq(0,m,0.001))
-x2$n <- apply(x2, 1, getn, m=m, s=s, n=203)
-x2 <- subset(x2, f>0.5)
-
-x3 <- data.frame(f=seq(m,1,0.001))
-x3$n <- apply(x3, 1, getn, m=m, s=s, n=203)
-
-# Another example point, n=176  with m=0.8112502 and s=0.0357850962, 
-# (1-pnorm(0.8, m, s))*(260-176) = 52.36
-m <- 0.8112502
-s <- 0.0357850962
-
-x4 <- data.frame(f=seq(0,m,0.001))
-x4$n <- apply(x4, 1, getn, m=m, s=s, n=176)
-x4 <- subset(x4, f>0.5)
-
-x5 <- data.frame(f=seq(m,1,0.001))
-x5$n <- apply(x5, 1, getn, m=m, s=s, n=176)
-
 # Optimal expected feasible improvement is at 190, with
 # m = 0.8388252, sd = 3.464424e-02
+
+get_n <- function(y, m, s, n)
+{
+  n + 1.2*dnorm(y, m, s)
+}
 
 m <- 0.8388252
 s <- 3.464424e-02
 
 x6 <- data.frame(f=c(seq(0,m,0.001), m))
-x6$n <- apply(x6, 1, getn, m=m, s=s, n=190)
+x6$n <- apply(x6, 1, get_n, m=m, s=s, n=190)
 x6 <- subset(x6, f>0.5)
 
 x7 <- data.frame(f=seq(m,1,0.001))
-x7$n <- apply(x7, 1, getn, m=m, s=s, n=190)
+x7$n <- apply(x7, 1, get_n, m=m, s=s, n=190)
 
 # For paper
 ggplot(x6, aes(n, f)) + geom_line(colour="#009E73", linetype=2) + geom_line(data=x7, colour="#009E73", linetype=2) + 
@@ -1321,5 +1307,6 @@ ggplot(x6, aes(n, f)) + geom_line(colour="#009E73", linetype=2) + geom_line(data
   geom_line(data=probs, aes(n, EFI), colour="#CC79A7", linetype=3) +
   theme_minimal() + ylab("Power") + xlab("Sample size")
 
-#ggsave("U:/Projects/MRC SDF/WP4/Papers/Bayes_opt/Figures/GP_example.eps", width= 5, height = 3.3, device=cairo_ps)
+#ggsave("./paper/figures/GP_example.pdf", width= 5, height = 3.3)
+#ggsave("./paper/figures/GP_example.eps", width= 5, height = 3.3, device=cairo_ps)
 ```

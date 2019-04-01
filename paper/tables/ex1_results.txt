@@ -1,5 +1,5 @@
 % latex table generated in R 3.4.3 by xtable 1.8-3 package
-% Fri Mar 22 09:19:19 2019
+% Mon Apr 01 09:21:31 2019
 \begin{tabular}{rrrll}
   \toprule
 $2n$ & $k$ & $j$ & $\beta$ (s.e.), $N = 10^2$ & $\beta$ (s.e.), $N = 10^4$ \\ 
