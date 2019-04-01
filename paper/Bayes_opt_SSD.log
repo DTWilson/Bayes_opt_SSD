@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2019.3.21)  22 MAR 2019 09:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2019.3.21)  1 APR 2019 09:30
 entering extended mode
 **./Bayes_opt_SSD.tex
 (Bayes_opt_SSD.tex
 LaTeX2e <2018-04-01> patch level 5
-(sagej.cls
+(C:/Users/meddwilb/Documents/local_miktex\tex\latex\Sage\sagej.cls
 Document Class: sagej 2017/01/17 v1.20\ sagej.cls
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
@@ -433,12 +433,12 @@ input line 90.
 (pdftex.def)             Requested size: 337.96033pt x 139.11879pt.
 [4] [5 <./figures/ex1_structure-eps-converted-to.pdf>] [6] [7]
 Package epstopdf Info: Source file: <./figures/fake_pareto.eps>
-(epstopdf)                    date: 2019-01-09 15:32:11
-(epstopdf)                    size: 82849 bytes
+(epstopdf)                    date: 2019-04-01 08:46:58
+(epstopdf)                    size: 80220 bytes
 (epstopdf)             Output file: <./figures/fake_pareto-eps-converted-to.pdf
 >
-(epstopdf)                    date: 2019-03-21 09:06:26
-(epstopdf)                    size: 33832 bytes
+(epstopdf)                    date: 2019-04-01 09:23:40
+(epstopdf)                    size: 36906 bytes
 (epstopdf)             Command: <epstopdf --outfile=./figures/fake_pareto-eps-c
 onverted-to.pdf ./figures/fake_pareto.eps>
 (epstopdf)             \includegraphics on input line 163.
@@ -467,19 +467,21 @@ LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 210.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 210.
-
-
-LaTeX Warning: File `./figures/GP_example.eps' not found on input line 220.
-
 Package epstopdf Info: Source file: <./figures/GP_example.eps>
+(epstopdf)                    date: 2019-04-01 09:01:12
+(epstopdf)                    size: 116760 bytes
 (epstopdf)             Output file: <./figures/GP_example-eps-converted-to.pdf>
 
-(epstopdf)                    date: 2019-01-09 15:34:29
-(epstopdf)                    size: 54136 bytes
+(epstopdf)                    date: 2019-04-01 09:23:42
+(epstopdf)                    size: 56999 bytes
 (epstopdf)             Command: <epstopdf --outfile=./figures/GP_example-eps-co
 nverted-to.pdf ./figures/GP_example.eps>
 (epstopdf)             \includegraphics on input line 220.
 Package epstopdf Info: Output file is already uptodate.
+
+
+pdfTeX warning: pdflatex (file ./figures/GP_example-eps-converted-to.pdf): PDF 
+inclusion: found PDF version <1.7>, but at most version <1.5> allowed
 <./figures/GP_example-eps-converted-to.pdf, id=76, 361.35pt x 237.88875pt>
 File: ./figures/GP_example-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/GP_example-eps-converted-to.pdf>
@@ -592,8 +594,8 @@ LaTeX Font Warning: Size substitutions with differences
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
  ) 
 Here is how much of TeX's memory you used:
- 5401 strings out of 492970
- 79849 string characters out of 3135846
+ 5402 strings out of 492970
+ 79948 string characters out of 3135846
  150989 words of memory out of 3000000
  9108 multiletter control sequences out of 15000+200000
  22692 words of font info for 88 fonts, out of 3000000 for 9000
@@ -627,7 +629,7 @@ ti7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><
 C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Progr
 am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb><C:/Program Files/
 MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Bayes_opt_SSD.pdf (27 pages, 599904 bytes).
+Output written on Bayes_opt_SSD.pdf (27 pages, 605844 bytes).
 PDF statistics:
  264 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
