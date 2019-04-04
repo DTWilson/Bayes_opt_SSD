@@ -1242,7 +1242,7 @@ ggplot(df, aes(f1, f2)) + geom_polygon(data=pg, alpha=0.1) + #fill="grey90") +
   scale_colour_manual(name= "",
                       values=c(colours[3], colours[4]), 
                       labels=c("Approximation set", "Pareto set")) +
-  geom_point(data=data.frame(f1=1200, f2=30), shape=4) +
+  geom_point(data=data.frame(f1=1200, f2=30), shape=4, size=3, stroke=2) +
   annotate("text", x = 900, y = 23, label = "H(A)")
   
 # ggsave("./paper/figures/fake_pareto.pdf", width= 5, height = 3)
