@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2019.3.21)  4 APR 2019 10:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2019.3.21)  5 APR 2019 10:42
 entering extended mode
 **./Bayes_opt_SSD.tex
 (Bayes_opt_SSD.tex
@@ -369,46 +369,46 @@ G,.JBIG2,.JB2,.eps]
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for U+lasy on input line 58.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 48.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ulasy.fd"
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 58.
+LaTeX Font Info:    Try loading font information for U+msa on input line 48.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 58.
+LaTeX Font Info:    Try loading font information for U+msb on input line 48.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <18> not available
-(Font)              size <17.28> substituted on input line 62.
+(Font)              size <17.28> substituted on input line 52.
 LaTeX Font Warning: Font shape `OT1/cmss/bx/n' in size <18> not available
-(Font)              size <17.28> substituted on input line 62.
-LaTeX Font Info:    Try loading font information for OMS+cmss on input line 62.
+(Font)              size <17.28> substituted on input line 52.
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 52.
 
-LaTeX Font Info:    No file OMScmss.fd. on input line 62.
+LaTeX Font Info:    No file OMScmss.fd. on input line 52.
 LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
-(Font)              using `OMS/cmsy/m/n' instead on input line 62.
+(Font)              using `OMS/cmsy/m/n' instead on input line 52.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <7> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 64.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 54.
  [1
 
 {C:/Users/meddwilb/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 71.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 61.
  [2]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [3]
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <12> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 84.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 74.
 Package epstopdf Info: Source file: <./figures/ex1_structure.eps>
 (epstopdf)                    date: 2019-01-09 15:46:21
 (epstopdf)                    size: 29948 bytes
@@ -418,7 +418,7 @@ df>
 (epstopdf)                    size: 12336 bytes
 (epstopdf)             Command: <epstopdf --outfile=./figures/ex1_structure-eps
 -converted-to.pdf ./figures/ex1_structure.eps>
-(epstopdf)             \includegraphics on input line 90.
+(epstopdf)             \includegraphics on input line 80.
 Package epstopdf Info: Output file is already uptodate.
 
 
@@ -429,19 +429,19 @@ DF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
 File: ./figures/ex1_structure-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex1_structure-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex1_structure-eps-converted-to.pdf  used on 
-input line 90.
+input line 80.
 (pdftex.def)             Requested size: 337.96033pt x 139.11879pt.
 [4] [5 <./figures/ex1_structure-eps-converted-to.pdf>] [6] [7]
 Package epstopdf Info: Source file: <./figures/fake_pareto.eps>
-(epstopdf)                    date: 2019-04-01 08:46:58
-(epstopdf)                    size: 80220 bytes
+(epstopdf)                    date: 2019-04-04 10:35:50
+(epstopdf)                    size: 80338 bytes
 (epstopdf)             Output file: <./figures/fake_pareto-eps-converted-to.pdf
 >
-(epstopdf)                    date: 2019-04-01 09:23:40
-(epstopdf)                    size: 36906 bytes
+(epstopdf)                    date: 2019-04-04 10:36:58
+(epstopdf)                    size: 37066 bytes
 (epstopdf)             Command: <epstopdf --outfile=./figures/fake_pareto-eps-c
 onverted-to.pdf ./figures/fake_pareto.eps>
-(epstopdf)             \includegraphics on input line 163.
+(epstopdf)             \includegraphics on input line 152.
 Package epstopdf Info: Output file is already uptodate.
 
 
@@ -451,22 +451,22 @@ pdfTeX warning: pdflatex (file ./figures/fake_pareto-eps-converted-to.pdf): PDF
 File: ./figures/fake_pareto-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/fake_pareto-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/fake_pareto-eps-converted-to.pdf  used on in
-put line 163.
+put line 152.
 (pdftex.def)             Requested size: 289.0804pt x 173.44823pt.
 [8] [9 <./figures/fake_pareto-eps-converted-to.pdf>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 195.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 184.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 195.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 184.
  [10]
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 210.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 199.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 210.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 199.
 Package epstopdf Info: Source file: <./figures/GP_example.eps>
 (epstopdf)                    date: 2019-04-01 09:01:12
 (epstopdf)                    size: 116760 bytes
@@ -476,7 +476,7 @@ Package epstopdf Info: Source file: <./figures/GP_example.eps>
 (epstopdf)                    size: 56999 bytes
 (epstopdf)             Command: <epstopdf --outfile=./figures/GP_example-eps-co
 nverted-to.pdf ./figures/GP_example.eps>
-(epstopdf)             \includegraphics on input line 220.
+(epstopdf)             \includegraphics on input line 209.
 Package epstopdf Info: Output file is already uptodate.
 
 
@@ -486,7 +486,7 @@ inclusion: found PDF version <1.7>, but at most version <1.5> allowed
 File: ./figures/GP_example-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/GP_example-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/GP_example-eps-converted-to.pdf  used on inp
-ut line 220.
+ut line 209.
 (pdftex.def)             Requested size: 289.0804pt x 190.31123pt.
 [11] [12 <./figures/GP_example-eps-converted-to.pdf>] [13] [14]
 Package epstopdf Info: Source file: <./figures/ex1_single_run.eps>
@@ -498,7 +498,7 @@ pdf>
 (epstopdf)                    size: 11348 bytes
 (epstopdf)             Command: <epstopdf --outfile=./figures/ex1_single_run-ep
 s-converted-to.pdf ./figures/ex1_single_run.eps>
-(epstopdf)             \includegraphics on input line 293.
+(epstopdf)             \includegraphics on input line 280.
 Package epstopdf Info: Output file is already uptodate.
 
 
@@ -509,7 +509,7 @@ t>
 File: ./figures/ex1_single_run-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex1_single_run-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex1_single_run-eps-converted-to.pdf  used on
- input line 293.
+ input line 280.
 (pdftex.def)             Requested size: 318.79143pt x 204.76526pt.
 Package epstopdf Info: Source file: <./figures/ex1_traj.eps>
 (epstopdf)                    date: 2019-03-11 17:40:07
@@ -519,7 +519,7 @@ Package epstopdf Info: Source file: <./figures/ex1_traj.eps>
 (epstopdf)                    size: 8915 bytes
 (epstopdf)             Command: <epstopdf --outfile=./figures/ex1_traj-eps-conv
 erted-to.pdf ./figures/ex1_traj.eps>
-(epstopdf)             \includegraphics on input line 304.
+(epstopdf)             \includegraphics on input line 291.
 Package epstopdf Info: Output file is already uptodate.
 
 
@@ -529,7 +529,7 @@ clusion: found PDF version <1.7>, but at most version <1.5> allowed
 File: ./figures/ex1_traj-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex1_traj-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex1_traj-eps-converted-to.pdf  used on input
- line 304.
+ line 291.
 (pdftex.def)             Requested size: 318.79143pt x 204.76526pt.
 [15] [16 <./figures/ex1_single_run-eps-converted-to.pdf> <./figures/ex1_traj-ep
 s-converted-to.pdf>] (tables/ex1_results.txt) [17]
@@ -542,7 +542,7 @@ pdf>
 (epstopdf)                    size: 12114 bytes
 (epstopdf)             Command: <epstopdf --outfile=./figures/ex2_single_run-ep
 s-converted-to.pdf ./figures/ex2_single_run.eps>
-(epstopdf)             \includegraphics on input line 347.
+(epstopdf)             \includegraphics on input line 335.
 Package epstopdf Info: Output file is already uptodate.
 
 
@@ -553,7 +553,7 @@ pt>
 File: ./figures/ex2_single_run-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex2_single_run-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex2_single_run-eps-converted-to.pdf  used on
- input line 347.
+ input line 335.
 (pdftex.def)             Requested size: 318.79143pt x 204.76526pt.
 (tables/ex2_results.txt) [18 <./figures/ex2_single_run-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./figures/ex3_single_run.eps>
@@ -565,7 +565,7 @@ pdf>
 (epstopdf)                    size: 8113 bytes
 (epstopdf)             Command: <epstopdf --outfile=./figures/ex3_single_run-ep
 s-converted-to.pdf ./figures/ex3_single_run.eps>
-(epstopdf)             \includegraphics on input line 372.
+(epstopdf)             \includegraphics on input line 361.
 Package epstopdf Info: Output file is already uptodate.
 
 
@@ -576,31 +576,31 @@ pt>
 File: ./figures/ex3_single_run-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex3_single_run-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex3_single_run-eps-converted-to.pdf  used on
- input line 372.
+ input line 361.
 (pdftex.def)             Requested size: 318.79143pt x 204.76526pt.
 (tables/ex3_results.txt)
-Overfull \hbox (21.98105pt too wide) in paragraph at lines 3--382
+Overfull \hbox (38.42546pt too wide) in paragraph at lines 3--371
  [][] 
  []
 
-[19 <./figures/ex3_single_run-eps-converted-to.pdf>] [20] [21]
-(Bayes_opt_SSD.bbl [22] [23] [24]
+[19] [20 <./figures/ex3_single_run-eps-converted-to.pdf>] [21]
+(Bayes_opt_SSD.bbl [22] [23] [24] [25]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [25]
-[26]) [27] (Bayes_opt_SSD.aux)
+ [26])
+[27] (Bayes_opt_SSD.aux)
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.72pt have occurred.
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
  ) 
 Here is how much of TeX's memory you used:
- 5402 strings out of 492970
- 79948 string characters out of 3135846
- 150989 words of memory out of 3000000
- 9108 multiletter control sequences out of 15000+200000
+ 5399 strings out of 492970
+ 79897 string characters out of 3135846
+ 154973 words of memory out of 3000000
+ 9105 multiletter control sequences out of 15000+200000
  22692 words of font info for 88 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,10n,43p,1922b,564s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 43i,10n,43p,1922b,546s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTe
@@ -629,7 +629,7 @@ ti7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><
 C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Progr
 am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb><C:/Program Files/
 MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Bayes_opt_SSD.pdf (27 pages, 605844 bytes).
+Output written on Bayes_opt_SSD.pdf (27 pages, 606814 bytes).
 PDF statistics:
  264 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

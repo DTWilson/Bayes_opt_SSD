@@ -343,7 +343,7 @@ y <- c(0.06, 0.000569697)
 ```
 
 
-The recommended evaluation is at $n=$ `sol[1]`, $k=$ `sol[2]`. Evaluating the point using $N=100$ MC samples gives an estimated type II error rate of `y[1]` (sd `sqrt(y[2])`), so it appears to be feasible. We can add the new information to our records, update the GP model, and then use its predictions to confirm whether or not the new point can join the approximation set.
+The recommended evaluation is at $n=$ `r sol[1]`, $k=$ `r sol[2]`. Evaluating the point using $N=100$ MC samples gives an estimated type II error rate of `r y[1]` (sd `r sqrt(y[2])`), so it appears to be feasible. We can add the new information to our records, update the GP model, and then use its predictions to confirm whether or not the new point can join the approximation set.
 
 ```{r}
 DoE <- rbind(DoE, c(sol, y, 100))
@@ -575,12 +575,12 @@ tab2 <- data.frame(n=tab$n*2, k=tab$k, j=tab$k*2,
                    beta_2=apply(tab[,5:6], 1, function(x) paste0(round(x[1], 3), " (", round(sqrt(x[2]), 3), ")"))
                    )
 tab2 <- tab2[order(tab2$k),]
-colnames(tab2) <- c("$2n$", "$k$", "$j$", "$\\beta$ (s.e.), $N = 10^2$", "$\\beta$ (s.e.), $N = 10^4$")
+colnames(tab2) <- c("$2n$", "$k$", "$j$", "$\\beta$ (s.e.), $N = 10^2$", "$\\beta$ (s.e.), $N = 50^4$")
 tab2
 
-print(xtable(tab2, digits=0), booktabs = T, include.rownames = F, 
-      sanitize.text.function = function(x) {x}, floating = F,
-      file = "./paper/tables/ex1_results.txt")
+# print(xtable(tab2, digits=0), booktabs = T, include.rownames = F, 
+#       sanitize.text.function = function(x) {x}, floating = F,
+#       file = "./paper/tables/ex1_results.txt")
 ```
 
 
@@ -910,12 +910,12 @@ tab2 <- data.frame(n=tab$n*2, k=tab$k, j=tab$k*2,
                    beta_2=apply(tab[,5:6], 1, function(x) paste0(round(x[1], 3), " (", round(sqrt(x[2]), 3), ")"))
                    )
 tab2 <- tab2[order(tab2$k),]
-colnames(tab2) <- c("$2n$", "$k$", "$j$", "$\\beta$ (s.e.), $N = 10^2$", "$\\beta$ (s.e.), $N = 10^4$")
+colnames(tab2) <- c("$2n$", "$k$", "$j$", "$\\beta$ (s.e.), $N = 10^2$", "$\\beta$ (s.e.), $N = 50^4$")
 tab2
 
-print(xtable(tab2, digits=0), booktabs = T, include.rownames = F, 
-      sanitize.text.function = function(x) {x}, floating = F,
-      file = "./paper/tables/ex2_results.txt")
+# print(xtable(tab2, digits=0), booktabs = T, include.rownames = F, 
+#       sanitize.text.function = function(x) {x}, floating = F,
+#       file = "./paper/tables/ex2_results.txt")
 ```
 
 ## Example 3
@@ -1207,11 +1207,11 @@ colnames(tab2) <- c("$n_1$", "$n$", "$k$", "$j$", "$a$",
                     "$\\beta$ (s.e.)", "$\\alpha$ (s.e.)")
 tab2
 
-#  & & & & & \multicolumn{2}{c}{$N = 10^2$} & \multicolumn{2}{c}{$N = 10^4$} \\
-print(xtable(tab2, digits=c(rep(0,5), 2, rep(0,4))),
-      booktabs = T, include.rownames = F, 
-      sanitize.text.function = function(x) {x}, floating = F,
-      file = "./paper/tables/ex3_results.txt")
+#  & & & & & \multicolumn{2}{c}{$N = 10^2$} & \multicolumn{2}{c}{$N = 50^4$} \\
+# print(xtable(tab2, digits=c(rep(0,5), 2, rep(0,4))),
+#       booktabs = T, include.rownames = F, 
+#       sanitize.text.function = function(x) {x}, floating = F,
+#       file = "./paper/tables/ex3_results.txt")
 ```
 
 ## Figures
