@@ -542,6 +542,7 @@ ggplot(df, aes(2*n, 3*k, z=beta)) + geom_contour(colour="light blue") +
 
 #ggsave("./paper/figures/ex1_single_run.pdf", height=9, width=14, units="cm")
 #ggsave("./paper/figures/ex1_single_run.eps", height=9, width=14, units="cm")
+#ggsave("./paper/figures/ex1_single_run.png", height=3, width=5)
 
 ## Plot dominated hypervolumes over the search
 df2 <- data.frame(it = 1:30, DH=DHs)
@@ -1241,12 +1242,13 @@ ggplot(df, aes(f1, f2)) + geom_polygon(data=pg, alpha=0.1) + #fill="grey90") +
   theme_minimal() + xlab("Number of participants") + ylab("Number of clusters") +
   scale_colour_manual(name= "",
                       values=c(colours[3], colours[4]), 
-                      labels=c("Approximation set", "Pareto set")) +
-  geom_point(data=data.frame(f1=1200, f2=30), shape=4, size=3, stroke=2) +
-  annotate("text", x = 900, y = 23, label = "H(A)")
+                      labels=c("Approximation set", "Pareto set")) #+
+  #geom_point(data=data.frame(f1=1200, f2=30), shape=4, size=3, stroke=2) +
+  #annotate("text", x = 900, y = 23, label = "H(A)")
   
 # ggsave("./paper/figures/fake_pareto.pdf", width= 5, height = 3)
 # ggsave("./paper/figures/fake_pareto.eps", width= 5, height = 3, device=cairo_ps)
+# ggsave("./paper/figures/fake_pareto.png", width= 4, height = 2)
 ```
 
 Plot of a GP constraint, annotating some expected improvemets at a couple of points

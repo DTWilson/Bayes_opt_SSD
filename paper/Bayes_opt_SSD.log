@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2019.3.21)  5 APR 2019 10:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2019.3.21)  23 JUL 2019 13:34
 entering extended mode
 **./Bayes_opt_SSD.tex
 (Bayes_opt_SSD.tex
@@ -21,6 +21,9 @@ File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
+)
+(C:\Users\meddwilb\AppData\Roaming\MiKTeX\2.9\tex\latex\setspace\setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
@@ -199,8 +202,35 @@ Package: tracefnt 2015/02/21 v3.0k Standard LaTeX package (font tracing)
 \tracingfonts=\count109
 LaTeX Info: Redefining \selectfont on input line 106.
 )
+("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.sty"
+Package: geometry 2018/04/16 v5.8 Page Geometry
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
+Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.sty"
+Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+\Gm@cnth=\count110
+\Gm@cntv=\count111
+\c@Gm@tempcnt=\count112
+\Gm@bindingoffset=\dimen130
+\Gm@wd@mp=\dimen131
+\Gm@odd@mp=\dimen132
+\Gm@even@mp=\dimen133
+\Gm@layoutwidth=\dimen134
+\Gm@layoutheight=\dimen135
+\Gm@layouthoffset=\dimen136
+\Gm@layoutvoffset=\dimen137
+\Gm@dimlist=\toks28
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\geometry\geometry.cfg"))
 \absbox=\box29
-\@bls=\dimen130
+\@bls=\dimen138
 
 (C:\Users\meddwilb\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption.sty
 Package: caption 2018/10/06 v3.3-154 Customizing captions (AR)
@@ -208,16 +238,16 @@ Package: caption 2018/10/06 v3.3-154 Customizing captions (AR)
 (C:\Users\meddwilb\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption3.sty
 Package: caption3 2018/09/12 v1.8c caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 64.
-\captionmargin=\dimen131
-\captionmargin@=\dimen132
-\captionwidth=\dimen133
-\caption@tempdima=\dimen134
-\caption@indent=\dimen135
-\caption@parindent=\dimen136
-\caption@hangindent=\dimen137
+\captionmargin=\dimen139
+\captionmargin@=\dimen140
+\captionwidth=\dimen141
+\caption@tempdima=\dimen142
+\caption@indent=\dimen143
+\caption@parindent=\dimen144
+\caption@hangindent=\dimen145
 )
-\c@caption@flags=\count110
-\c@ContinuedFloat=\count111
+\c@caption@flags=\count113
+\c@ContinuedFloat=\count114
 Package caption Info: rotating package is loaded.
 )
 (C:\Users\meddwilb\AppData\Roaming\MiKTeX\2.9\tex\latex\natbib\natbib.sty
@@ -225,7 +255,7 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip54
 \bibsep=\skip55
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count112
+\c@NAT@ctr=\count115
 ))
 (C:\Users\meddwilb\AppData\Roaming\MiKTeX\2.9\tex\latex\algorithms\algorithm.st
 y
@@ -233,29 +263,29 @@ Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
  ("C:\Program Files\MiKTeX 2.9\tex\latex\float\float.sty"
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count113
-\float@exts=\toks28
+\c@float@type=\count116
+\float@exts=\toks29
 \float@box=\box30
-\@float@everytoks=\toks29
+\@float@everytoks=\toks30
 \@floatcapt=\box31
 )
-\@float@every@algorithm=\toks30
-\c@algorithm=\count114
+\@float@every@algorithm=\toks31
+\c@algorithm=\count117
 )
 (C:\Users\meddwilb\AppData\Roaming\MiKTeX\2.9\tex\latex\algorithmicx\algorithmi
 cx.sty
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count115
-\c@ALG@rem=\count116
-\c@ALG@nested=\count117
+\c@ALG@line=\count118
+\c@ALG@rem=\count119
+\c@ALG@nested=\count120
 \ALG@tlm=\skip56
 \ALG@thistlm=\skip57
-\c@ALG@Lnr=\count118
-\c@ALG@blocknr=\count119
-\c@ALG@storecount=\count120
-\c@ALG@tmpcounter=\count121
+\c@ALG@Lnr=\count121
+\c@ALG@blocknr=\count122
+\c@ALG@storecount=\count123
+\c@ALG@tmpcounter=\count124
 \ALG@tmplength=\skip58
 )
 (C:\Users\meddwilb\AppData\Roaming\MiKTeX\2.9\tex\latex\algorithmicx\algpseudoc
@@ -265,10 +295,10 @@ Package: algpseudocode
 Document Style - pseudocode environments for use with the `algorithmicx' style
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\tools\array.sty"
 Package: array 2018/04/30 v2.4h Tabular extension package (FMi)
-\col@sep=\dimen138
+\col@sep=\dimen146
 \ar@mcellbox=\box32
-\extrarowheight=\dimen139
-\NC@list=\toks31
+\extrarowheight=\dimen147
+\NC@list=\toks32
 \extratabsurround=\skip59
 \backup@length=\skip60
 \ar@cellbox=\box33
@@ -276,9 +306,9 @@ Package: array 2018/04/30 v2.4h Tabular extension package (FMi)
 ("C:\Program Files\MiKTeX 2.9\tex\latex\multirow\multirow.sty"
 Package: multirow 2018/08/03 v2.3 Span multiple rows of a table
 \multirow@colwidth=\skip61
-\multirow@cntb=\count122
+\multirow@cntb=\count125
 \multirow@dima=\skip62
-\bigstrutjot=\dimen140
+\bigstrutjot=\dimen148
 )
 (C:\Users\meddwilb\AppData\Roaming\MiKTeX\2.9\tex\latex\url\url.sty
 \Urlmuskip=\muskip11
@@ -303,17 +333,17 @@ LaTeX Font Info:    ... okay on input line 26.
 (C:\Users\meddwilb\AppData\Roaming\MiKTeX\2.9\tex\context\base\mkii\supp-pdf.mk
 ii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count123
-\scratchdimen=\dimen141
+\scratchcounter=\count126
+\scratchdimen=\dimen149
 \scratchbox=\box34
-\nofMPsegments=\count124
-\nofMParguments=\count125
-\everyMPshowfont=\toks32
-\MPscratchCnt=\count126
-\MPscratchDim=\dimen142
-\MPnumerator=\count127
-\makeMPintoPDFobject=\count128
-\everyMPtoPDFconversion=\toks33
+\nofMPsegments=\count127
+\nofMParguments=\count128
+\everyMPshowfont=\toks33
+\MPscratchCnt=\count129
+\MPscratchDim=\dimen150
+\MPnumerator=\count130
+\makeMPintoPDFobject=\count131
+\everyMPtoPDFconversion=\toks34
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -350,10 +380,6 @@ Package etexcmds Info: Could not find \expanded.
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\pdftexcmds.sty"
 Package: pdftexcmds 2018/09/10 v0.29 Utility functions of pdfTeX for LuaTeX (HO
 )
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
-Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
-)
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
@@ -366,11 +392,46 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
 )
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: custom
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* hratio: 1:1
+* vratio: 1:1
+* modes: twoside asymmetric 
+* h-part:(L,W,R)=(53.5623pt, 416.83287pt, 53.56232pt)
+* v-part:(T,H,B)=(82.93977pt, 520.68542pt, 82.93979pt)
+* \paperwidth=523.95749pt
+* \paperheight=686.56499pt
+* \textwidth=416.83287pt
+* \textheight=520.68542pt
+* \oddsidemargin=-18.70769pt
+* \evensidemargin=-18.70769pt
+* \topmargin=-22.33022pt
+* \headheight=12.0pt
+* \headsep=21.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=12.0pt
+* \skip\footins=20.0pt plus 8.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Try loading font information for U+lasy on input line 48.
-
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ulasy.fd"
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
@@ -402,13 +463,14 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <7> not available
 
 {C:/Users/meddwilb/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 61.
- [2]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3]
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 59.
+ [2] [3]
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <12> not available
 (Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 74.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [4]
 Package epstopdf Info: Source file: <./figures/ex1_structure.eps>
 (epstopdf)                    date: 2019-01-09 15:46:21
 (epstopdf)                    size: 29948 bytes
@@ -424,14 +486,14 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: pdflatex (file ./figures/ex1_structure-eps-converted-to.pdf): P
 DF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/ex1_structure-eps-converted-to.pdf, id=21, 482.80376pt x 198.7425pt>
+<./figures/ex1_structure-eps-converted-to.pdf, id=24, 482.80376pt x 198.7425pt>
 
 File: ./figures/ex1_structure-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex1_structure-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex1_structure-eps-converted-to.pdf  used on 
 input line 80.
 (pdftex.def)             Requested size: 337.96033pt x 139.11879pt.
-[4] [5 <./figures/ex1_structure-eps-converted-to.pdf>] [6] [7]
+[5 <./figures/ex1_structure-eps-converted-to.pdf>] [6] [7] [8] [9]
 Package epstopdf Info: Source file: <./figures/fake_pareto.eps>
 (epstopdf)                    date: 2019-04-04 10:35:50
 (epstopdf)                    size: 80338 bytes
@@ -447,13 +509,13 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: pdflatex (file ./figures/fake_pareto-eps-converted-to.pdf): PDF
  inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/fake_pareto-eps-converted-to.pdf, id=53, 361.35pt x 216.81pt>
+<./figures/fake_pareto-eps-converted-to.pdf, id=60, 361.35pt x 216.81pt>
 File: ./figures/fake_pareto-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/fake_pareto-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/fake_pareto-eps-converted-to.pdf  used on in
 put line 152.
 (pdftex.def)             Requested size: 289.0804pt x 173.44823pt.
-[8] [9 <./figures/fake_pareto-eps-converted-to.pdf>]
+[10 <./figures/fake_pareto-eps-converted-to.pdf>]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 184.
 
 
@@ -462,7 +524,7 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 184.
- [10]
+ [11]
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 199.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
@@ -482,13 +544,23 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: pdflatex (file ./figures/GP_example-eps-converted-to.pdf): PDF 
 inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/GP_example-eps-converted-to.pdf, id=76, 361.35pt x 237.88875pt>
+<./figures/GP_example-eps-converted-to.pdf, id=79, 361.35pt x 237.88875pt>
 File: ./figures/GP_example-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/GP_example-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/GP_example-eps-converted-to.pdf  used on inp
 ut line 209.
 (pdftex.def)             Requested size: 289.0804pt x 190.31123pt.
-[11] [12 <./figures/GP_example-eps-converted-to.pdf>] [13] [14]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [12]
+[13 <./figures/GP_example-eps-converted-to.pdf>] [14]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [15]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [16]
 Package epstopdf Info: Source file: <./figures/ex1_single_run.eps>
 (epstopdf)                    date: 2019-03-11 17:39:49
 (epstopdf)                    size: 16808 bytes
@@ -504,8 +576,8 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: pdflatex (file ./figures/ex1_single_run-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/ex1_single_run-eps-converted-to.pdf, id=99, 398.48875pt x 255.95625p
-t>
+<./figures/ex1_single_run-eps-converted-to.pdf, id=105, 398.48875pt x 255.95625
+pt>
 File: ./figures/ex1_single_run-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex1_single_run-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex1_single_run-eps-converted-to.pdf  used on
@@ -525,14 +597,18 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: pdflatex (file ./figures/ex1_traj-eps-converted-to.pdf): PDF in
 clusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/ex1_traj-eps-converted-to.pdf, id=100, 398.48875pt x 255.95625pt>
+<./figures/ex1_traj-eps-converted-to.pdf, id=106, 398.48875pt x 255.95625pt>
 File: ./figures/ex1_traj-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex1_traj-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex1_traj-eps-converted-to.pdf  used on input
  line 291.
 (pdftex.def)             Requested size: 318.79143pt x 204.76526pt.
-[15] [16 <./figures/ex1_single_run-eps-converted-to.pdf> <./figures/ex1_traj-ep
-s-converted-to.pdf>] (tables/ex1_results.txt) [17]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [17]
+[18 <./figures/ex1_single_run-eps-converted-to.pdf> <./figures/ex1_traj-eps-con
+verted-to.pdf>] (tables/ex1_results.txt) [19]
 Package epstopdf Info: Source file: <./figures/ex2_single_run.eps>
 (epstopdf)                    date: 2019-03-12 14:23:06
 (epstopdf)                    size: 19826 bytes
@@ -548,14 +624,14 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: pdflatex (file ./figures/ex2_single_run-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/ex2_single_run-eps-converted-to.pdf, id=123, 398.48875pt x 255.95625
+<./figures/ex2_single_run-eps-converted-to.pdf, id=130, 398.48875pt x 255.95625
 pt>
 File: ./figures/ex2_single_run-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex2_single_run-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex2_single_run-eps-converted-to.pdf  used on
  input line 335.
 (pdftex.def)             Requested size: 318.79143pt x 204.76526pt.
-(tables/ex2_results.txt) [18 <./figures/ex2_single_run-eps-converted-to.pdf>]
+(tables/ex2_results.txt) [20 <./figures/ex2_single_run-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./figures/ex3_single_run.eps>
 (epstopdf)                    date: 2019-03-20 08:18:06
 (epstopdf)                    size: 11316 bytes
@@ -571,33 +647,45 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: pdflatex (file ./figures/ex3_single_run-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/ex3_single_run-eps-converted-to.pdf, id=132, 398.48875pt x 255.95625
+<./figures/ex3_single_run-eps-converted-to.pdf, id=139, 398.48875pt x 255.95625
 pt>
 File: ./figures/ex3_single_run-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex3_single_run-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex3_single_run-eps-converted-to.pdf  used on
  input line 361.
 (pdftex.def)             Requested size: 318.79143pt x 204.76526pt.
-(tables/ex3_results.txt)
-Overfull \hbox (38.42546pt too wide) in paragraph at lines 3--371
- [][] 
- []
-
-[19] [20 <./figures/ex3_single_run-eps-converted-to.pdf>] [21]
-(Bayes_opt_SSD.bbl [22] [23] [24] [25]
+[21] (tables/ex3_results.txt) [22 <./figures/ex3_single_run-eps-converted-to.pd
+f>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [26])
-[27] (Bayes_opt_SSD.aux)
+ [23]
+[24] (Bayes_opt_SSD.bbl [25]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [26]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [27]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [28]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [29])
+[30] (Bayes_opt_SSD.aux)
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.72pt have occurred.
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 5399 strings out of 492970
- 79897 string characters out of 3135846
- 154973 words of memory out of 3000000
- 9105 multiletter control sequences out of 15000+200000
+ 5921 strings out of 492970
+ 87773 string characters out of 3135846
+ 165028 words of memory out of 3000000
+ 9610 multiletter control sequences out of 15000+200000
  22692 words of font info for 88 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,10n,43p,1922b,546s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -629,9 +717,9 @@ ti7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><
 C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Progr
 am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb><C:/Program Files/
 MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Bayes_opt_SSD.pdf (27 pages, 606814 bytes).
+Output written on Bayes_opt_SSD.pdf (30 pages, 609090 bytes).
 PDF statistics:
- 264 PDF objects out of 1000 (max. 8388607)
+ 273 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  36 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -77,7 +77,7 @@ For simplicity, we consider redesigning the PACE trial to detect a difference in
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.7]{./figures/ex1_structure.eps}
+\includegraphics[scale=0.7]{fig1_ex1_structure.eps}
 \caption{Multilevel structure of the SMC and APT arms of our example, where therapists (T) are partially nested within interventions, doctors (D) are crossed with interventions, and patients (P) are cross-classified with therapists and doctors in the intervention arm and nested within doctors in the control arm.}
 \label{fig:ex1_structure}
 \end{figure}
@@ -149,7 +149,7 @@ The largest possible hypervolume of any feasible approximation set $\mathcal{A}$
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.8]{./figures/fake_pareto.eps}
+\includegraphics[scale=0.8]{fig2_fake_pareto.eps}
 \caption{Example Pareto front $\mathcal{X}_{p}$ and approximation set $\mathcal{A}$ for a cluster randomised trial design problem. The dominated hypervolume of the approximation set with respect to a reference point (cross) is the shaded area.}
 \label{fig:fake_pareto}
 \end{figure}
@@ -206,7 +206,7 @@ An illustration of a Gaussian process regression model of a power function in on
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.8]{./figures/GP_example.eps}
+\includegraphics[scale=0.8]{fig3_GP_example.eps}
 \caption{A Gaussian process model of a power function over a one-dimensional sample size (solid line) based on three evaluations. Uncertainty is shown as the shaded area. Expected improvement (dotted line) is maximised at a sample size of 190, where the predicted power is normally distributed around a mean estimate of 0.84 (dashed line).}
 \label{fig:GP_example}
 \end{figure}
@@ -277,7 +277,7 @@ We initialised the optimisation algorithm by generating a Sobol sequence of size
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.8]{./figures/ex1_single_run.eps}
+\includegraphics[scale=0.8]{fig4_ex1_single_run.eps}
 \caption{Objective values of solutions in the initial set $\mathcal{X}_{E}$ (open circles), subsequent iterations of the algorithm (crosses), and those in the final approximation of the Pareto set (filled squares). The approximation set obtained using a fixed design is also shown (filled circles). Contours represent the mean function of the final GP model.}
 \label{fig:ex1_single_run}
 \end{figure}
@@ -288,7 +288,7 @@ At the $i$th iteration of the algorithm we calculated the dominated volume $H(\m
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.8]{./figures/ex1_traj.eps}
+\includegraphics[scale=0.8]{fig5_ex1_traj.eps}
 \caption{Quality of the approximation set obtained as the algorithm proceeds, where higher dominated hypervolume reflects higher quality.}
 \label{fig:ex1_traj}
 \end{figure}
@@ -298,7 +298,7 @@ The solutions which form the final approximation set are detailed in Table~\ref{
 \begin{table}
 \small\sf\centering
 \caption{Approximation set after 30 iterations for Example 1. Solutions are defined by their total sample size $2n$, number of therapists $k$, and number of doctors $j$. Type II error rate $\beta$ is constrained to be below 0.1, while the total sample size and number of providers are to be minimised.}
-\input{./tables/ex1_results.txt}
+\input{tab1_ex1_results.txt}
 \label{tab:ex1_single_run}
 \end{table}
 
@@ -332,7 +332,7 @@ The algorithm was applied using the same settings as before, with an initial des
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.8]{./figures/ex2_single_run.eps}
+\includegraphics[scale=0.8]{fig6_ex2_single_run.eps}
 \caption{Objective values of solutions in the initial set $\mathcal{X}_{E}$ (open circles), subsequent iterations of the algorithm (crosses), and those in the final approximation of the Pareto set (filled squares).}
 \label{fig:ex2_single_run}
 \end{figure}
@@ -342,7 +342,7 @@ Table \ref{tab:ex2_single_run} provides full details of the obtained approximati
 \begin{table}
 \small\sf\centering
 \caption{Approximation set after 30 iterations for Example 2. Solutions are defined by their total sample size $2n$, number of therapists $k$, and number of doctors $j$. Type II error rate $\beta$ is constrained to be below 0.1, while the total sample size and number of providers are to be minimised.}
-\input{./tables/ex2_results.txt}
+\input{tab2_ex2_results.txt}
 \label{tab:ex2_single_run}
 \end{table}
 
@@ -358,7 +358,7 @@ Given the increase in dimensions of the solution space, we use an initial Sobol 
 
 \begin{figure}
 \centering
-\includegraphics[scale=0.8]{./figures/ex3_single_run.eps}
+\includegraphics[scale=0.8]{fig7_ex3_single_run.eps}
 \caption{Objective values of the approximation set obtained following 50 iterations of the algorithm for Example 3.}
 \label{fig:ex3_single_run}
 \end{figure}
@@ -366,7 +366,7 @@ Given the increase in dimensions of the solution space, we use an initial Sobol 
 \begin{table}
 \small\sf\centering
 \caption{Approximation set after 50 iterations for Example 3. Solutions are defined by the number of participants in the APT arm $n_1$, the total number of participants across both arms $n$, the number of therapists $k$, the number of doctors $j$, and the nominal type I error rates $a$. Both Type I and II error rates are estimated using simulation using $N$ samples, and are constrained at 0.2 and 0.1 respectively.}
-\input{./tables/ex3_results.txt}
+\input{tab3_ex3_results.txt}
 \label{tab:ex3_single_run}
 \end{table}
 
@@ -397,7 +397,7 @@ This work was supported by the Medical Research Council [grant number MR/N015444
 \end{funding}
 
 \bibliographystyle{SageV}
-\bibliography{C:/Users/meddwilb/Documents/Literature/Databases/DTWrefs}
+\bibliography{DTWrefs}
 
 \end{document}
 
