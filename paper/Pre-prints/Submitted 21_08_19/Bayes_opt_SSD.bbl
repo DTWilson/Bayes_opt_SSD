@@ -1,0 +1,336 @@
+\begin{thebibliography}{10}
+
+\bibitem{Arnold2011}
+Benjamin~F Arnold, Daniel~R Hogan, John~M Colford, and Alan~E Hubbard.
+\newblock Simulation methods to estimate design power: an overview for applied
+  research.
+\newblock {\em {BMC} Med Res Methodol}, 11(1), 6 2011.
+
+\bibitem{Landau2013}
+Sabine Landau and Daniel Stahl.
+\newblock Sample size and power calculations for medical studies by simulation
+  when closed form expressions are not available.
+\newblock {\em Statistical Methods in Medical Research}, 22(3):324--345, 2013.
+
+\bibitem{Feng1992}
+Ziding Feng and James~E. Grizzle.
+\newblock Correlated binomial variates: Properties of estimator of intraclass
+  correlation and its effect on sample size calculation.
+\newblock {\em Statistics in Medicine}, 11(12):1607--1614, 1992.
+
+\bibitem{Hooper2013}
+Richard Hooper.
+\newblock Versatile sample-size calculation using simulation.
+\newblock {\em The STATA Journal}, 13(1):21--38, 2013.
+
+\bibitem{Schoenfeld2005}
+David~A. Schoenfeld and Michael Borenstein.
+\newblock Calculating the power or sample size for the logistic and
+  proportional hazards models.
+\newblock {\em Journal of Statistical Computation and Simulation},
+  75(10):771--785, oct 2005.
+
+\bibitem{Grieve2016}
+Andrew~P. Grieve and Shah-Jalal Sarker.
+\newblock Simulation-based sample-sizing and power calculations in logistic
+  regression with partial prior information.
+\newblock {\em Pharmaceutical Statistics}, 15(6):507--516, sep 2016.
+
+\bibitem{Sutton2007}
+Alexander~J. Sutton, Nicola~J. Cooper, David~R. Jones, Paul~C. Lambert, John~R.
+  Thompson, and Keith~R. Abrams.
+\newblock Evidence-based sample size calculations based upon updated
+  meta-analysis.
+\newblock {\em Statistics in Medicine}, 26(12):2479--2500, 2007.
+
+\bibitem{Kontopantelis2016}
+Evangelos Kontopantelis, David~A Springate, Rosa Parisi, and David Reeves.
+\newblock Simulation-based power calculations for mixed effects modeling:
+  ipdpower in stata.
+\newblock {\em Journal of Statistical Software}, 74(12), 2016.
+
+\bibitem{Fedorov2005}
+Valerii Fedorov and Byron Jones.
+\newblock The design of multicentre trials.
+\newblock {\em Statistical Methods in Medical Research}, 14(3):205--248, 2005.
+\newblock PMID: 15969302.
+
+\bibitem{Baio2015}
+Gianluca Baio, Andrew Copas, Gareth Ambler, James Hargreaves, Emma Beard, and
+  Rumana~Z Omar.
+\newblock Sample size calculation for a stepped wedge trial.
+\newblock {\em Trials}, 16(1), aug 2015.
+
+\bibitem{Hooper2016}
+Richard Hooper, Steven Teerenstra, Esther de~Hoop, and Sandra Eldridge.
+\newblock Sample size calculation for stepped wedge and other longitudinal
+  cluster randomised trials.
+\newblock {\em Statistics in Medicine}, 35(26):4718--4728, jun 2016.
+
+\bibitem{Reich2012}
+Nicholas~G. Reich, Jessica~A. Myers, Daniel Obeng, Aaron~M. Milstone, and
+  Trish~M. Perl.
+\newblock Empirical power and sample size calculations for cluster-randomized
+  and cluster-randomized crossover studies.
+\newblock {\em PLOS ONE}, 7(4):1--7, 04 2012.
+
+\bibitem{Wilson2015}
+D.~T. Wilson, R.~E. Walwyn, J.~Brown, A.~J. Farrin, and S.~R. Brown.
+\newblock Statistical challenges in assessing potential efficacy of complex
+  interventions in pilot or feasibility studies.
+\newblock {\em Statistical Methods in Medical Research}, 25(3):997--1009, jun
+  2015.
+
+\bibitem{Deb2002}
+K.~Deb, A.~Pratap, S.~Agarwal, and T.~Meyarivan.
+\newblock A fast and elitist multiobjective genetic algorithm: {NSGA}-{II}.
+\newblock {\em {IEEE} Transactions on Evolutionary Computation}, 6(2):182--197,
+  apr 2002.
+
+\bibitem{Mersmann2014}
+Olaf Mersmann.
+\newblock {\em mco: Multiple Criteria Optimization Algorithms and Related
+  Functions}, 2014.
+\newblock R package version 1.0-15.1.
+
+\bibitem{Sacks1989}
+Jerome Sacks, William~J. Welch, Toby~J. Mitchell, and Henry~P. Wynn.
+\newblock Design and analysis of computer experiments.
+\newblock {\em Statistical Science}, 4(4):409--423, 1989.
+
+\bibitem{Santner2003}
+Thomas~J. Santner, Brian~J. Williams, and William~I. Notz.
+\newblock {\em The Design and Analysis of Computer Experiments}.
+\newblock Springer-Verlag New York, Inc., 2003.
+
+\bibitem{Krige1951}
+D.G. Krige.
+\newblock A statistical approach to some basic mine valuation problems on the
+  witwatersrand.
+\newblock {\em Journal of the Southern African Institute of Mining and
+  Metallurgy}, 52(6):119--139, 1951.
+
+\bibitem{Rasmussen2006}
+Carl~Edward Rasmussen and Christopher K.~I. Williams.
+\newblock {\em Gaussian Processes for Machine Learning}.
+\newblock MIT Press, 2006.
+
+\bibitem{Roustant2012}
+Olivier Roustant, David Ginsbourger, and Yves Deville.
+\newblock {DiceKriging}, {DiceOptim}: Two {R} packages for the analysis of
+  computer experiments by kriging-based metamodeling and optimization.
+\newblock {\em Journal of Statistical Software}, 51(1):1--55, 2012.
+
+\bibitem{Jones2001}
+Donald~R. Jones.
+\newblock A taxonomy of global optimization methods based on response surfaces.
+\newblock {\em Journal of Global Optimization}, 21(4):345--383, 2001.
+
+\bibitem{Sasena2002}
+Michael~J. Sasena, Panos Papalambros, and Pierre Goovaerts.
+\newblock Exploration of metamodeling sampling criteria for constrained global
+  optimization.
+\newblock {\em Engineering Optimization}, 34(3):263--278, jan 2002.
+
+\bibitem{Emmerich2011}
+Michael~TM Emmerich, Andr{\'e}~H Deutz, and Jan~Willem Klinkenberg.
+\newblock Hypervolume-based expected improvement: Monotonicity properties and
+  exact computation.
+\newblock In {\em Evolutionary Computation (CEC), 2011 IEEE Congress on}, pages
+  2147--2154. IEEE, 2011.
+
+\bibitem{Picheny2014}
+Victor Picheny and David Ginsbourger.
+\newblock Noisy kriging-based optimization methods: A unified implementation
+  within the {DiceOptim} package.
+\newblock {\em Computational Statistics {\&} Data Analysis}, 71:1035--1053, mar
+  2014.
+
+\bibitem{Browne2009}
+William~J Browne, Mousa~Golalizadeh Lahi, and Richard~MA Parker.
+\newblock {\em A Guide to Sample Size Calculations for Random Effect Models via
+  Simulation and the MLPowSim Software Package}, 2009.
+
+\bibitem{White2007}
+Peter White, Michael Sharpe, Trudie Chalder, Julia DeCesare, Rebecca Walwyn,
+  and the PACE~trial group.
+\newblock Protocol for the pace trial: A randomised controlled trial of
+  adaptive pacing, cognitive behaviour therapy, and graded exercise as
+  supplements to standardised specialist medical care versus standardised
+  specialist medical care alone for patients with the chronic fatigue
+  syndrome/myalgic encephalomyelitis or encephalopathy.
+\newblock {\em BMC Neurology}, 7(1):6, 2007.
+
+\bibitem{White2011}
+PD~White, KA~Goldsmith, AL~Johnson, L~Potts, R~Walwyn, JC~DeCesare, HL~Baber,
+  M~Burgess, LV~Clark, DL~Cox, J~Bavinton, BJ~Angus, G~Murphy, M~Murphy,
+  H~O'Dowd, D~Wilks, P~McCrone, T~Chalder, and M~Sharpe.
+\newblock Comparison of adaptive pacing therapy, cognitive behaviour therapy,
+  graded exercise therapy, and specialist medical care for chronic fatigue
+  syndrome (pace): a randomised trial.
+\newblock {\em The Lancet}, 377(9768):823--836, 2011.
+
+\bibitem{Chalder1993}
+T~Chalder, G~Berelowitz, S~Hirsch, T~Pawlikowska, P~Wallace, and S~Wessely.
+\newblock Development of a fatigue scale.
+\newblock {\em Journal of Psychometric Research}, 37(2):147--153, 1993.
+
+\bibitem{Walwyn2010}
+Rebecca E.~A. Walwyn and Chris Roberts.
+\newblock Therapist variation within randomised trials of psychotherapy:
+  implications for precision, internal and external validity.
+\newblock {\em Statistical Methods in Medical Research}, 19(3):291--315, 2010.
+
+\bibitem{Roberts2015}
+Chris Roberts, Evridiki Batistatou, and Stephen~A. Roberts.
+\newblock Design and analysis of trials with a partially nested design and a
+  binary outcome measure.
+\newblock {\em Statistics in Medicine}, 35(10):1616--1636, 2015.
+
+\bibitem{McHorney1993}
+Colleen~A. McHorney, John~E. Ware, and Anastasia~E. Raczek.
+\newblock The mos 36-item short-form health survey (sf-36): Ii. psychometric
+  and clinical tests of validity in measuring physical and mental health
+  constructs.
+\newblock {\em Medical Care}, 31(3):247--263, 1993.
+
+\bibitem{Senn2007}
+Stephen Senn and Frank Bretz.
+\newblock Power and sample size when multiple endpoints are considered.
+\newblock {\em Pharmaceut. Statist.}, 6(3):161--170, 2007.
+
+\bibitem{Jones1998}
+Donald~R. Jones, Matthias Schonlau, and William~J. Welch.
+\newblock Efficient global optimization of expensive black-box functions.
+\newblock {\em Journal of Global Optimization}, 13(4):455--492, 1998.
+
+\bibitem{Bendtsen2012}
+Claus Bendtsen.
+\newblock {\em pso: Particle Swarm Optimization}, 2012.
+\newblock R package version 1.0.3.
+
+\bibitem{Picheny2010}
+V.~Picheny, D.~Ginsbourger, and Y.~Richet.
+\newblock Noisy expected improvement and on-line computation time allocation
+  for the optimization of simulators with tunable fidelity.
+\newblock In {\em 2nd International Conference on Engineering Optimization},
+  2010.
+
+\bibitem{Dutang2015}
+Christophe Dutang and Petr Savicky.
+\newblock {\em randtoolbox: Generating and Testing Random Numbers}, 2015.
+\newblock R package version 1.17.
+
+\bibitem{Chevalier2014}
+Cl{\'{e}}ment Chevalier, Victor Picheny, and David Ginsbourger.
+\newblock {KrigInv}: An efficient and user-friendly implementation of
+  batch-sequential inversion strategies based on kriging.
+\newblock {\em Computational Statistics {\&} Data Analysis}, 71:1021--1034, mar
+  2014.
+
+\bibitem{Bates2015}
+Douglas Bates, Martin M{\"a}chler, Ben Bolker, and Steve Walker.
+\newblock Fitting linear mixed-effects models using {lme4}.
+\newblock {\em Journal of Statistical Software}, 67(1):1--48, 2015.
+
+\bibitem{Goldstein2003}
+Harvey Goldstein.
+\newblock {\em Multilevel Statistical Models}.
+\newblock Arnold, 3rd edition, 2003.
+
+\bibitem{Hemming2017}
+K~Hemming, S~Eldridge, G~Forbes, C~Weijer, and M~Taljaard.
+\newblock How to design efficient cluster randomised trials.
+\newblock {\em BMJ}, 358, 2017.
+
+\bibitem{Donner2000}
+Allan Donner and Neil Klar.
+\newblock {\em Design and Analysis of Cluster Randomization Trials in Health
+  Research}.
+\newblock London Arnold Publishers, 2000.
+
+\bibitem{Hemming2011}
+Karla Hemming, Alan Girling, Alice Sitch, Jennifer Marsh, and Richard Lilford.
+\newblock Sample size calculations for cluster randomised controlled trials
+  with a fixed number of clusters.
+\newblock {\em BMC Medical Research Methodology}, 11(1):102, 2011.
+
+\bibitem{Eldridge2015}
+Sandra~M Eldridge, Ceire~E Costelloe, Brennan~C Kahan, Gillian~A Lancaster, and
+  Sally~M Kerry.
+\newblock How big should the pilot study for my cluster randomised trial be?
+\newblock {\em Statistical Methods in Medical Research}, 2015.
+
+\bibitem{Hox2002}
+Joop Hox.
+\newblock {\em Multilevel Analysis: Techniques and Applications}.
+\newblock Lawrence Erlbaum Associates, Inc., 2002.
+
+\bibitem{Snijders1993}
+Tom A.~B. Snijders and Roel~J. Bosker.
+\newblock Standard errors and sample sizes for two-level research.
+\newblock {\em Journal of Educational and Behavioral Statistics},
+  18(3):237--259, 1993.
+
+\bibitem{Raudenbush2000}
+Stephen~W. Raudenbush and Xiaofeng Liu.
+\newblock Statistical power and optimal design for multisite randomized trials.
+\newblock {\em Psychological Methods}, 5(2):199--213, 2000.
+
+\bibitem{Breukelen2012}
+Gerard~J.P. van Breukelen and Math~J.J.M. Candel.
+\newblock Calculating sample sizes for cluster randomized trials: We can keep
+  it simple and efficient!
+\newblock {\em Journal of Clinical Epidemiology}, 65(11):1212 -- 1218, 2012.
+
+\bibitem{Teerenstra2008}
+S.~Teerenstra, M.~Moerbeek, T.~van Achterberg, B.~J. Pelzer, and G.~F. Borm.
+\newblock Sample size calculations for 3-level cluster randomized trials.
+\newblock {\em Clinical Trials}, 5(5):486--495, sep 2008.
+
+\bibitem{Joseph1997a}
+Lawrence Joseph and David~B. Wolfson.
+\newblock Interval-based versus decision theoretic criteria for the choice of
+  sample size.
+\newblock {\em Journal of the Royal Statistical Society: Series D (The
+  Statistician)}, 46(2):145--149, 1997.
+
+\bibitem{Smith2010}
+Mike~K. Smith and Andrea Marshall.
+\newblock Importance of protocols for simulation studies in clinical drug
+  development.
+\newblock {\em Statistical Methods in Medical Research}, 2010.
+
+\bibitem{Burton2006}
+Andrea Burton, Douglas~G. Altman, Patrick Royston, and Roger~L. Holder.
+\newblock The design of simulation studies in medical statistics.
+\newblock {\em Statistics in Medicine}, 25(24):4279--4292, 2006.
+
+\bibitem{Kennedy2001}
+Marc~C. Kennedy and Anthony O'Hagan.
+\newblock Bayesian calibration of computer models.
+\newblock {\em Journal of the Royal Statistical Society: Series B (Statistical
+  Methodology)}, 63(3):425--464, 2001.
+
+\bibitem{OHagan2005}
+Anthony O'Hagan, John~W. Stevens, and Michael~J. Campbell.
+\newblock Assurance in clinical trial design.
+\newblock {\em Pharmaceutical Statistics}, 4(3):187--201, 2005.
+
+\bibitem{Cao2009}
+Jing Cao, J.~Jack Lee, and Susan Alber.
+\newblock Comparison of bayesian sample size criteria: {ACC}, {ALC}, and {WOC}.
+\newblock {\em Journal of Statistical Planning and Inference}, 139(12):4111 --
+  4122, 2009.
+
+\bibitem{Oakley2010}
+Jeremy~E. Oakley, Alan Brennan, Paul Tappenden, and Jim Chilcott.
+\newblock Simulation sample sizes for monte carlo partial evpi calculations.
+\newblock {\em Journal of Health Economics}, 29(3):468 -- 477, 2010.
+
+\bibitem{Wason2012}
+James M.~S. Wason and Thomas Jaki.
+\newblock Optimal design of multi-arm multi-stage trials.
+\newblock {\em Statistics in Medicine}, 31(30):4269--4279, jul 2012.
+
+\end{thebibliography}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2019.3.21)  23 JUL 2019 13:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840 64-bit) (preloaded format=pdflatex 2019.3.21)  13 AUG 2019 16:00
 entering extended mode
 **./Bayes_opt_SSD.tex
 (Bayes_opt_SSD.tex
@@ -21,9 +21,6 @@ File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-)
-(C:\Users\meddwilb\AppData\Roaming\MiKTeX\2.9\tex\latex\setspace\setspace.sty
-Package: setspace 2011/12/19 v6.7a set line spacing
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
@@ -454,23 +451,16 @@ LaTeX Font Info:    Try loading font information for OMS+cmss on input line 52.
 LaTeX Font Info:    No file OMScmss.fd. on input line 52.
 LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead on input line 52.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <7> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 54.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 57.
  [1
 
 {C:/Users/meddwilb/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <10> not available
-(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 59.
+(Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 65.
  [2] [3]
 LaTeX Font Warning: Font shape `OT1/cmss/m/it' in size <12> not available
 (Font)              Font shape `OT1/cmss/m/sl' tried instead on input line 74.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [4]
 Package epstopdf Info: Source file: <./figures/ex1_structure.eps>
 (epstopdf)                    date: 2019-01-09 15:46:21
 (epstopdf)                    size: 29948 bytes
@@ -486,17 +476,17 @@ Package epstopdf Info: Output file is already uptodate.
 
 pdfTeX warning: pdflatex (file ./figures/ex1_structure-eps-converted-to.pdf): P
 DF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/ex1_structure-eps-converted-to.pdf, id=24, 482.80376pt x 198.7425pt>
+<./figures/ex1_structure-eps-converted-to.pdf, id=21, 482.80376pt x 198.7425pt>
 
 File: ./figures/ex1_structure-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex1_structure-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex1_structure-eps-converted-to.pdf  used on 
 input line 80.
 (pdftex.def)             Requested size: 337.96033pt x 139.11879pt.
-[5 <./figures/ex1_structure-eps-converted-to.pdf>] [6] [7] [8] [9]
+[4 <./figures/ex1_structure-eps-converted-to.pdf>] [5] [6] [7]
 Package epstopdf Info: Source file: <./figures/fake_pareto.eps>
-(epstopdf)                    date: 2019-04-04 10:35:50
-(epstopdf)                    size: 80338 bytes
+(epstopdf)                    date: 2019-07-23 14:30:02
+(epstopdf)                    size: 78525 bytes
 (epstopdf)             Output file: <./figures/fake_pareto-eps-converted-to.pdf
 >
 (epstopdf)                    date: 2019-04-04 10:36:58
@@ -504,18 +494,24 @@ Package epstopdf Info: Source file: <./figures/fake_pareto.eps>
 (epstopdf)             Command: <epstopdf --outfile=./figures/fake_pareto-eps-c
 onverted-to.pdf ./figures/fake_pareto.eps>
 (epstopdf)             \includegraphics on input line 152.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(epstopdf --outfile=./figures/fake_pareto-eps-converted-to.pdf ./figur
+es/fake_pareto.eps)...executed (allowed).
+
+Package epstopdf Info: Result file: <./figures/fake_pareto-eps-converted-to.pdf
+>
+(epstopdf)                    date: 2019-08-13 16:00:39
+(epstopdf)                    size: 35249 bytes.
 
 
 pdfTeX warning: pdflatex (file ./figures/fake_pareto-eps-converted-to.pdf): PDF
  inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/fake_pareto-eps-converted-to.pdf, id=60, 361.35pt x 216.81pt>
+<./figures/fake_pareto-eps-converted-to.pdf, id=54, 361.35pt x 216.81pt>
 File: ./figures/fake_pareto-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/fake_pareto-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/fake_pareto-eps-converted-to.pdf  used on in
 put line 152.
 (pdftex.def)             Requested size: 289.0804pt x 173.44823pt.
-[10 <./figures/fake_pareto-eps-converted-to.pdf>]
+[8 <./figures/fake_pareto-eps-converted-to.pdf>]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 184.
 
 
@@ -524,13 +520,13 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 184.
- [11]
+ [9]
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 199.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 199.
 Package epstopdf Info: Source file: <./figures/GP_example.eps>
-(epstopdf)                    date: 2019-04-01 09:01:12
+(epstopdf)                    date: 2019-07-23 14:30:23
 (epstopdf)                    size: 116760 bytes
 (epstopdf)             Output file: <./figures/GP_example-eps-converted-to.pdf>
 
@@ -539,31 +535,27 @@ Package epstopdf Info: Source file: <./figures/GP_example.eps>
 (epstopdf)             Command: <epstopdf --outfile=./figures/GP_example-eps-co
 nverted-to.pdf ./figures/GP_example.eps>
 (epstopdf)             \includegraphics on input line 209.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(epstopdf --outfile=./figures/GP_example-eps-converted-to.pdf ./figure
+s/GP_example.eps)...executed (allowed).
+
+Package epstopdf Info: Result file: <./figures/GP_example-eps-converted-to.pdf>
+
+(epstopdf)                    date: 2019-08-13 16:00:41
+(epstopdf)                    size: 56999 bytes.
 
 
 pdfTeX warning: pdflatex (file ./figures/GP_example-eps-converted-to.pdf): PDF 
 inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/GP_example-eps-converted-to.pdf, id=79, 361.35pt x 237.88875pt>
+<./figures/GP_example-eps-converted-to.pdf, id=73, 361.35pt x 237.88875pt>
 File: ./figures/GP_example-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/GP_example-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/GP_example-eps-converted-to.pdf  used on inp
 ut line 209.
 (pdftex.def)             Requested size: 289.0804pt x 190.31123pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [12]
-[13 <./figures/GP_example-eps-converted-to.pdf>] [14]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [15]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [16]
+[10] [11 <./figures/GP_example-eps-converted-to.pdf>] [12] [13]
 Package epstopdf Info: Source file: <./figures/ex1_single_run.eps>
-(epstopdf)                    date: 2019-03-11 17:39:49
-(epstopdf)                    size: 16808 bytes
+(epstopdf)                    date: 2019-07-23 13:39:20
+(epstopdf)                    size: 16761 bytes
 (epstopdf)             Output file: <./figures/ex1_single_run-eps-converted-to.
 pdf>
 (epstopdf)                    date: 2019-03-21 09:03:15
@@ -571,20 +563,27 @@ pdf>
 (epstopdf)             Command: <epstopdf --outfile=./figures/ex1_single_run-ep
 s-converted-to.pdf ./figures/ex1_single_run.eps>
 (epstopdf)             \includegraphics on input line 280.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(epstopdf --outfile=./figures/ex1_single_run-eps-converted-to.pdf ./fi
+gures/ex1_single_run.eps)...executed (allowed).
+
+Package epstopdf Info: Result file: <./figures/ex1_single_run-eps-converted-to.
+pdf>
+(epstopdf)                    date: 2019-08-13 16:00:41
+(epstopdf)                    size: 11317 bytes.
 
 
 pdfTeX warning: pdflatex (file ./figures/ex1_single_run-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/ex1_single_run-eps-converted-to.pdf, id=105, 398.48875pt x 255.95625
-pt>
+<./figures/ex1_single_run-eps-converted-to.pdf, id=96, 398.48875pt x 255.95625p
+t>
 File: ./figures/ex1_single_run-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex1_single_run-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex1_single_run-eps-converted-to.pdf  used on
  input line 280.
 (pdftex.def)             Requested size: 318.79143pt x 204.76526pt.
+[14 <./figures/ex1_single_run-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./figures/ex1_traj.eps>
-(epstopdf)                    date: 2019-03-11 17:40:07
+(epstopdf)                    date: 2019-07-23 13:39:31
 (epstopdf)                    size: 9688 bytes
 (epstopdf)             Output file: <./figures/ex1_traj-eps-converted-to.pdf>
 (epstopdf)                    date: 2019-03-21 09:03:16
@@ -592,25 +591,25 @@ Package epstopdf Info: Source file: <./figures/ex1_traj.eps>
 (epstopdf)             Command: <epstopdf --outfile=./figures/ex1_traj-eps-conv
 erted-to.pdf ./figures/ex1_traj.eps>
 (epstopdf)             \includegraphics on input line 291.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(epstopdf --outfile=./figures/ex1_traj-eps-converted-to.pdf ./figures/
+ex1_traj.eps)...executed (allowed).
+
+Package epstopdf Info: Result file: <./figures/ex1_traj-eps-converted-to.pdf>
+(epstopdf)                    date: 2019-08-13 16:00:42
+(epstopdf)                    size: 8925 bytes.
 
 
 pdfTeX warning: pdflatex (file ./figures/ex1_traj-eps-converted-to.pdf): PDF in
 clusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/ex1_traj-eps-converted-to.pdf, id=106, 398.48875pt x 255.95625pt>
+<./figures/ex1_traj-eps-converted-to.pdf, id=105, 398.48875pt x 255.95625pt>
 File: ./figures/ex1_traj-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex1_traj-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex1_traj-eps-converted-to.pdf  used on input
  line 291.
 (pdftex.def)             Requested size: 318.79143pt x 204.76526pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [17]
-[18 <./figures/ex1_single_run-eps-converted-to.pdf> <./figures/ex1_traj-eps-con
-verted-to.pdf>] (tables/ex1_results.txt) [19]
+(tables/ex1_results.txt) [15 <./figures/ex1_traj-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <./figures/ex2_single_run.eps>
-(epstopdf)                    date: 2019-03-12 14:23:06
+(epstopdf)                    date: 2019-07-23 14:27:55
 (epstopdf)                    size: 19826 bytes
 (epstopdf)             Output file: <./figures/ex2_single_run-eps-converted-to.
 pdf>
@@ -619,21 +618,28 @@ pdf>
 (epstopdf)             Command: <epstopdf --outfile=./figures/ex2_single_run-ep
 s-converted-to.pdf ./figures/ex2_single_run.eps>
 (epstopdf)             \includegraphics on input line 335.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(epstopdf --outfile=./figures/ex2_single_run-eps-converted-to.pdf ./fi
+gures/ex2_single_run.eps)...executed (allowed).
+
+Package epstopdf Info: Result file: <./figures/ex2_single_run-eps-converted-to.
+pdf>
+(epstopdf)                    date: 2019-08-13 16:00:43
+(epstopdf)                    size: 12115 bytes.
 
 
 pdfTeX warning: pdflatex (file ./figures/ex2_single_run-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/ex2_single_run-eps-converted-to.pdf, id=130, 398.48875pt x 255.95625
+<./figures/ex2_single_run-eps-converted-to.pdf, id=114, 398.48875pt x 255.95625
 pt>
 File: ./figures/ex2_single_run-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex2_single_run-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex2_single_run-eps-converted-to.pdf  used on
  input line 335.
 (pdftex.def)             Requested size: 318.79143pt x 204.76526pt.
-(tables/ex2_results.txt) [20 <./figures/ex2_single_run-eps-converted-to.pdf>]
+(tables/ex2_results.txt) [16] [17 <./figures/ex2_single_run-eps-converted-to.pd
+f>]
 Package epstopdf Info: Source file: <./figures/ex3_single_run.eps>
-(epstopdf)                    date: 2019-03-20 08:18:06
+(epstopdf)                    date: 2019-07-23 14:29:26
 (epstopdf)                    size: 11316 bytes
 (epstopdf)             Output file: <./figures/ex3_single_run-eps-converted-to.
 pdf>
@@ -642,37 +648,36 @@ pdf>
 (epstopdf)             Command: <epstopdf --outfile=./figures/ex3_single_run-ep
 s-converted-to.pdf ./figures/ex3_single_run.eps>
 (epstopdf)             \includegraphics on input line 361.
-Package epstopdf Info: Output file is already uptodate.
+runsystem(epstopdf --outfile=./figures/ex3_single_run-eps-converted-to.pdf ./fi
+gures/ex3_single_run.eps)...executed (allowed).
+
+Package epstopdf Info: Result file: <./figures/ex3_single_run-eps-converted-to.
+pdf>
+(epstopdf)                    date: 2019-08-13 16:00:44
+(epstopdf)                    size: 8123 bytes.
 
 
 pdfTeX warning: pdflatex (file ./figures/ex3_single_run-eps-converted-to.pdf): 
 PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<./figures/ex3_single_run-eps-converted-to.pdf, id=139, 398.48875pt x 255.95625
+<./figures/ex3_single_run-eps-converted-to.pdf, id=129, 398.48875pt x 255.95625
 pt>
 File: ./figures/ex3_single_run-eps-converted-to.pdf Graphic file (type pdf)
 <use ./figures/ex3_single_run-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/ex3_single_run-eps-converted-to.pdf  used on
  input line 361.
 (pdftex.def)             Requested size: 318.79143pt x 204.76526pt.
-[21] (tables/ex3_results.txt) [22 <./figures/ex3_single_run-eps-converted-to.pd
-f>]
+(tables/ex3_results.txt) [18 <./figures/ex3_single_run-eps-converted-to.pdf>]
+[19] [20] (Bayes_opt_SSD.bbl [21]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [22]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [23]
-[24] (Bayes_opt_SSD.bbl [25]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [26]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [27]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [28]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [29])
-[30] (Bayes_opt_SSD.aux)
+ [24])
+[25] (Bayes_opt_SSD.aux)
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.72pt have occurred.
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -682,13 +687,13 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 5921 strings out of 492970
- 87773 string characters out of 3135846
- 165028 words of memory out of 3000000
- 9610 multiletter control sequences out of 15000+200000
+ 5891 strings out of 492970
+ 87187 string characters out of 3135846
+ 166707 words of memory out of 3000000
+ 9584 multiletter control sequences out of 15000+200000
  22692 words of font info for 88 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,10n,43p,1922b,546s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 43i,10n,43p,1922b,550s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTe
@@ -717,9 +722,9 @@ ti7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><
 C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Progr
 am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb><C:/Program Files/
 MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Bayes_opt_SSD.pdf (30 pages, 609090 bytes).
+Output written on Bayes_opt_SSD.pdf (25 pages, 602757 bytes).
 PDF statistics:
- 273 PDF objects out of 1000 (max. 8388607)
+ 258 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  36 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -13,7 +13,7 @@ require(gganimate)
 require(reshape2)
 require(pso)
 require(mco)
-require(randtoolbox)
+require(lhs)
 require(mvtnorm)
 require(DiceKriging)
 require(RColorBrewer)
@@ -147,7 +147,7 @@ DoE_num <- 20
 dim <- nrow(design_space)
   
 ## Choose initial points using a Sobol sequence
-DoE <- data.frame(sobol(DoE_num, dim))
+DoE <- data.frame(maximinLHS(DoE_num, dim))
 names(DoE) <- design_space$name
 for(i in 1:dim){
   DoE[,i] <-  DoE[,i]*(design_space$up[i]-design_space$low[i]) + design_space$low[i]
@@ -229,7 +229,11 @@ best <- function(design_space, models, DoE, b=NULL)
   sols <- DoE
   
   ## Get objective values
-  sols <- cbind(sols, t(apply(sols, 1, objective)))
+  if(nobj > 1){
+    sols <- cbind(sols, t(apply(sols, 1, objective)))
+  } else {
+    sols <- cbind(sols, apply(sols, 1, objective))
+  }
   names(sols)[(ncol(sols)-nobj+1):ncol(sols)] <- obj_names
   
   ## Penalise constraint violations
@@ -237,7 +241,7 @@ best <- function(design_space, models, DoE, b=NULL)
   for(i in 1:nrow(constraints)){
     mod <- models[[i]]
     nom <- constraints$nom[i]
-    p <- predict.km(mod, newdata=sols[,1:dim], type="SK")
+    p <- predict.km(mod, newdata=sols[,1:dim, drop=F], type="SK")
     pen <- pnorm(nom, p$mean, p$sd)
     pen <- ifelse(pen < constraints[i,4], 0.0000001, 1)
     sols$exp_pen <- sols$exp_pen*pen
@@ -255,7 +259,7 @@ best <- function(design_space, models, DoE, b=NULL)
       i <- i + 1
     }
     ## If b is now empty, then des is non-dominated
-    if(nrow(b)==1 | all(apply(b[,c("f1","f2")], 2, function(x) length(unique(x)) == 1) == TRUE) ) {
+    if(nrow(b)==1 | all(apply(b[,obj_names, drop=F], 2, function(x) length(unique(x)) == 1) == TRUE) ) {
       nondom <- TRUE
     } else {
       nondom <- FALSE
@@ -265,7 +269,7 @@ best <- function(design_space, models, DoE, b=NULL)
   
   nondom_sols <- sols[apply(sols, 1, is_nondom, b=sols), ]
   ## check for duplicates
-  sub <- unique(nondom_sols[,obj_names])
+  sub <- unique(nondom_sols[,obj_names, drop=F])
   
   return(nondom_sols[row.names(sub),])
 }
@@ -298,7 +302,7 @@ exp_improve <- function(design, N, p_set, models, design_space, constraints)
   for(i in 1:nrow(constraints)){
     mod <- models[[i]]
     nom <- constraints$nom[i]
-    p <- predict.km(mod, newdata=design[,1:dim], type="SK")
+    p <- predict.km(mod, newdata=design[,1:dim, drop=F], type="SK")
     means <- ifelse(p$mean < 0, 0, ifelse(p$mean > 1, 1, p$mean))
     mc_vars <- means*(1-means)/N
     pred_q_mean <- p$mean + qnorm(constraints[i,4])*sqrt(mc_vars*(p$sd^2)/(mc_vars+(p$sd^2)))
@@ -1214,6 +1218,237 @@ tab2
 #       sanitize.text.function = function(x) {x}, floating = F,
 #       file = "./paper/tables/ex3_results.txt")
 ```
+
+## Example 4
+
+As suggested by a reviewer, add a simple example where the exact result is known. We will look at the power of a two-sample t-test. Although we can calculate power exactly in this case, we replicate the simulation setting by adding some Monet Carlo error to the true power.
+
+### Simualtion
+
+```{r}
+calc_rates4 <- function(x, h, N)
+{
+  n <- x[[1]]; k <- x[[2]]; m <- n/k
+  var_t <- h[[2]]; rho <- h[[3]]
+  sig_c <- sqrt(var_t*rho + var_t/m - var_t*rho/m)
+  pow <- power.t.test(n = k, delta = h[[1]], sd = sig_c)$power
+  mc_err <- rnorm(1, 0, sqrt(pow*(1-pow)/N))
+  est <- pow + mc_err
+  res <- c(1-min(max(est, 0),1), pow*(1-pow)/N)
+  
+  res
+}
+
+## For example,
+x <- c(n=181, k = 20)
+h <- c(mu = 0.2, var_t = 1, rho = 0.05)
+
+ptm <- proc.time()
+calc_rates4(x, h, 10)
+proc.time() - ptm
+```
+
+### Algorithm
+
+```{r, eval=T}
+set.seed(90307)
+
+ptm <- proc.time()
+
+design_space <- data.frame(name=c("n","k"), 
+                           low=c(100,10), 
+                           up=c(500,100)
+)
+
+constraints <- data.frame(name=c("beta"), 
+                          hyp=c("H1"), 
+                          nom=c(0.1), 
+                          delta=c(0.975))
+
+nobj <- 2
+
+obj_names <- NULL
+for(i in 1:nobj){
+  obj_names <- c(obj_names, paste0("f",i))
+}
+
+objective <- function(x)
+{
+  c(x[1]*2/5, x[2])
+}
+
+DoE_num <- 20
+dim <- nrow(design_space)
+ref <- objective(design_space$up)
+  
+## Choose initial points
+DoE <- data.frame(optimumLHS(DoE_num, dim))
+names(DoE) <- design_space$name
+for(i in 1:dim){
+  DoE[,i] <-  DoE[,i]*(design_space$up[i]-design_space$low[i]) + design_space$low[i]
+}
+DoE[,1:2] <- round(DoE[,1:2])
+```
+
+```{r, eval=F}
+## Evaluate at initial points
+N <- 100
+h <- c(mu = 0.3, var_t = 1, rho = 0.05)
+DoE <- cbind(DoE, t(apply(DoE, 1, calc_rates4, h=h, N=N)))
+names(DoE)[3:4] <- c("beta", "beta_var")
+DoE$N <- N
+
+models <- list()
+for(i in 1:nrow(constraints)){
+  name <- constraints$name[i]
+  models <- append(models, km(~1, design=DoE[1:dim], response=DoE[,as.character(name)], 
+                             noise.var=DoE[,paste0(as.character(name), "_var")]))
+  names(models)[length(models)] <- as.character(name)
+}
+
+## Get the current set of Pareto solutions
+b <- best(design_space, models, DoE)
+
+DHs <- NULL
+
+proc.time() - ptm
+
+for(i in 1:30){
+  opt <- psoptim(rep(NA, nrow(design_space)), exp_improve, lower=design_space$low, upper=design_space$up,
+                 N=100, p_set=b, models=models, design_space=design_space, constraints=constraints,
+                 control=list(vectorize = T))
+  sol <- opt$par
+  sol <- round(sol)
+  
+  ## track the objective value at each step
+  p_set2 <- as.matrix(b[,obj_names])
+  current <- dominatedHypervolume(p_set2, ref)
+  DHs <- c(DHs, dominatedHypervolume(p_set2, ref))
+  
+  ## Do the evaluation and add to the design
+  y <- calc_rates4(sol, h, N=100)
+  
+  DoE <- rbind(DoE, c(sol, y, 100))
+  
+  models <- list()
+  for(i in 1:nrow(constraints)){
+    name <- constraints$name[i]
+    models <- append(models, km(~1, design=DoE[1:dim], response=DoE[,as.character(name)], 
+                             noise.var=DoE[,paste0(as.character(name), "_var")]))
+    names(models)[length(models)] <- as.character(name)
+  }
+
+  b <- best(design_space, models, DoE)
+}
+
+proc.time() - ptm
+# 96.33883 minutes
+
+## Save the dominated hypervolumes of the approximation sets at each iteration
+#saveRDS(DHs, "./data/ex2_single_run_DHs.Rda")
+
+## Save the final DoE table containing all the points evaluated over the whole algorithm
+#saveRDS(DoE, "./data/ex2_single_run_DoE.Rda")
+```
+
+Get the exact optimal sample sizes:
+```{r}
+calc_rates4_opt <- function(n, k, h)
+{
+  m <- n/k
+  var_t <- h[[2]]; rho <- h[[3]]
+  sig_c <- sqrt(var_t*rho + var_t/m - var_t*rho/m)
+  pow <- power.t.test(n = k, delta = h[[1]], sd = sig_c)$power
+
+  n + 100000000*(pow < 0.9)
+}
+
+ks <- 30:100
+ns <- sapply(ks, function(x) optim(200, calc_rates4_opt, method = "Brent", lower = 10, upper = 5000,
+                                   k = x, h = h)$par)
+
+plot(ns, ks)
+points(b[,1:2], col="red")
+```
+
+### Results
+
+```{r}
+DoE <- readRDS("./data/ex2_single_run_DoE.Rda")
+DHs <- readRDS("./data/ex2_single_run_DHs.Rda")
+
+models <- list()
+for(i in 1:nrow(constraints)){
+  name <- constraints$name[i]
+  models <- append(models, km(~1, design=DoE[1:dim], response=DoE[,as.character(name)], 
+                             noise.var=DoE[,paste0(as.character(name), "_var")]))
+  names(models)[length(models)] <- as.character(name)
+}
+
+b <- best(design_space, models, DoE)
+b2 <- b[,1:2]
+b2 <- rbind(c(min(b2[,1]), 30), b2, c(500, min(b2[,2])))
+
+# Get the GP predictions
+mod <- models[[1]]
+df <- expand.grid(n = seq(100,500,10), k=3:30)
+pred <- predict(mod, newdata=df, type="SK")
+df$beta <- pred$mean
+df$sd <- pred$sd
+```
+
+```{r}
+ggplot(df, aes(2*n, 3*k)) + geom_contour(aes(z=beta), colour = "light blue") + 
+  geom_point(data=DoE[1:20,], colour=colours[1], shape=1) +
+  geom_point(data=DoE[21:50,], colour=colours[2], shape=4) +
+  
+  geom_point(data=b2[2:(nrow(b2)-1),], colour=colours[3]) +
+  geom_step(data=b2, colour=colours[3], linetype=2) +
+
+  theme_minimal() + xlab("Number of participants") + ylab("Number of providers")
+
+#ggsave("./paper/figures/ex2_single_run.pdf", height=9, width=14, units="cm")
+#ggsave("./paper/figures/ex2_single_run.eps", height=9, width=14, units="cm")
+
+## Plot dominated hypervolumes over the search
+df2 <- data.frame(it = 1:30, DH=DHs)
+ggplot(df2, aes(it, DH)) + geom_point() + geom_line() + 
+  theme_minimal() + ylab("Dominated hypervolume") + xlab("Iteration")
+
+#ggsave("./paper/figures/ex2_traj.pdf", height=9, width=14, units="cm")
+#ggsave("./paper/figures/ex2_traj.eps", height=9, width=14, units="cm")
+```
+
+```{r, eval=F}
+tab <- b[,1:4]
+new_eval <- NULL
+for(i in 1:nrow(tab)){
+  new_eval <- rbind(new_eval, calc_rates2(as.numeric(tab[i, 1:2]), h=h, N=10000))
+}
+tab <- cbind(tab, new_eval)
+names(tab)[5:6] <- c("beta_2", "beta_var_2")
+
+#saveRDS(tab, "./data/ex2_large_N.Rda")
+```
+
+```{r}
+## Print the results in a table
+tab <- readRDS("./data/ex2_large_N.Rda")
+
+tab2 <- data.frame(n=tab$n*2, k=tab$k, j=tab$k*2, 
+                   beta=apply(tab[,3:4], 1, function(x) paste0(round(x[1], 2), " (", round(sqrt(x[2]), 3), ")")),
+                   beta_2=apply(tab[,5:6], 1, function(x) paste0(round(x[1], 3), " (", round(sqrt(x[2]), 3), ")"))
+                   )
+tab2 <- tab2[order(tab2$k),]
+colnames(tab2) <- c("$2n$", "$k$", "$j$", "$\\beta$ (s.e.), $N = 10^2$", "$\\beta$ (s.e.), $N = 50^4$")
+tab2
+
+# print(xtable(tab2, digits=0), booktabs = T, include.rownames = F, 
+#       sanitize.text.function = function(x) {x}, floating = F,
+#       file = "./paper/tables/ex2_results.txt")
+```
+
+
 
 ## Figures
 

@@ -1,0 +1,194 @@
+\relax 
+\citation{Arnold2011}
+\citation{Landau2013}
+\citation{Feng1992}
+\citation{Hooper2013}
+\citation{Schoenfeld2005}
+\citation{Grieve2016}
+\citation{Sutton2007}
+\citation{Kontopantelis2016}
+\citation{Fedorov2005}
+\citation{Baio2015}
+\citation{Hooper2016}
+\citation{Reich2012}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
+\newlabel{sec:intro}{{1}{1}}
+\citation{Wilson2015}
+\citation{Deb2002}
+\citation{Mersmann2014}
+\citation{Sacks1989}
+\citation{Santner2003}
+\citation{Krige1951}
+\citation{Rasmussen2006}
+\citation{Roustant2012}
+\citation{Jones2001}
+\citation{Sasena2002}
+\citation{Emmerich2011}
+\citation{Picheny2014}
+\citation{Browne2009}
+\citation{Kontopantelis2016}
+\citation{Baio2015}
+\citation{Hooper2013}
+\citation{White2007}
+\citation{White2011}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Motivating examples}{3}}
+\newlabel{sec:examples}{{2}{3}}
+\citation{Chalder1993}
+\citation{Walwyn2010}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Complex clustering}{4}}
+\newlabel{sec:ex1}{{2.1}{4}}
+\citation{Roberts2015}
+\citation{McHorney1993}
+\citation{Senn2007}
+\citation{Landau2013}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Multilevel structure of the SMC and APT arms of our example, where therapists (T) are partially nested within interventions, doctors (D) are crossed with interventions, and patients (P) are cross-classified with therapists and doctors in the intervention arm and nested within doctors in the control arm.}}{5}}
+\newlabel{fig:ex1_structure}{{1}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Co-primary endpoints}{5}}
+\newlabel{sec:ex2}{{2.2}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Small sample pilot}{6}}
+\newlabel{sec:ex3}{{2.3}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Background}{6}}
+\newlabel{sec:prelim}{{3}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Monte Carlo estimation}{6}}
+\newlabel{sec:MC}{{3.1}{6}}
+\citation{Landau2013}
+\newlabel{eqn:MC_error}{{3}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Multi-objective optimisation}{7}}
+\newlabel{sec:optimisation}{{3.2}{7}}
+\citation{Emmerich2011}
+\citation{Jones1998}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Simulation-based sample size determination}{8}}
+\newlabel{sec:methods}{{4}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Overview}{8}}
+\citation{Jones1998}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Example Pareto front $\mathcal  {X}_{p}$ and approximation set $\mathcal  {A}$ for a cluster randomised trial design problem. The dominated hypervolume of the approximation set with respect to a reference point (cross) is the shaded area.}}{9}}
+\newlabel{fig:fake_pareto}{{2}{9}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Efficient Global Optimisation\nobreakspace  {}\cite  {Jones1998}}}{9}}
+\newlabel{alg:EGO}{{1}{9}}
+\citation{Rasmussen2006}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Gaussian process regression}{10}}
+\newlabel{sec:GP}{{4.2}{10}}
+\newlabel{eqn:cov_matrix}{{8}{10}}
+\citation{Rasmussen2006}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces A Gaussian process model of a power function over a one-dimensional sample size (solid line) based on three evaluations. Uncertainty is shown as the shaded area. Expected improvement (dotted line) is maximised at a sample size of 190, where the predicted power is normally distributed around a mean estimate of 0.84 (dashed line).}}{11}}
+\newlabel{fig:GP_example}{{3}{11}}
+\newlabel{eqn:loglik}{{10}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Expected improvement}{11}}
+\newlabel{sec:EGO}{{4.3}{11}}
+\citation{Picheny2014}
+\citation{Sasena2002}
+\citation{Bendtsen2012}
+\newlabel{eqn:quant}{{12}{12}}
+\citation{Picheny2010}
+\citation{Dutang2015}
+\citation{Chevalier2014}
+\citation{Roustant2012}
+\citation{Bendtsen2012}
+\citation{Bates2015}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Implementation}{13}}
+\citation{Goldstein2003}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Application to the examples}{14}}
+\newlabel{sec:application}{{5}{14}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Complex clustering}{14}}
+\newlabel{eqn:ex1_model}{{16}{14}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Objective values of solutions in the initial set $\mathcal  {X}_{E}$ (open circles), subsequent iterations of the algorithm (crosses), and those in the final approximation of the Pareto set (filled squares). The approximation set obtained using a fixed design is also shown (filled circles). Contours represent the mean function of the final GP model.}}{16}}
+\newlabel{fig:ex1_single_run}{{4}{16}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Quality of the approximation set obtained as the algorithm proceeds, where higher dominated hypervolume reflects higher quality.}}{16}}
+\newlabel{fig:ex1_traj}{{5}{16}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Approximation set after 30 iterations for Example 1. Solutions are defined by their total sample size $2n$, number of therapists $k$, and number of doctors $j$. Type II error rate $\beta $ is constrained to be below 0.1, while the total sample size and number of providers are to be minimised.}}{17}}
+\newlabel{tab:ex1_single_run}{{1}{17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Co-primary endpoints}{17}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Objective values of solutions in the initial set $\mathcal  {X}_{E}$ (open circles), subsequent iterations of the algorithm (crosses), and those in the final approximation of the Pareto set (filled squares).}}{18}}
+\newlabel{fig:ex2_single_run}{{6}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Small sample pilot}{18}}
+\citation{Landau2013}
+\citation{Hooper2013}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Approximation set after 30 iterations for Example 2. Solutions are defined by their total sample size $2n$, number of therapists $k$, and number of doctors $j$. Type II error rate $\beta $ is constrained to be below 0.1, while the total sample size and number of providers are to be minimised.}}{19}}
+\newlabel{tab:ex2_single_run}{{2}{19}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{19}}
+\newlabel{sec:discussion}{{6}{19}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Objective values of the approximation set obtained following 50 iterations of the algorithm for Example 3.}}{20}}
+\newlabel{fig:ex3_single_run}{{7}{20}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Approximation set after 50 iterations for Example 3. Solutions are defined by the number of participants in the APT arm $n_1$, the total number of participants across both arms $n$, the number of therapists $k$, the number of doctors $j$, and the nominal type I error rates $a$. Both Type I and II error rates are estimated using simulation using $N$ samples, and are constrained at 0.2 and 0.1 respectively.}}{20}}
+\newlabel{tab:ex3_single_run}{{3}{20}}
+\citation{Hemming2017}
+\citation{Donner2000}
+\citation{Hemming2011}
+\citation{Eldridge2015}
+\citation{Hox2002}
+\citation{Snijders1993}
+\citation{Raudenbush2000}
+\citation{Breukelen2012}
+\citation{Teerenstra2008}
+\citation{Joseph1997a}
+\citation{Kontopantelis2016}
+\citation{Smith2010}
+\citation{Hooper2013}
+\citation{Smith2010}
+\citation{Burton2006}
+\citation{Emmerich2011}
+\citation{Landau2013}
+\citation{Kennedy2001}
+\citation{OHagan2005}
+\citation{Cao2009}
+\citation{Oakley2010}
+\citation{OHagan2005}
+\citation{Wason2012}
+\bibstyle{unsrt}
+\bibdata{C:/Users/meddwilb/Documents/Literature/Databases/DTWrefs}
+\bibcite{Arnold2011}{1}
+\bibcite{Landau2013}{2}
+\bibcite{Feng1992}{3}
+\bibcite{Hooper2013}{4}
+\bibcite{Schoenfeld2005}{5}
+\bibcite{Grieve2016}{6}
+\bibcite{Sutton2007}{7}
+\bibcite{Kontopantelis2016}{8}
+\bibcite{Fedorov2005}{9}
+\bibcite{Baio2015}{10}
+\bibcite{Hooper2016}{11}
+\bibcite{Reich2012}{12}
+\bibcite{Wilson2015}{13}
+\bibcite{Deb2002}{14}
+\bibcite{Mersmann2014}{15}
+\bibcite{Sacks1989}{16}
+\bibcite{Santner2003}{17}
+\bibcite{Krige1951}{18}
+\bibcite{Rasmussen2006}{19}
+\bibcite{Roustant2012}{20}
+\bibcite{Jones2001}{21}
+\bibcite{Sasena2002}{22}
+\bibcite{Emmerich2011}{23}
+\bibcite{Picheny2014}{24}
+\bibcite{Browne2009}{25}
+\bibcite{White2007}{26}
+\bibcite{White2011}{27}
+\bibcite{Chalder1993}{28}
+\bibcite{Walwyn2010}{29}
+\bibcite{Roberts2015}{30}
+\bibcite{McHorney1993}{31}
+\bibcite{Senn2007}{32}
+\bibcite{Jones1998}{33}
+\bibcite{Bendtsen2012}{34}
+\bibcite{Picheny2010}{35}
+\bibcite{Dutang2015}{36}
+\bibcite{Chevalier2014}{37}
+\bibcite{Bates2015}{38}
+\bibcite{Goldstein2003}{39}
+\bibcite{Hemming2017}{40}
+\bibcite{Donner2000}{41}
+\bibcite{Hemming2011}{42}
+\bibcite{Eldridge2015}{43}
+\bibcite{Hox2002}{44}
+\bibcite{Snijders1993}{45}
+\bibcite{Raudenbush2000}{46}
+\bibcite{Breukelen2012}{47}
+\bibcite{Teerenstra2008}{48}
+\bibcite{Joseph1997a}{49}
+\bibcite{Smith2010}{50}
+\bibcite{Burton2006}{51}
+\bibcite{Kennedy2001}{52}
+\bibcite{OHagan2005}{53}
+\bibcite{Cao2009}{54}
+\bibcite{Oakley2010}{55}
+\bibcite{Wason2012}{56}
