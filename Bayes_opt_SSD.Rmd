@@ -13,7 +13,7 @@ require(gganimate)
 require(reshape2)
 require(pso)
 require(mco)
-require(lhs)
+require(randtoolbox)
 require(mvtnorm)
 require(DiceKriging)
 require(RColorBrewer)
@@ -147,7 +147,7 @@ DoE_num <- 20
 dim <- nrow(design_space)
   
 ## Choose initial points using a Sobol sequence
-DoE <- data.frame(maximinLHS(DoE_num, dim))
+DoE <- data.frame(sobol(DoE_num, dim))
 names(DoE) <- design_space$name
 for(i in 1:dim){
   DoE[,i] <-  DoE[,i]*(design_space$up[i]-design_space$low[i]) + design_space$low[i]
@@ -332,7 +332,7 @@ exp_improve <- function(design, N, p_set, models, design_space, constraints)
 ## Find the next point to evaluate, using a particlae swarm algorithm:
 opt <- psoptim(rep(NA, 2), exp_improve, lower=design_space$low, upper=design_space$up,
                N=100, p_set=b, models=models, design_space=design_space, constraints=constraints,
-               control=list(vectorize = T))
+               control=list(vectorize = T, max.restart=1, reltol=0.0001, trace=1))
 sol <- opt$par
 sol[1:2] <- round(sol[1:2])
 
@@ -1221,7 +1221,7 @@ tab2
 
 ## Example 4
 
-As suggested by a reviewer, add a simple example where the exact result is known. We will look at the power of a two-sample t-test. Although we can calculate power exactly in this case, we replicate the simulation setting by adding some Monet Carlo error to the true power.
+As suggested by a reviewer, we here add a simple example where the exact result is known. We will look at the power of a two-sample t-test. Although we can calculate power exactly in this case, we replicate the simulation setting by adding some Monet Carlo error to the true power.
 
 ### Simualtion
 
@@ -1232,23 +1232,24 @@ calc_rates4 <- function(x, h, N)
   var_t <- h[[2]]; rho <- h[[3]]
   sig_c <- sqrt(var_t*rho + var_t/m - var_t*rho/m)
   pow <- power.t.test(n = k, delta = h[[1]], sd = sig_c)$power
-  mc_err <- rnorm(1, 0, sqrt(pow*(1-pow)/N))
-  est <- pow + mc_err
-  res <- c(1-min(max(est, 0),1), pow*(1-pow)/N)
+  
+  res <- c(1 - rbinom(1, N, pow)/N, pow*(1-pow)/N)
   
   res
 }
 
 ## For example,
-x <- c(n=181, k = 20)
-h <- c(mu = 0.2, var_t = 1, rho = 0.05)
+x <- c(n=342, k = 18)
+h <- c(mu = 0.3, var_t = 1, rho = 0.05)
 
 ptm <- proc.time()
-calc_rates4(x, h, 10)
+calc_rates4(x, h, 1000)
 proc.time() - ptm
 ```
 
 ### Algorithm
+
+The proposed method is stochastic, leading to a different approximation set each time it is run. To understand the variation in the quality of these sets, we run the algorithm 500 times and for each run record the dominated hypervolume trajectories. We will also record the number of solutions in each final set, and the proportion of these which do indeed have sufficient power. In the first run, we will save the full details of all evaluations for illustration later.
 
 ```{r, eval=T}
 set.seed(90307)
@@ -1280,81 +1281,121 @@ objective <- function(x)
 DoE_num <- 20
 dim <- nrow(design_space)
 ref <- objective(design_space$up)
-  
-## Choose initial points
-DoE <- data.frame(optimumLHS(DoE_num, dim))
-names(DoE) <- design_space$name
-for(i in 1:dim){
-  DoE[,i] <-  DoE[,i]*(design_space$up[i]-design_space$low[i]) + design_space$low[i]
-}
-DoE[,1:2] <- round(DoE[,1:2])
 ```
 
 ```{r, eval=F}
-## Evaluate at initial points
-N <- 100
-h <- c(mu = 0.3, var_t = 1, rho = 0.05)
-DoE <- cbind(DoE, t(apply(DoE, 1, calc_rates4, h=h, N=N)))
-names(DoE)[3:4] <- c("beta", "beta_var")
-DoE$N <- N
-
-models <- list()
-for(i in 1:nrow(constraints)){
-  name <- constraints$name[i]
-  models <- append(models, km(~1, design=DoE[1:dim], response=DoE[,as.character(name)], 
-                             noise.var=DoE[,paste0(as.character(name), "_var")]))
-  names(models)[length(models)] <- as.character(name)
-}
-
-## Get the current set of Pareto solutions
-b <- best(design_space, models, DoE)
-
-DHs <- NULL
-
-proc.time() - ptm
-
-for(i in 1:30){
-  opt <- psoptim(rep(NA, nrow(design_space)), exp_improve, lower=design_space$low, upper=design_space$up,
-                 N=100, p_set=b, models=models, design_space=design_space, constraints=constraints,
-                 control=list(vectorize = T))
-  sol <- opt$par
-  sol <- round(sol)
+M <- 500
+all_res <- NULL
+ptm <- proc.time()
+DoE_num <- 20
   
-  ## track the objective value at each step
-  p_set2 <- as.matrix(b[,obj_names])
-  current <- dominatedHypervolume(p_set2, ref)
-  DHs <- c(DHs, dominatedHypervolume(p_set2, ref))
+for(iter in 1:M){
+
+  ## Choose initial points
+  DoE <- data.frame(sobol(DoE_num, dim))
+  names(DoE) <- design_space$name
+  for(i in 1:dim){
+    DoE[,i] <-  DoE[,i]*(design_space$up[i]-design_space$low[i]) + design_space$low[i]
+  }
+  DoE[,1:2] <- round(DoE[,1:2])
   
-  ## Do the evaluation and add to the design
-  y <- calc_rates4(sol, h, N=100)
-  
-  DoE <- rbind(DoE, c(sol, y, 100))
+  ## Evaluate at initial points
+  N <- 100
+  h <- c(mu = 0.3, var_t = 1, rho = 0.05)
+  DoE <- cbind(DoE, t(apply(DoE, 1, calc_rates4, h=h, N=N)))
+  names(DoE)[3:4] <- c("beta", "beta_var")
+  DoE$N <- N
   
   models <- list()
   for(i in 1:nrow(constraints)){
     name <- constraints$name[i]
     models <- append(models, km(~1, design=DoE[1:dim], response=DoE[,as.character(name)], 
-                             noise.var=DoE[,paste0(as.character(name), "_var")]))
+                               noise.var=DoE[,paste0(as.character(name), "_var")]))
     names(models)[length(models)] <- as.character(name)
   }
-
+  
+  ## Get the current set of Pareto solutions
   b <- best(design_space, models, DoE)
+  
+  DHs <- NULL
+  
+  proc.time() - ptm
+  
+  sink("NUL") # suppress output to the console
+  
+  # For the first run, do 200 iterations and save as an example
+  iter <- 50 - DoE_num
+  if(M == 1) iter <- 200 - DoE_num
+  
+  for(i in 1:iter){
+    opt <- psoptim(rep(NA, nrow(design_space)), exp_improve, lower=design_space$low, upper=design_space$up,
+                   N=100, p_set=b, models=models, design_space=design_space, constraints=constraints,
+                   control=list(vectorize = T,max.restart=1, reltol=0.01))
+    sol <- opt$par
+    sol <- round(sol)
+    
+    ## track the objective value at each step
+    p_set2 <- as.matrix(b[,obj_names])
+    current <- dominatedHypervolume(p_set2, ref)
+    DHs <- c(DHs, dominatedHypervolume(p_set2, ref))
+    
+    ## Do the evaluation and add to the design
+    y <- calc_rates4(sol, h, N=100)
+    
+    DoE <- rbind(DoE, c(sol, y, 100))
+    
+    models <- list()
+    for(i in 1:nrow(constraints)){
+      name <- constraints$name[i]
+      models <- append(models, km(~1, design=DoE[1:dim], response=DoE[,as.character(name)], 
+                               noise.var=DoE[,paste0(as.character(name), "_var")]))
+      names(models)[length(models)] <- as.character(name)
+    }
+  
+    b <- best(design_space, models, DoE)
+    
+    if(M == 1) saveRDS(DoE, "./data/ex4_DoE.Rda")
+  }
+  
+  sink(NULL)
+  
+  res <- c(50, 
+           dominatedHypervolume(t(apply(b[,1:2], 1, objective)), ref),
+           nrow(b),
+           mean(apply(b, 1, function(x) calc_rates4_opt(x[1], x[2], h)) < 100000000))
+  
+  all_res <- rbind(all_res, res)
 }
-
 proc.time() - ptm
-# 96.33883 minutes
 
-## Save the dominated hypervolumes of the approximation sets at each iteration
-#saveRDS(DHs, "./data/ex2_single_run_DHs.Rda")
+df_e <- as.data.frame(all_res)
+names(df_e) <- c("i", "DH", "s", "p")
 
-## Save the final DoE table containing all the points evaluated over the whole algorithm
-#saveRDS(DoE, "./data/ex2_single_run_DoE.Rda")
+sink(NULL)
+#saveRDS(df_e, "./data/ex4_many_runs_10DoE.Rda")
+#saveRDS(df_e, "./data/ex4_many_runs_20DoE.Rda")
+#saveRDS(df_e, "./data/ex4_many_runs_30DoE.Rda")
 ```
 
-Get the exact optimal sample sizes:
+
+### Comparison
+
+For comparison, we will compare the method against a fixed design approach. Specifically, we generate a fixed space filling design of 50 solutions 500 times. For each set we estimate power as above (using an artificial MC error) and then find approximation sets based on the first 30, 31, \ldots , 50 solutions. We then record trajectories, size of sets, and proportions of powered solutions as above.
+
+First, the exact Pareto set:
 ```{r}
+get_pow4 <- function(n, k, h)
+{
+  # Get the true power
+  m <- n/k
+  var_t <- h[[2]]; rho <- h[[3]]
+  sig_c <- sqrt(var_t*rho + var_t/m - var_t*rho/m)
+  power.t.test(n = k, delta = h[[1]], sd = sig_c)$power
+}
+
 calc_rates4_opt <- function(n, k, h)
 {
+  # An objective function to find optimal n for a given k
   m <- n/k
   var_t <- h[[2]]; rho <- h[[3]]
   sig_c <- sqrt(var_t*rho + var_t/m - var_t*rho/m)
@@ -1363,92 +1404,250 @@ calc_rates4_opt <- function(n, k, h)
   n + 100000000*(pow < 0.9)
 }
 
-ks <- 30:100
-ns <- sapply(ks, function(x) optim(200, calc_rates4_opt, method = "Brent", lower = 10, upper = 5000,
+# For a set of ks, find optimal n
+ks <- 10:100
+ns <- sapply(ks, function(x) optim(200, calc_rates4_opt, method = "Brent", lower = 10, upper = 1000,
                                    k = x, h = h)$par)
-
-plot(ns, ks)
-points(b[,1:2], col="red")
+ps <- data.frame(n = ns, k = ks)
+ps <- ps[ps$n > 11 & ps$n <= 500,]
 ```
 
-### Results
+Now, we get approximation sets using the fixed design approach. 
 
 ```{r}
-DoE <- readRDS("./data/ex2_single_run_DoE.Rda")
-DHs <- readRDS("./data/ex2_single_run_DHs.Rda")
+set.seed(90307)
 
-models <- list()
-for(i in 1:nrow(constraints)){
-  name <- constraints$name[i]
-  models <- append(models, km(~1, design=DoE[1:dim], response=DoE[,as.character(name)], 
-                             noise.var=DoE[,paste0(as.character(name), "_var")]))
-  names(models)[length(models)] <- as.character(name)
+# The fixed design approach
+ref <- objective(design_space$up)
+
+M <- 500
+all_res <- NULL
+  
+for(iter in 1:M){
+  ## Choose initial points
+  DoE <- data.frame(sobol(1000, dim))
+  names(DoE) <- design_space$name
+  for(i in 1:dim){
+    DoE[,i] <-  DoE[,i]*(design_space$up[i]-design_space$low[i]) + design_space$low[i]
+  }
+  DoE[,1:2] <- round(DoE[,1:2])
+  
+  N <- 100
+  h <- c(mu = 0.3, var_t = 1, rho = 0.05)
+  DoE <- cbind(DoE, t(apply(DoE, 1, calc_rates4, h=h, N=N)))
+  names(DoE)[3:4] <- c("beta", "beta_var")
+  DoE$N <- N
+  DoE$ci <- DoE$beta + qnorm(0.975)*sqrt(DoE$beta_var)
+  
+  res <- NULL
+  for(j in seq(50,1000,50)){
+    sub <- DoE[1:j,]
+    fb <- paretoFilter(as.matrix(sub[sub$ci < 0.1, 1:2]))
+    # save first run as an example
+    if(M == 1 & j == 50){
+      saveRDS(fb, "./data/ex4_fb.Rda")
+      saveRDS(sub, "./data/ex4_DoE_fb.Rda")
+    }
+    powered <- mean(apply(fb, 1, function(x) calc_rates4_opt(x[1], x[2], h)) < 100000000)
+    dh <- dominatedHypervolume(t(apply(fb, 1, objective)), ref)
+    res <- rbind(res, c(j, dh, nrow(fb), powered))
+  }
+  res <- cbind(res, iter)
+  all_res <- rbind(all_res, res)
 }
 
-b <- best(design_space, models, DoE)
-b2 <- b[,1:2]
-b2 <- rbind(c(min(b2[,1]), 30), b2, c(500, min(b2[,2])))
+df_f <- as.data.frame(all_res)
+# i = internal iteartion count
+# DH = dominated hypervolume
+# s = size of approximation set
+# p = proportion of approximation set which is actually powered
+names(df_f) <- c("i", "DH", "s", "p", "r")
 
-# Get the GP predictions
+#saveRDS(df_f, "./data/ex4_fixed.Rda")
+```
+
+
+```{r}
+df_f <- readRDS("./data/ex4_fixed.Rda")
+df_f <- unique(df_f[df_f$i %in% c(50, 200, 400, 600, 800, 1000), -5])
+
+# Compare with EGO method
+
+df <- rbind(readRDS("./data/ex4_many_runs1.Rda"),
+            readRDS("./data/ex4_many_runs2.Rda"),
+            readRDS("./data/ex4_many_runs3.Rda"))
+
+df$t <- "EGO"; df_f$t <- "fix"
+
+df$i <- 10001;
+df2 <- rbind(df, df_f)
+df2$i <- factor(df2$i, labels = c("50", "200", "400", "600", "800", "1000", "EGO"))
+
+# Get Dh of the actual Pareto set
+dh_ps <- dominatedHypervolume(matrix(c(objective(ps)$n, objective(ps)$k), ncol=2), ref)
+
+ggplot(df2, aes(i, DH, fill=t)) + geom_boxplot() +
+  theme_minimal() +
+  ylab("Dominated area") + xlab("Number of evaluations") +
+  #theme(axis.text.y=element_blank(),
+   #   axis.title.y=element_blank()) +
+  scale_fill_manual(name="Method", values=colours, labels = c("EGO", "Fixed")) +
+  geom_hline(yintercept = dh_ps, linetype = 2)
+
+ggplot(df2, aes(i, s, fill=t)) + geom_boxplot() +
+  theme_minimal() +
+  ylab("Size of appoximation set") +  xlab("Number of evaluations") +
+  #theme(axis.text.y=element_blank(),
+   #   axis.title.y=element_blank()) +
+  scale_fill_manual(name="Method", values=colours, labels = c("EGO", "Fixed"))
+
+df3 <- data.frame(i = unique(df2$i), t=c("EGO", rep("Fixed", 6)))
+df3$pr <- sapply(df3$i, function(x) mean(df2[df2$i == x,"p"] < 1))
+df3
+
+#ggsave("./paper/figures/ex4_many_runs.pdf", height=9, width=14, units="cm")
+#ggsave("./paper/figures/ex4_many_runs.eps", height=9, width=14, units="cm", device = cairo_ps())
+#ggsave("./paper/figures/ex4_many_runs.png", height=3, width=5)
+```
+
+Plot example approximation sets from both methods for one of the runs:
+
+```{r}
+# Example EGO run with 50 evals
+DoE <- readRDS("./data/ex4_DoE.Rda")[1:50,]
+# Example EGO run with 200 evals
+DoE2 <- readRDS("./data/ex4_DoE.Rda")
+# Example fixed design run approximation set
+fb <- readRDS("./data/ex4_fb.Rda")
+
+models <- list()
+  for(i in 1:nrow(constraints)){
+    name <- constraints$name[i]
+    models <- append(models, km(~1, design=DoE[1:dim], response=DoE[,as.character(name)], 
+                               noise.var=DoE[,paste0(as.character(name), "_var")]))
+    names(models)[length(models)] <- as.character(name)
+  }
+
+## The final approximation set after 50 - 20 iterations
+b <- best(design_space, models, DoE)
+## Extend to include extreme points for plotting
+b2 <- b[,1:2]
+b2 <- rbind(c(min(b2[,1]), 100), b2, c(500, min(b2[,2])))
+
+## Fixed design comparator
+b3 <- as.data.frame(fb)
+b3 <- rbind(c(min(b3[,1]), 100), b3, c(500, min(b3[,2])))
+
+## Actual Pareto set
+b4 <- as.data.frame(ps)
+b4 <- rbind(c(min(b4[,1]), 100), b4, c(500, min(b4[,2])))
+
+## Get the GP predictions
 mod <- models[[1]]
-df <- expand.grid(n = seq(100,500,10), k=3:30)
+df <- expand.grid(n = seq(100,500,10), k=10:100)
 pred <- predict(mod, newdata=df, type="SK")
 df$beta <- pred$mean
 df$sd <- pred$sd
-```
 
-```{r}
-ggplot(df, aes(2*n, 3*k)) + geom_contour(aes(z=beta), colour = "light blue") + 
-  geom_point(data=DoE[1:20,], colour=colours[1], shape=1) +
-  geom_point(data=DoE[21:50,], colour=colours[2], shape=4) +
+models <- list()
+  for(i in 1:nrow(constraints)){
+    name <- constraints$name[i]
+    models <- append(models, km(~1, design=DoE2[1:dim], response=DoE2[,as.character(name)], 
+                               noise.var=DoE2[,paste0(as.character(name), "_var")]))
+    names(models)[length(models)] <- as.character(name)
+  }
+
+## The final approximation set after 200 - 20 iterations
+b5 <- best(design_space, models, DoE2)
+## Extend to include extreme points for plotting
+b5 <- b5[,1:2]
+b5 <- rbind(c(min(b5[,1]), 100), b5, c(500, min(b5[,2])))
+
+b2$beta <- 1; b3$beta <- 1; b4$beta <- 1; b5$beta <- 1
+## Plot evaluated points With the mean function
+ggplot(df, aes(2*n, 2*k, z=beta)) + geom_contour(colour="lightblue") + 
+  # Initial EGO points
+  geom_point(data=DoE[1:20,], shape=1) +
+  # Subsequent EGO evals
+  geom_point(data=DoE[21:nrow(DoE),], shape=4) +
+  # EGO approximation set (50 evals)
+  geom_point(data=b2[2:(nrow(b2)-1),], aes(colour="EGO50")) +
+  geom_step(data=b2, aes(colour="EGO50"), linetype=2) +
+  # Fixed design approximation set
+  geom_point(data=b3[2:(nrow(b3)-1),], aes(colour="FD")) +
+  geom_step(data=b3, aes(colour="FD"), linetype=2) +
+  # EGO approximation set (200 evals)
+  geom_point(data=b5[2:(nrow(b5)-1),], aes(colour="EGO200")) +
+  geom_step(data=b5, aes(colour="EGO200"), linetype=2) +
+  # True Pareto set
+  geom_step(data=b4, aes(colour="PS"), linetype=2) +
+
+  scale_color_manual(name = "",
+                        breaks = c("EGO50", "FD", "EGO200", "PS"),
+                        values = c("EGO50" = colours[2],
+                                   "FD" = colours[3],
+                                   "EGO200" = colours[1],
+                                   "PS" = colours[4]),
+                     labels = c("EGO (50)", "Fixed design", "EGO (200)", "Pareto set")) +
   
-  geom_point(data=b2[2:(nrow(b2)-1),], colour=colours[3]) +
-  geom_step(data=b2, colour=colours[3], linetype=2) +
+  theme_minimal() + xlab("Number of participants") + ylab("Number of clusters") +
+  xlim(c(500, 1000)) + ylim(c(45,200))
 
-  theme_minimal() + xlab("Number of participants") + ylab("Number of providers")
+#ggsave("./paper/figures/ex4_single_run.pdf", height=9, width=17, units="cm")
+#ggsave("./paper/figures/ex4_single_run.eps", height=9, width=17, units="cm")
+#ggsave("./paper/figures/ex4_single_run.png", height=3, width=5)
 
-#ggsave("./paper/figures/ex2_single_run.pdf", height=9, width=14, units="cm")
-#ggsave("./paper/figures/ex2_single_run.eps", height=9, width=14, units="cm")
-
-## Plot dominated hypervolumes over the search
-df2 <- data.frame(it = 1:30, DH=DHs)
-ggplot(df2, aes(it, DH)) + geom_point() + geom_line() + 
-  theme_minimal() + ylab("Dominated hypervolume") + xlab("Iteration")
-
-#ggsave("./paper/figures/ex2_traj.pdf", height=9, width=14, units="cm")
-#ggsave("./paper/figures/ex2_traj.eps", height=9, width=14, units="cm")
+# In this example the dominated areas are:
+dominatedHypervolume(matrix(c(objective(b2)$n, objective(b2)$k), ncol=2), ref)
+dominatedHypervolume(matrix(c(objective(b5)$n, objective(b5)$k), ncol=2), ref)
+dominatedHypervolume(matrix(c(objective(b3)$n, objective(b3)$k), ncol=2), ref)
+dominatedHypervolume(matrix(c(objective(ps)$n, objective(ps)$k), ncol=2), ref)
 ```
 
-```{r, eval=F}
-tab <- b[,1:4]
-new_eval <- NULL
-for(i in 1:nrow(tab)){
-  new_eval <- rbind(new_eval, calc_rates2(as.numeric(tab[i, 1:2]), h=h, N=10000))
-}
-tab <- cbind(tab, new_eval)
-names(tab)[5:6] <- c("beta_2", "beta_var_2")
-
-#saveRDS(tab, "./data/ex2_large_N.Rda")
-```
+Print the individual EGO (50 evaluations) solutions for a table:
 
 ```{r}
+DoE <- readRDS("./data/ex4_DoE.Rda")[1:50,]
+
+models <- list()
+  for(i in 1:nrow(constraints)){
+    name <- constraints$name[i]
+    models <- append(models, km(~1, design=DoE[1:dim], response=DoE[,as.character(name)], 
+                               noise.var=DoE[,paste0(as.character(name), "_var")]))
+    names(models)[length(models)] <- as.character(name)
+  }
+
+## The final approximation set after 50 - 20 iterations
+b <- best(design_space, models, DoE)
+tab <- DoE[row.names(b),]
+
 ## Print the results in a table
-tab <- readRDS("./data/ex2_large_N.Rda")
+tab2 <- data.frame(n=tab$n*2, k=2*tab$k,
+                   beta_est=apply(tab[,3:4], 1, function(x) paste0(round(x[1], 2), " (", round(sqrt(x[2]), 3), ")")))
 
-tab2 <- data.frame(n=tab$n*2, k=tab$k, j=tab$k*2, 
-                   beta=apply(tab[,3:4], 1, function(x) paste0(round(x[1], 2), " (", round(sqrt(x[2]), 3), ")")),
-                   beta_2=apply(tab[,5:6], 1, function(x) paste0(round(x[1], 3), " (", round(sqrt(x[2]), 3), ")"))
-                   )
+tab2$beta <- round(1-apply(tab2, 1, function(x) get_pow4(as.numeric(x[1])/2, as.numeric(x[2])/2, h)), 3)
+
 tab2 <- tab2[order(tab2$k),]
-colnames(tab2) <- c("$2n$", "$k$", "$j$", "$\\beta$ (s.e.), $N = 10^2$", "$\\beta$ (s.e.), $N = 50^4$")
+colnames(tab2) <- c("$2n$", "$2k$", "$\\hat{\\beta}$ (s.e.)", "$\\beta$")
 tab2
-
-# print(xtable(tab2, digits=0), booktabs = T, include.rownames = F, 
-#       sanitize.text.function = function(x) {x}, floating = F,
-#       file = "./paper/tables/ex2_results.txt")
 ```
 
+And similarly, for the fixed design approximation set:
+```{r}
+DoE <- readRDS("./data/ex4_DoE_fb.Rda")
 
+tab <- DoE[row.names(fb),]
+
+## Print the results in a table
+tab2 <- data.frame(n=tab$n*2, k=2*tab$k,
+                   beta_est=apply(tab[,3:4], 1, function(x) paste0(round(x[1], 2), " (", round(sqrt(x[2]), 3), ")")))
+
+tab2$beta <- round(1-apply(tab2, 1, function(x) get_pow4(as.numeric(x[1])/2, as.numeric(x[2])/2, h)), 3)
+
+tab2 <- tab2[order(tab2$k),]
+colnames(tab2) <- c("$2n$", "$2k$", "$\\hat{\\beta}$ (s.e.)", "$\\beta$")
+tab2
+```
 
 ## Figures
 
@@ -1546,4 +1745,141 @@ ggplot(x6, aes(n, f)) + geom_line(colour="#009E73", linetype=2) + geom_line(data
 
 #ggsave("./paper/figures/GP_example.pdf", width= 5, height = 3.3)
 #ggsave("./paper/figures/GP_example.eps", width= 5, height = 3.3, device=cairo_ps)
+```
+
+1D animation for Twitter
+
+```{r}
+set.seed(8239709)
+
+N <- 500
+
+get_power <- function(n)
+{
+  p <- power.t.test(n=n, delta=0.3245459)$power
+  c(rbinom(1, N, p)/N, p*(1-p)/N, N)
+}
+
+get_p <- function(input)
+{
+  # prob of a point being feasible
+  m <- input[2]; sd <- input[3]
+  mc_var <- m*(1-m)/N
+  pred_q_mean <- m - qnorm(0.95)*sqrt(mc_var*(sd^2)/(mc_var + sd^2))
+  pred_q_var <- ((sd^2)^2)/(mc_var + sd^2) 
+  
+  1 - pnorm(0.8, pred_q_mean, sqrt(pred_q_var))
+}
+
+consolidate <- function(df)
+{
+  if(sum(duplicated(df$n)) > 0){
+    n_dup <- df[duplicated(df$n), "n"]
+    p <- power.t.test(n=n_dup, delta=0.3245459)$power
+    m <- mean(df[df$n == n_dup, "f"])
+    df <- df[!duplicated(df$n),]
+    new_N <- df[df$n == n_dup, "N"] + N
+    df[df$n == n_dup, 2:4] <- c(m, p*(1-p)/new_N, new_N)
+  }
+  
+  df
+}
+
+df <- data.frame(n = c(2, 200, 400))
+df <- cbind(df, t(apply(df, 1, get_power)))
+names(df)[2:4] <- c("f", "v", "N")
+df$t <- 1
+
+model <- km(design = df[,1, drop=FALSE], response = df[,2], noise.var = df[,3])
+
+x <- data.frame(n=2:400)
+
+p <- predict.km(model, newdata=x, type="SK")
+
+x$f <- p$mean
+x$sd <- p$sd
+x$min <- x$f - qnorm(0.95)*x$sd
+x$max <- x$f + qnorm(0.95)*x$sd
+x$t <- 1
+
+best <- x[x$n %in% df$n & x$min >= 0.8, ][1,"n"]
+if(is.na(best)) best <- 400
+df_best <- data.frame(n = best, t = 1)
+
+probs <- cbind(x, V1=apply(x, 1, get_p))
+probs$EFI <- (best-probs$n)*probs$V1
+probs$EFI <- ifelse(probs$EFI < 0, 0, probs$EFI)
+probs$t <- 1
+
+to_try <- probs[which.max(probs$EFI), "n"]
+
+for(i in 2:8){
+  
+  df1 <- df[df$t == (i-1), ]
+  df1 <- rbind(df1, c(to_try, get_power(to_try), i))
+  df1$t <- i
+  
+  #model <- km(design = df[,1, drop=FALSE], response = df[,2], noise.var = df[,3],
+  #             parinit = coef(model))
+  
+  model <- update(model, df1[nrow(df1),1, drop=FALSE], df1[nrow(df1),2], 
+                  newX.alreadyExist = max(duplicated(df1$n)),
+                  newnoise.var = df1[nrow(df1),3])
+  
+  df1 <- consolidate(df1)
+  df <- rbind(df, df1)
+  
+  x1 <- data.frame(n=2:400)
+  
+  p <- predict.km(model, newdata=x1, type="SK")
+  
+  x1$f <- p$mean
+  x1$sd <- p$sd
+  x1$min <- x1$f - 1.96*x1$sd
+  x1$max <- x1$f + 1.96*x1$sd
+  x1$t <- i
+  x <- rbind(x, x1)
+  
+  best <- x1[x1$n %in% df1$n & x1$min >= 0.8, ][1,"n"]
+  if(is.na(best)) best <- 400
+  df_best <- rbind(df_best, c(best, i))
+  
+  probs1 <- cbind(x1, V1=apply(x1, 1, get_p))
+  probs1$EFI <- (best-probs1$n)*probs1$V1
+  probs1$EFI <- ifelse(probs1$EFI < 0, 0, probs1$EFI)
+  probs1$t <- i
+  probs <- rbind(probs, probs1)
+  
+  to_try <- probs1[which.max(probs1$EFI), "n"] 
+}
+
+probs$p <- sapply(probs$n, function(x) power.t.test(n=x, delta=0.32)$power)
+df_best$n <- paste("Optimal n: ", as.character(df_best$n))
+
+p <- ggplot(x, aes(n)) + 
+  geom_point(data = df, aes(y = f)) +
+  geom_line(aes(y = f)) + 
+  geom_ribbon(aes(ymin=min, ymax=max), alpha=0.1) +
+  geom_line(data = probs, aes(y = p), linetype = 2) + 
+  theme_minimal() +
+  xlab("Sample size") + ylab("Power") +
+  #labs(title = "{df[nrow(df), 1]}") +
+  geom_text(data = df_best, aes(label = n), x = 300, y = 0.3) +
+  transition_states(
+    t,
+    wrap = FALSE
+    #transition_length = 2,
+    #state_length = 1
+  ) +
+  scale_y_continuous(breaks = seq(0,1.2,0.4)) +
+  coord_cartesian(ylim = c(0, 1.2), xlim = c(0,400))
+
+animate(p,
+        nframes = 100,
+        #fps = 20,
+        start_pause = 5,
+        end_pause = 15,
+        height = 2, width = 4, units = "in", res = 300)
+
+anim_save("1D_EGO.gif")
 ```

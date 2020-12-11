@@ -7,6 +7,13 @@
   \urlstyle{rm}\Url}\fi
 \providecommand{\eprint}[2][]{\url{#2}}
 
+\bibitem{Cook2018}
+Cook JA, Julious SA, Sones W et~al.
+\newblock {DELTA}2 guidance on choosing the target difference and undertaking
+  and reporting the sample size calculation for a randomised controlled trial.
+\newblock \emph{Trials} 2018; 19(1).
+\newblock \doi{10.1186/s13063-018-2884-0}.
+
 \bibitem{Arnold2011}
 Arnold BF, Hogan DR, Colford JM et~al.
 \newblock Simulation methods to estimate design power: an overview for applied
@@ -64,14 +71,6 @@ Sutton AJ, Cooper NJ, Jones DR et~al.
 \newblock \doi{10.1002/sim.2704}.
 \newblock \urlprefix\url{https://doi.org/10.1002%2Fsim.2704}.
 
-\bibitem{Kontopantelis2016}
-Kontopantelis E, Springate DA, Parisi R et~al.
-\newblock Simulation-based power calculations for mixed effects modeling:
-  ipdpower in stata.
-\newblock \emph{Journal of Statistical Software} 2016; 74(12).
-\newblock \doi{10.18637/jss.v074.i12}.
-\newblock \urlprefix\url{http://dx.doi.org/10.18637/jss.v074.i12}.
-
 \bibitem{Fedorov2005}
 Fedorov V and Jones B.
 \newblock The design of multicentre trials.
@@ -111,6 +110,50 @@ Wilson DT, Walwyn RE, Brown J et~al.
   997--1009.
 \newblock \doi{10.1177/0962280215589507}.
 \newblock \urlprefix\url{http://dx.doi.org/10.1177/0962280215589507}.
+
+\bibitem{Feiveson2002}
+Feiveson AH.
+\newblock Power by simulation.
+\newblock \emph{The Stata Journal} 2002; 2: 107--124.
+\newblock
+  \urlprefix\url{http://ageconsearch.umn.edu/bitstream/115955/2/sjart_st0010.pdf}.
+
+\bibitem{Browne2009}
+Browne WJ, Lahi MG and Parker RM.
+\newblock \emph{A Guide to Sample Size Calculations for Random Effect Models
+  via Simulation and the MLPowSim Software Package}, 2009.
+\newblock
+  \urlprefix\url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.408.6314&rep=rep1&type=pdf}.
+
+\bibitem{Williams2007}
+Williams MS, Ebel ED and Wagner BA.
+\newblock Monte carlo approaches for determining power and sample size in
+  low-prevalence applications.
+\newblock \emph{Preventive Veterinary Medicine} 2007; 82(1-2): 151--158.
+\newblock \doi{10.1016/j.prevetmed.2007.05.015}.
+
+\bibitem{Jung2008a}
+Jung SH.
+\newblock Sample size calculation for paired survival data: a simulation
+  method.
+\newblock \emph{Journal of Statistical Computation and Simulation} 2008; 78(1):
+  85--92.
+\newblock \doi{10.1080/10629360600864951}.
+
+\bibitem{Kontopantelis2016}
+Kontopantelis E, Springate DA, Parisi R et~al.
+\newblock Simulation-based power calculations for mixed effects modeling:
+  ipdpower in stata.
+\newblock \emph{Journal of Statistical Software} 2016; 74(12).
+\newblock \doi{10.18637/jss.v074.i12}.
+\newblock \urlprefix\url{http://dx.doi.org/10.18637/jss.v074.i12}.
+
+\bibitem{Wason2012}
+Wason JMS and Jaki T.
+\newblock Optimal design of multi-arm multi-stage trials.
+\newblock \emph{Statistics in Medicine} 2012; 31(30): 4269--4279.
+\newblock \doi{10.1002/sim.5513}.
+\newblock \urlprefix\url{http://dx.doi.org/10.1002/sim.5513}.
 
 \bibitem{Deb2002}
 Deb K, Pratap A, Agarwal S et~al.
@@ -192,13 +235,6 @@ Picheny V and Ginsbourger D.
 \newblock \doi{10.1016/j.csda.2013.03.018}.
 \newblock \urlprefix\url{https://doi.org/10.1016%2Fj.csda.2013.03.018}.
 
-\bibitem{Browne2009}
-Browne WJ, Lahi MG and Parker RM.
-\newblock \emph{A Guide to Sample Size Calculations for Random Effect Models
-  via Simulation and the MLPowSim Software Package}, 2009.
-\newblock
-  \urlprefix\url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.408.6314&rep=rep1&type=pdf}.
-
 \bibitem{White2007}
 White P, Sharpe M, Chalder T et~al.
 \newblock Protocol for the pace trial: A randomised controlled trial of
@@ -220,11 +256,6 @@ White P, Goldsmith K, Johnson A et~al.
 \newblock
   \urlprefix\url{http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(11)60096-2/abstract}.
 
-\bibitem{Chalder1993}
-Chalder T, Berelowitz G, Hirsch S et~al.
-\newblock Development of a fatigue scale.
-\newblock \emph{Journal of Psychometric Research} 1993; 37(2): 147--153.
-
 \bibitem{Walwyn2010}
 Walwyn REA and Roberts C.
 \newblock Therapist variation within randomised trials of psychotherapy:
@@ -233,24 +264,6 @@ Walwyn REA and Roberts C.
 \newblock \doi{10.1177/0962280209105017}.
 \newblock \urlprefix\url{http://smm.sagepub.com/content/19/3/291.abstract}.
 \newblock \eprint{http://smm.sagepub.com/content/19/3/291.full.pdf+html}.
-
-\bibitem{Roberts2015}
-Roberts C, Batistatou E and Roberts SA.
-\newblock Design and analysis of trials with a partially nested design and a
-  binary outcome measure.
-\newblock \emph{Statistics in Medicine} 2015; 35(10): 1616--1636.
-\newblock \doi{10.1002/sim.6828}.
-\newblock
-  \urlprefix\url{https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.6828}.
-\newblock \eprint{https://onlinelibrary.wiley.com/doi/pdf/10.1002/sim.6828}.
-
-\bibitem{McHorney1993}
-McHorney CA, Ware JE and Raczek AE.
-\newblock The mos 36-item short-form health survey (sf-36): Ii. psychometric
-  and clinical tests of validity in measuring physical and mental health
-  constructs.
-\newblock \emph{Medical Care} 1993; 31(3): 247--263.
-\newblock \urlprefix\url{http://www.jstor.org/stable/3765819}.
 
 \bibitem{Senn2007}
 Senn S and Bretz F.
@@ -432,12 +445,5 @@ Oakley JE, Brennan A, Tappenden P et~al.
 \newblock \doi{https://doi.org/10.1016/j.jhealeco.2010.03.006}.
 \newblock
   \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0167629610000470}.
-
-\bibitem{Wason2012}
-Wason JMS and Jaki T.
-\newblock Optimal design of multi-arm multi-stage trials.
-\newblock \emph{Statistics in Medicine} 2012; 31(30): 4269--4279.
-\newblock \doi{10.1002/sim.5513}.
-\newblock \urlprefix\url{http://dx.doi.org/10.1002/sim.5513}.
 
 \end{thebibliography}

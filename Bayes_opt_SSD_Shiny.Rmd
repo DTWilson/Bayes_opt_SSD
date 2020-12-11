@@ -1,0 +1,313 @@
+---
+title: "Simulation-based sample size determination"
+author: "Duncan T Wilson"
+date: "11/10/2020"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+General functions:
+```{r}
+calc_rates <- function(x, hypotheses, N)
+{
+  results <- NULL
+  k <- x[1]; m <- x[2]
+  for(i in 1:nrow(hypotheses)){
+    mu <- hypotheses[i,, drop = F]$mu
+    sims <- replicate(N, sim_trial(k, m, mu))
+    for(j in 1:nrow(sims)){
+      results <- c(results, mean(sims[j,]), var(sims[j,])/N)
+    }
+  }
+  names(results) <- letters[1:12]
+  results
+}
+
+DoE_index <- function(out_i, hyp_i, dim, out_dim)
+{
+  (hyp_i - 1)*out_dim*2 + (2*out_i - 1) + dim
+}
+
+is_nondom <- function(x, b, objectives)
+{
+  i <- 1
+  obj_names <- as.character(objectives$name)
+  while(i <= nrow(objectives) & nrow(b)!= 0 ){
+    ## subset b to those non-dominated solutions which are less than or equal to 
+    ## x in an objective
+    b <- b[b[, obj_names[i] ] <= x[[ obj_names[i] ]],]
+    i <- i + 1
+  }
+  ## If b is now empty, then des is non-dominated
+  if(nrow(b)==1 | all(apply(b[,obj_names, drop=F], 2, function(x) length(unique(x)) == 1) == TRUE) ) {
+    nondom <- TRUE
+  } else {
+    nondom <- FALSE
+  }
+  return(nondom)
+}
+
+
+best <- function(design_space, models, DoE, objectives, constraints, b=NULL)
+{ 
+  ## Return the set of current Patero optimal solutions,
+  ## penalising constrain violations and considering only solutions
+  ## where some evaluation has actually happened
+  sols <- DoE
+  
+  ## Get objective values
+  for(i in 1:nrow(objectives)){
+    index <- DoE_index(objectives[i, "out_i"], objectives[i, "hyp_i"], dim, out_dim)
+    if(objectives[i, "stoch"]){
+      model_index <- which(to_model$out_i == objectives[i, "out_i"] & to_model$hyp_i == objectives[i, "hyp_i"])
+      sols <- cbind(sols, predict.km(models[[model_index]], newdata=sols[, 1:dim, drop = F], type="SK")$mean*objectives[i, "weight"])
+    } else {
+      sols <- cbind(sols, DoE[, index]*objectives[i, "weight"])
+    }
+    names(sols)[ncol(sols)] <- as.character(objectives[i, "name"])
+  }
+  
+  ## Penalise constraint violations
+  sols$exp_pen <- 1
+  for(i in 1:nrow(constraints)){
+    index <- DoE_index(constraints[i, "out_i"], constraints[i, "hyp_i"], dim, out_dim)
+    model_index <- which(to_model$out_i == constraints[i, "out_i"] & to_model$hyp_i == constraints[i, "hyp_i"])
+    nom <- constraints[i, "nom"]
+    if(constraints[i, "stoch"]){
+      p <- predict.km(models[[model_index]], newdata=sols[,1:dim, drop=F], type="SK")
+      pen <- pnorm(nom, p$mean, p$sd)
+      pen <- ifelse(pen < constraints[i, "delta"], 0.0000001, 1)
+      sols$exp_pen <- sols$exp_pen*pen
+    } else {
+      pen <- ifelse(DoE[, index] > nom, 0.0000001, 1)
+    }
+  }
+  sols[, objectives[, "name"]] <- sols[, objectives[, "name"]]/sols$exp_pen
+  
+  ## Drop any dominated solutions
+  nondom_sols <- sols[apply(sols, 1, is_nondom, b=sols, objectives=objectives), ]
+  ## check for duplicates
+  sub <- unique(nondom_sols[, objectives[, "name"], drop=F])
+  
+  PS <- nondom_sols[row.names(sub),]
+  PS
+}
+
+
+predict_obj <- function(design, models, objectives)
+{
+  preds_stoch <- NULL
+  i <- 1
+  while(i <= sum(objectives$stoch)){
+    model_index <- which(to_model$out_i == objectives[i, "out_i"] & to_model$hyp_i == objectives[i, "hyp_i"])
+    p <- predict.km(models[[model_index]], newdata=design[,1:dim, drop=F], type="SK")
+    f <- p$mean - qnorm(0.7)*p$sd
+    preds_stoch <- c(preds_stoch, f)
+    i <- i + 1
+  }
+  preds_det <- get_det_obj(design)
+  t(t(cbind(preds_stoch, preds_det))*objectives$weight)
+}
+
+exp_improve <- function(design, N, PS, models, design_space, constraints)
+{
+  design <- as.data.frame(t(design))
+  names(design) <- design_space$name
+  
+  ## Get expected penalisation if we were to evaluate at design,
+  ## using the models of constraint functions
+  design$exp_pen <- 1
+  for(i in 1:nrow(constraints)){
+    index <- DoE_index(constraints[i, "out_i"], constraints[i, "hyp_i"], dim, out_dim)
+    model_index <- which(to_model$out_i == constraints[i, "out_i"] & to_model$hyp_i == constraints[i, "hyp_i"])
+    nom <- constraints[i, "nom"]
+    if(constraints[i, "stoch"]){
+      p <- predict.km(models[[model_index]], newdata=design[,1:dim, drop=F], type="SK")
+      means <- ifelse(p$mean < 0, 0, ifelse(p$mean > 1, 1, p$mean))
+      mc_vars <- means*(1-means)/N
+      pred_q_mean <- p$mean + qnorm(constraints[i, "delta"])*sqrt(mc_vars*(p$sd^2)/(mc_vars+(p$sd^2)))
+      pred_q_var <- ((p$sd^2)^2)/(mc_vars+(p$sd^2)) 
+      design$exp_pen <- design$exp_pen*pnorm(nom, pred_q_mean, sqrt(pred_q_var))
+    } else {
+      pen <- ifelse(DoE[, index] > nom, 0.0000001, 1)
+    }
+  }
+  
+  ## Get objective value of design
+  fs <- predict_obj(design, models, objectives)
+  
+  ## Improvement is quantified by the number of additional
+  ## solutions which would be dominated if this design was included
+  PS2 <- as.matrix(PS[, objectives$name])
+  current <- dominatedHypervolume(PS2, ref)
+  pos <- apply(fs, 1, function(obj) dominatedHypervolume(as.matrix(rbind(PS2, obj)), ref) )
+  #pos <- dominatedHypervolume(as.matrix(rbind(PS2, fs)), ref)
+  imp <- (current-pos)*design$exp_pen
+  
+  ## Minimising, so keeping negative
+  return(imp)
+}
+```
+
+Specifying the problem:
+```{r}
+sim_trial <- function(n, k, mu)
+{
+  m <- n/k
+  s_c <- sqrt(0.05 + 0.95/m)
+  x0 <- rnorm(k, 0, s_c); x1 <- rnorm(k, mu, s_c)
+  c(t.test(x0, x1)$p.value >= 0.05, n, k)
+}
+
+get_det_obj <- function(design)
+{
+  design[,1:2]
+  #as.numeric(c(design[,1], design[,2]))
+}
+
+var_names <- names(formals(sim_trial))
+design_names <- var_names[1:2]
+model_names <- var_names[3]
+
+design_space <- data.frame(name = design_names,
+                           low = c(100, 10), 
+                           up = c(500, 100),
+                           int = c(T, T)
+)
+dim <- nrow(design_space)
+
+hypotheses <- data.frame(matrix(c(0, 0.3), nrow = 2))
+names(hypotheses) <- model_names
+                         
+constraints <- data.frame(name = c("beta"), 
+                          out_i = c(1),
+                          hyp_i = c(2), 
+                          nom = c(0.2),
+                          delta = c(0.975),
+                          stoch = c(T)
+)
+
+objectives <- data.frame(name = c("f1", "f2", "f3"),
+                         out_i = c(1, 2, 3),
+                         hyp_i = c(2, 2, 2),
+                         weight = c(0.00001, 2/5, 1),
+                         stoch = c(T, F, F)
+)
+objectives$weight <- objectives$weight/sum(objectives$weight)
+objectives$name <- as.character(objectives$name)
+out_dim <- 3
+
+ref <- c(1, 500, 100)
+
+to_model <- data.frame(out_i = c(1),
+                       hyp_i = c(2))
+
+
+```
+
+Evaluating an initial space-filling design:
+```{r}
+require(randtoolbox)
+require(DiceKriging)
+require(mco)
+require(pso)
+require(ggplot2)
+
+## Choose initial points
+DoE <- data.frame(sobol(20, dim))
+names(DoE) <- design_space$name
+for(i in 1:dim){
+  DoE[,i] <-  DoE[,i]*(design_space$up[i]-design_space$low[i]) + design_space$low[i]
+}
+DoE[, design_space$int] <- round(DoE[, design_space$int])
+
+## Evaluate at initial points
+N <- 100
+DoE <- cbind(DoE, t(apply(DoE, 1, calc_rates, hypotheses=hypotheses, N=N)))
+DoE$N <- N
+
+models <- list()
+for(i in 1:nrow(to_model)){
+  response_index <- (to_model[i, "hyp_i"] - 1)*out_dim*2 + (2*to_model[i, "out_i"] - 1) + nrow(design_space)
+  models <- append(models, km(~1, design=DoE[1:dim], response=DoE[, response_index], 
+                              noise.var=DoE[, response_index + 1]))
+}
+
+## Get the current set of Pareto solutions
+b <- best(design_space, models, DoE, objectives, constraints)
+
+track <- NULL
+```
+
+Doing one iteration of EGO:
+```{r}
+grid <- t(expand.grid(n = 100:500,
+                    k = 10:100))
+
+for(m in 1:30){
+
+if(nrow(design_space) > 2){  
+  opt <- psoptim(rep(NA, nrow(design_space)), exp_improve, lower=design_space$low, upper=design_space$up,
+                     N=N, PS=b, models=models, design_space=design_space, constraints=constraints,
+                     control=list(vectorize = T,max.restart=1, reltol=0.01))
+  sol <- opt$par
+  sol <- round(sol)
+  val <- -opt$value
+} else {
+  ys <- exp_improve(grid,
+                     N=N, PS=b, models=models, design_space=design_space, constraints=constraints)
+  sol <- t(grid)[which.min(ys),]
+  val <- -ys[which.min(ys)]
+}
+
+## track the expcted improvement and the objective value
+track <- rbind(track, c(val, dominatedHypervolume(as.matrix(b[, objectives[, "name"]]), ref)))
+
+## Do the evaluation and add to the design
+y <- calc_rates(sol, hypotheses, N)
+
+DoE <- rbind(DoE, c(sol, y, 100))
+
+models <- list()
+for(i in 1:nrow(to_model)){
+  response_index <- (to_model[i, "hyp_i"] - 1)*out_dim*2 + (2*to_model[i, "out_i"] - 1) + nrow(design_space)
+  models <- append(models, km(~1, design=DoE[1:dim], response=DoE[, response_index], 
+                              noise.var=DoE[, response_index + 1]))
+}
+
+b <- best(design_space, models, DoE, objectives, constraints)
+print(track)
+}
+```
+Diagnostics:
+```{r}
+traj <- as.data.frame(track)
+names(traj) <- c("EI", "DH")
+traj$iter <- 1:nrow(traj)
+
+ggplot(traj, aes(iter)) + #geom_line(aes(y = EI)) + 
+  geom_line(aes(y = DH))
+
+df <- expand.grid(n = 100:500, k = 10:100)
+for(i in 1:nrow(to_model)){
+  for(j in 1:dim){
+    df2 <- df[df[, j] == b[nrow(b), j],]
+    preds <- predict.km(models[[i]], newdata=df2[,1:2], type="SK")
+    df2$p <- preds$mean; df2$p_sd <- preds$sd
+    
+    j2 <- 1; if(j == 1) j2 <- 2
+    pl <- ggplot(df2, aes(df2[, j2], p)) + geom_line() + 
+      geom_ribbon(aes(ymin = p - p_sd, ymax = p + p_sd), alpha = 0.3) +
+      geom_vline(xintercept = b[nrow(b), j2], linetype = 2)
+    print(pl)
+  }
+}
+
+ggplot(b[,10:19], aes(f2/objectives$weight[2], f3/objectives$weight[3], colour=f1/objectives$weight[1])) + geom_point()
+```
+
+
